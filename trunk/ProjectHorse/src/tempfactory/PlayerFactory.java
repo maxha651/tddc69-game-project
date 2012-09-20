@@ -1,6 +1,6 @@
 package tempfactory;
 
-import model.Player;
+//import model.Player;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,5 +11,5 @@ import model.Player;
  */
 public interface PlayerFactory {
 
-    public Player create();
+    //public Player create();
 }

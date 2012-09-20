@@ -8,4 +8,8 @@ package model.spacecraft;
  * To change this template use File | Settings | File Templates.
  */
 public class Weapon extends SpacecraftPart {
+    int minDamage, maxDamage;
+    double speed;
+    int energyCost;
+
 }

@@ -1,6 +1,6 @@
 package tempfactory;
 
-import model.NonPlayableCharacter;
+//import model.NonPlayableCharacter;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,5 +11,5 @@ import model.NonPlayableCharacter;
  */
 public interface NonPlayableCharacterFactory {
 
-    public NonPlayableCharacter create();
+    // public NonPlayableCharacter create();
 }

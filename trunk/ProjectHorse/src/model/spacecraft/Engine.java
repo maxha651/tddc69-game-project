@@ -8,4 +8,5 @@ package model.spacecraft;
  * To change this template use File | Settings | File Templates.
  */
 public class Engine extends SpacecraftPart {
+    int currentThrust;
 }

@@ -20,5 +20,6 @@ public class GameModel extends Observable {
         this();
         this.seed = seed;
         player = new Player();
+
     }
 }

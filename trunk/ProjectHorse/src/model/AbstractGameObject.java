@@ -1,5 +1,5 @@
 package model;
 
 
-public class AbstractGameObject {
+public abstract class AbstractGameObject {
 }

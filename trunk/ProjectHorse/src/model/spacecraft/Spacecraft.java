@@ -1,19 +1,17 @@
 package model.spacecraft;
 
 import model.MoveableObject;
+import model.interfaces.Boundable;
 import model.interfaces.Collideable;
 import model.interfaces.Moveable;
+import model.utility.shape.Coordinate;
 
-import java.util.LinkedList;
+import java.awt.*;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Brain
- * Date: 2012-09-20
- * Time: 23:25
- * To change this template use File | Settings | File Templates.
+  * A spacecraft is the model of a spacecraft that can then be used in stores, by players or by NPCs
  */
-public class Spacecraft extends MoveableObject implements Collideable, Moveable {
+public class Spacecraft extends MoveableObject implements Boundable, Moveable {
 
     private Engine engine = null;
     private ShieldGenerator shield = null;
@@ -22,13 +20,20 @@ public class Spacecraft extends MoveableObject implements Collideable, Moveable 
     private Weapon weapon2 = null;
     private Hull hull = null;
 
-    private int x = 0, y = 0;
+    private double rotationAngle = 0;
 
-    private String name;
-    private String description;
+    private String name = "Default Spacecraft";
+    private String description = "Default description";
 
     public Spacecraft(){
+        //add parts to the spacecraft
+        this.hull = new Hull();
 
+    }
+
+    public Rectangle getBoundingRectangle(){
+        //the bounding rectangle of the spacecraft only checks the hull size
+        return new Rectangle((int)this.hull.getWidth(), (int)this.hull.getHeight());
     }
 
     public void setEngine(Engine engine) {
@@ -58,4 +63,5 @@ public class Spacecraft extends MoveableObject implements Collideable, Moveable 
     public void setDescription(String description) {
         this.description = description;
     }
+
 }
