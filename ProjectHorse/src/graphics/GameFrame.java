@@ -18,11 +18,11 @@ public class GameFrame extends JFrame implements Observer {
     JMenuBar menuBar;
     JMenu fileMenu, settingsMenu, viewMenu;
     static final String FRAME_TITLE = "Space Explorer";
-    GameModel game;
+    GameModel gameModel;
 
-    public GameFrame(GameModel game) {
+    public GameFrame(GameModel gameModel) {
         super(FRAME_TITLE);
-        this.game = game;
+        this.gameModel = gameModel;
         fileMenu = new JMenu("File");
         settingsMenu = new JMenu("Settings");
         viewMenu = new JMenu("View");
@@ -36,6 +36,8 @@ public class GameFrame extends JFrame implements Observer {
         menuBar.add(viewMenu);
         this.add(menuBar);
 
+        GraphicalViewer viewer = new GraphicalViewer(gameModel);
+        this.add(viewer);
         this.pack();
         this.setVisible(true);
     }

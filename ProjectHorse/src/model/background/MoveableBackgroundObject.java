@@ -1,5 +1,6 @@
 package model.background;
 
+import model.MoveableObject;
 import model.interfaces.Moveable;
 
 /**
@@ -9,6 +10,6 @@ import model.interfaces.Moveable;
  * Time: 23:16
  * To change this template use File | Settings | File Templates.
  */
-public class MoveableBackgroundObject extends BackgroundObject implements Moveable {
+public class MoveableBackgroundObject extends MoveableObject implements Moveable {
 
 }

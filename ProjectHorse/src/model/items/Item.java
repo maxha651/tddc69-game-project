@@ -1,6 +1,5 @@
 package model.items;
 
-import model.AbstractGameObject;
 import model.LocalObject;
 
 /**
