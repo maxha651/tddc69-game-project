@@ -1,5 +1,5 @@
 package model;
 
 
-public class Player {
+public class Player extends AbstractCharacter implements Moveable, Collideable {
 }

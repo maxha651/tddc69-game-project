@@ -1,4 +1,4 @@
 package model;
 
-public class AbstractCharacter {
+public class AbstractCharacter extends AbstractGameObject {
 }
