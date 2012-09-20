@@ -18,6 +18,17 @@ public class SpaceGrid<E> {
     private int size;
     private E[][] grid;
 
+    public SpaceGrid(Position spaceGridPos, ArrayList<AbstractGameObject> abstractGameObjects, int height, int width, int size) {
+        this.spaceGridPos = spaceGridPos;
+        this.abstractGameObjects = abstractGameObjects;
+        this.height = height;
+        this.width = width;
+        this.size = size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
 
     public int getHeight() {
         return height;
@@ -33,13 +44,5 @@ public class SpaceGrid<E> {
 
     public Position getSpaceGridPos() {
         return spaceGridPos;
-    }
-
-    public SpaceGrid(Position spaceGridPos, ArrayList<AbstractGameObject> abstractGameObjects, int height, int width, int size) {
-        this.spaceGridPos = spaceGridPos;
-        this.abstractGameObjects = abstractGameObjects;
-        this.height = height;
-        this.width = width;
-        this.size = size;
     }
 }
