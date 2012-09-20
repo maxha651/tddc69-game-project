@@ -2,5 +2,5 @@ package model.character;
 
 import model.AbstractGameObject;
 
-public class AbstractCharacter extends AbstractGameObject {
+public abstract class AbstractCharacter extends AbstractGameObject {
 }
