@@ -1,0 +1,97 @@
+1. Introduktion till projektet
+"Space Explorer" är ett open singleplayer sci-fi rymdspel som inte direkt har något slutmål utan
+ handlar snarare om att klara delmål. Idéen är att man har ett rymdskepp som man kan styra som man
+  vill i en 2D-rymd. I 2D-rymden kan man stöta på olika slumpade händelser, t.ex. fiender, planeter
+  eller asteroider. Delmålen är då endast att man hanterar situationerna som uppstår på det sättet man vill.
+
+   Spelet kommer även att ha vissa rollspelsinslag, som t.ex. vapenupgraderingar, handel och erfarenhetsniåver.
+
+2. Ytterligare bakgrundsinformation
+I spelet finns ganska få regler. Dock kan spelare dö om dennes skepp förstörs.
+Detta görs genom att samtliga delar av skeppet eller cockpit förstörs av fienden eller av
+kollision med t.ex. asteroider. Skeppet kommer att vara uppdelat i följande delar:
+
+Motor (för spelaren i någon riktning)
+Vapen (används för att strida mot fienden)
+Cockpit (spelaren dör om den går sönder)
+Cargo (spelaren förlorar sina föremål)
+
+Fienden kommer att vara uppdelade på liknande sätt.
+
+Om något är sönder (förutom cockpit) kan det repareras. Dock behövs det material för detta.
+Material kan fås från objekt (asteroider mm) i spelet. Genom att samla på sig material kan man uppgradera skeppet.
+Man får poäng av att slå fiender, samla på sig material mm.
+
+3. Milstolpar
+Implementera ett styrbart rymdskeppsobjekt som visas grafiskt som en rektangel i en tom 2D-rymd.
+Implementera fiendeobjekt som asteroider och andra skepp.
+Implementera kollisionskontroll och enkelt vapensystem.
+Implementera en enkel AI.
+Implementera rymdskeppsdelar med cargo, motor och vapensystem.
+Implementera föremål som går att plocka på sig ("loot").
+Implementera en slumpad rymdvärld.
+Implementera 2D-grafik.
+Implementera animationer.
+Implementera ett GUI (även GUI för cargo).
+Implementera andra ickeobligatoriska saker som t.ex. handel, uppgraderingar, material, nya fiender eller rymdstationer.
+Finputs av spel.
+
+4. Övriga implementationsförberedelser
+Vi kommer att använda MVC-modellen.
+
+Vi kommer att ha en model som innehåller rymden som spelplan (klassen "Space"). Klassen "Space" kommer sedan att innehålla hashmaps med fiender, objekt, asteroider och diverse saker som kan finnas i en rymd. Hashfunktionen kommer att ta hänsyn till position i planet (varje "delrum" kommer att ha sitt egna positionssystem och egna hashmap). "Objekten i rymden" kommer alla att använda states bl. a. för att hålla koll på egenskaper och om man interagerat med objekt eller inte. Dessa objekt kommer att loopas igenom för förflyttning och kollisionscheck. Tack vare hashmaps kommer endast vissa objekt behöva loopas igenom för t.ex. AI och kollisionscheck.
+
+Viewern kommer att bestå av en SpaceFrame som ärver av JFrame i Swing. Vi kommer sedan att ha en komponent ("SpaceComponent") som visar rymden och spelarens skepp.
+
+Controllern (SpaceGame) kommer att innehålla en gameloop och en animations-/grafikloop som antagligen kommer att vara separata för att kunna hålla så hög och jämn framerate som möjligt. Gameloopen kommer att uppdatera modellen (Space) genom att låta modellen uppdatera sig själv. Grafikloopen kommer att m.h.a. modellen uppdatera grafiken i "SpaceComponent".
+
+Abstraktion och objektorienterad design (MVC, Abstract Factory och States) kommer att användas såpass mycket det går.
+
+5. Utveckling och samarbete
+Vi har tänkt använda subversion och IDEA som utvecklingsmiljö. Vi kommer att sedan att arbeta tillsammans och separat med kontinuerlig kommunikation och samförståelse för alla delar av spelet via Skype (röstkommunkiation via internet). Vem som gör vad beror på vad vi håller på med i projektet och vem som då har mest tid. Vi har samma ambitioner.
+
+Är vi oense om något spelar vi "sten, sax, påse" eller "tärning". Är vi oense om vad vi ska spela så spelar vi en match Half-Life 2: Deathmatch; den som vinner bestämmer sedan vad vi ska göra.
+
+6. Implementationsbeskrivning
+Den här delen skriver ni inför slutinlämningen
+Det här kapitlet använder ni för att beskriva hur projektet är strukturerat och implementerat. Algoritmer och övergripande design passar också in i det här kapitlet (bilder, flödesdiagram, osv. kan vara användbart). Skapa gärna egna delkapitel för enskilda delar, om det underlättar.
+
+6.1. Dokumentation för programkod
+Programkod behöver dokumenteras för att man ska förstå hur den fungerar och hur allt hänger ihop.  Vissa typer av dokumentation är direkt relaterad till ett enda fält, en enda metod eller en enda klass och placeras då lämpligast vid fältet, metoden eller klassen i en Javadoc-kommentar.  Då är det både enklare att hitta dokumentationen och större chans att den faktiskt uppdateras när det sker ändringar.  Annan dokumentation är mer övergripande och placeras då här.  Det kan gälla till exempel:
+Övergripande programstruktur, t.ex. att man har implementerat ett spel som styrs av timer-tick n gånger per sekund där man vid varje sådant tick först tar hand om input och gör eventuella förflyttningar för objekt av typ X, Y och Z, därefter kontrollerar kollisioner vilket sker med hjälp av klass W, och till slut uppdaterar skärmen.
+Översikter över relaterade klasser och hur de hänger ihop.  Här kan det ofta vara bra att använda UML-diagram för att illustrera – men fundera då först på vilka grupper av klasser det är ni vill beskriva, och skapa sedan ett UML-diagram för varje grupp av klasser (det är sällan särskilt användbart att lägga in hela projektet i ett enda gigantiskt diagram).  Skriv sedan en textbeskrivning av vad det är ni illustrerar med UML-diagrammet.  Texten är den huvudsakliga dokumentationen medan UML-diagrammet hjälper läsaren att förstå texten och få en översikt.  IDEA kan hjälpa till att göra klassdiagram som ni sedan kan klippa och klistra in i dokumentet.
+Labbhandledaren och examinatorn kommer bland annat att använda den här dokumentationen för att förstå programmet vid bedömningen.  Ni kan också tänka er att ni själva ska vidareutveckla projektet efter att en annan grupp har utvecklat grunden.  Vad skulle ni själva vilja veta i det läget?  Om viktig information saknas kan ni få komplettera.
+Se även sidan om krav på programkod på webben.
+
+6.2. Användning av fritt material
+Skriv ner vilka klassbibliotek och vilket annat fritt material ni har använt utöver det som ingår i Java 7, eller ange uttryckligen att ni inte har använt något.
+
+6.3. Användning av designmönster
+Beskriv tydligt (i punktlista eller separata stycken) vilka designmönster som använts i implementationen, vad ni åstadkommer genom att använda just de designmönstren i just ert projekt (vad var bra med att använda det?), och hur designmönstret har realiserats i praktiken, t.ex. vilka klasser som är inblandade och vad de motsvarar i designmönstrets terminologi (”Klasserna X och Y är våra konkreta strategier för den här användningen av strategimönstret”).
+
+6.4. Användning av objektorientering
+För varje betygsnivå måste ni peka ut ett visst antal lösningar ni har gjort där ni använder objektorienterade "finesser" som t.ex. polymorfism, och diskutera kortfattat hur man kunde ha löst detta utan objektorientering.
+
+6.5. Motiverade designbeslut med alternativ
+Här anger ni motiverade designbeslut enligt betygskraven på webben.  Anledningen är både att ni ska visa oss hur ni har tänkt och att ni själva ska fundera över era val.
+
+7. Användarmanual
+Den här delen skriver ni inför slutinlämningen
+När ni har implementerat ett program krävs det också en manual som förklarar hur programmet fungerar. Ni ska beskriva programmet tillräckligt mycket för att en labbhandledare själv ska kunna starta det, testa det och förstå hur det fungerar.   Inkludera skärmdumpar som visar hur programmet ser ut.
+
+8. Betygsambitioner
+Den här delen skriver ni inför slutinlämningen
+Ange här vilket betyg ni har siktat på i ert projekt.  Se sedan till att ni har följt de mätbara kraven för detta betyg och att detta finns dokumenterat i projektbeskrivningen ovan.
+
+9. Utvärdering och erfarenheter
+Den här delen skriver ni inför slutinlämningen
+Detta avsnitt är en väldigt viktig del av projektspecifikationen. Här ska ni tänka tillbaka och utvärdera projektet (något som alltid ska göra efter ett projekt). Som en hjälp på vägen kan ni utgå från följande frågeställningar:
+Vad gick bra? Mindre bra?
+Lade ni ned för mycket/lite tid?
+Var arbetsfördelningen jämn? Om inte: Vad hade ni kunnat göra för att förbättra den?
+Har ni haft någon nytta av specifikationen? Vad har varit mest användbart med den? Minst?
+Har arbetet fungerat som ni tänkt er? Har ni följt "arbetsmetodiken"? Något som skiljer sig? Till det bättre? Till det sämre?
+Vad har varit mest problematiskt, om man utesluter den programmeringstekniska delen? Alltså saker runt omkring, som att hitta ledig tid eller plats att vara på.
+Vad har ni lärt er så här långt som kan vara bra att ta med till era egna kommande kurser/projekt?
+Vilka tips skulle ni vilja ge till studenter i nästa års kurs?
+Har ni saknat något i kursen som hade underlättat projektet?
