@@ -1,4 +1,4 @@
-package model;
+package model.background;
 
 import model.interfaces.Moveable;
 

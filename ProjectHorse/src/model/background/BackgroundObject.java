@@ -1,4 +1,6 @@
-package model;
+package model.background;
+
+import model.AbstractGameObject;
 
 /**
  * Created with IntelliJ IDEA.

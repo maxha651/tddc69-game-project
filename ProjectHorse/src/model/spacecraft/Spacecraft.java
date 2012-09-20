@@ -14,9 +14,48 @@ import java.util.LinkedList;
  * To change this template use File | Settings | File Templates.
  */
 public class Spacecraft extends MoveableObject implements Collideable, Moveable {
-    LinkedList<SpacecraftPart> parts;
+
+    private Engine engine = null;
+    private ShieldGenerator shield = null;
+    private Cargo cargo = null;
+    private Weapon weapon1 = null;
+    private Weapon weapon2 = null;
+    private Hull hull = null;
+
+    private int x = 0, y = 0;
+
+    private String name;
+    private String description;
 
     public Spacecraft(){
 
+    }
+
+    public void setEngine(Engine engine) {
+        this.engine = engine;
+    }
+
+    public void setShield(ShieldGenerator shield) {
+        this.shield = shield;
+    }
+
+    public void setCargo(Cargo cargo) {
+        this.cargo = cargo;
+    }
+
+    public void setWeapon1(Weapon weapon1) {
+        this.weapon1 = weapon1;
+    }
+
+    public void setWeapon2(Weapon weapon2) {
+        this.weapon2 = weapon2;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
