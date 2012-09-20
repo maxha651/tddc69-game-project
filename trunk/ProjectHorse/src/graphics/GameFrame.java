@@ -1,5 +1,7 @@
 package graphics;
 
+import model.GameModel;
+
 import javax.swing.*;
 import java.util.Observable;
 import java.util.Observer;
@@ -15,10 +17,12 @@ public class GameFrame extends JFrame implements Observer {
 
     JMenuBar menuBar;
     JMenu fileMenu, settingsMenu, viewMenu;
+    static final String FRAME_TITLE = "Space Explorer";
+    GameModel game;
 
-    public GameFrame(String s) {
-        super(s);
-
+    public GameFrame(GameModel game) {
+        super(FRAME_TITLE);
+        this.game = game;
         fileMenu = new JMenu("File");
         settingsMenu = new JMenu("Settings");
         viewMenu = new JMenu("View");
