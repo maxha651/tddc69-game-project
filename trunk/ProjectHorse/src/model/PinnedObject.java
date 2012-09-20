@@ -1,5 +1,5 @@
 package model;
 
 
-public class PinnedObject {
+public class PinnedObject implements Collideable {
 }
