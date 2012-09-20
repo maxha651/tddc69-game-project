@@ -1,5 +1,7 @@
 package model.spacecraft;
 
+import model.LocalObject;
+import model.interfaces.Collideable;
 import model.items.Item;
 
 /**
@@ -9,6 +11,6 @@ import model.items.Item;
  * Time: 23:26
  * To change this template use File | Settings | File Templates.
  */
-public abstract class SpacecraftPart extends Item {
-
+public abstract class SpacecraftPart extends Item implements Collideable {
+    int width, height;
 }

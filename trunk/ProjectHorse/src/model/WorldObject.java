@@ -1,11 +1,11 @@
-package model.spacecraft;
+package model;
 
 /**
  * Created with IntelliJ IDEA.
  * User: Brain
- * Date: 2012-09-20
- * Time: 23:47
+ * Date: 2012-09-21
+ * Time: 00:19
  * To change this template use File | Settings | File Templates.
  */
-public class Cockpit extends SpacecraftPart {
+public class WorldObject extends AbstractGameObject  {
 }

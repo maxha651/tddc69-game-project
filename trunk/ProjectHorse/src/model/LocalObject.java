@@ -1,13 +1,11 @@
 package model;
 
-import model.interfaces.Moveable;
-
 /**
  * Created with IntelliJ IDEA.
  * User: Brain
- * Date: 2012-09-20
- * Time: 23:49
+ * Date: 2012-09-21
+ * Time: 00:19
  * To change this template use File | Settings | File Templates.
  */
-public class MoveableObject extends WorldObject implements Moveable {
+public class LocalObject extends AbstractGameObject {
 }
