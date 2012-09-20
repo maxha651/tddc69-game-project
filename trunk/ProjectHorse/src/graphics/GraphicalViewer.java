@@ -1,6 +1,7 @@
 package graphics;
 
 import model.GameModel;
+import model.character.Player;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,12 +16,16 @@ import java.awt.*;
 public class GraphicalViewer extends Viewer {
     GameModel gameModel;
     final static int DEFAULT_SCREEN_WIDTH_PX = 1366, DEFAULT_SCREEN_HEIGHT_PX = 768;
-    Color backgroundColor = Color.BLACK;
-    Color defaultPaintColor = Color.WHITE;
+    Color DEFAULT_PAINT_COLOR = Color.WHITE;
+    Color DEFAULT_BACKGROUND_COLOR = Color.BLACK;
+    Color backgroundColor = DEFAULT_BACKGROUND_COLOR;
+    Color paintColor = DEFAULT_PAINT_COLOR;
     int width, height;
 
     public GraphicalViewer(GameModel gameModel){
          this.gameModel = gameModel;
+         this.width = DEFAULT_SCREEN_WIDTH_PX;
+         this.height = DEFAULT_SCREEN_HEIGHT_PX;
     }
 
     @Override
@@ -38,11 +43,16 @@ public class GraphicalViewer extends Viewer {
     }
 
     public void paintBackground(Graphics g2d){
+        g2d.setColor(backgroundColor);
         g2d.fillRect(0, 0, width, height);
     }
 
     public void paintPlayer(Graphics g2d){
-
+        g2d.setColor(paintColor);
+        g2d.fillRect((int)gameModel.getPlayer().getPosition().getX(),
+                     (int)gameModel.getPlayer().getPosition().getY(),
+                     (int)gameModel.getPlayer().getSpacecraft().getBoundingRectangle().getWidth(),
+                     (int)gameModel.getPlayer().getSpacecraft().getBoundingRectangle().getHeight());
     }
 
 }
