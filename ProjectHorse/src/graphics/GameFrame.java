@@ -21,7 +21,9 @@ public class GameFrame extends JFrame implements Observer {
     GameModel gameModel;
 
     public GameFrame(GameModel gameModel) {
+
         super(FRAME_TITLE);
+
         this.gameModel = gameModel;
         fileMenu = new JMenu("File");
         settingsMenu = new JMenu("Settings");
@@ -40,6 +42,7 @@ public class GameFrame extends JFrame implements Observer {
         this.add(viewer);
         this.pack();
         this.setVisible(true);
+
     }
 
 
