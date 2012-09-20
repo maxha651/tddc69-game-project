@@ -1,13 +1,15 @@
-package model;
+package tempfactory;
+
+import model.Player;
 
 /**
  * Created with IntelliJ IDEA.
  * User: Max
  * Date: 2012-09-20
- * Time: 23:13
+ * Time: 23:16
  * To change this template use File | Settings | File Templates.
  */
-public interface PinnedObjectFactory {
+public interface PlayerFactory {
 
-    public PinnedObject create();
+    public Player create();
 }
