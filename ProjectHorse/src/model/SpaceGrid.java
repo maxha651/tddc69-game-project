@@ -12,33 +12,65 @@ import java.util.ArrayList;
 public class SpaceGrid<E> {
 
     private Position spaceGridPos;
-    private ArrayList<AbstractGameObject> abstractGameObjects;
+    private ArrayList<WorldObject> worldObjects;
     private int height;
     private int width;
-    private int size;
-    private E[][] grid;
+    private double size;
+    private ArrayList<ArrayList<E>> grid;
 
-    public SpaceGrid(Position spaceGridPos, ArrayList<AbstractGameObject> abstractGameObjects, int height, int width, int size) {
+    public SpaceGrid(Position spaceGridPos, ArrayList<WorldObject> worldObjects, int height, int width, double size) {
         this.spaceGridPos = spaceGridPos;
-        this.abstractGameObjects = abstractGameObjects;
+        this.worldObjects = worldObjects;
         this.height = height;
         this.width = width;
         this.size = size;
+
+        this.grid = new ArrayList<ArrayList<E>>();
+        reset();
     }
 
-    public void setSize(int size) {
+    public void reset(){
+        grid.clear();
+
+        for (int i = 0; i < height; i++){
+            grid.add(new ArrayList<E>());
+            ArrayList<E> temp = grid.get(i);
+            for (int j = 0; j < width; j++){
+                temp.add(null);
+            }
+        }
+    }
+
+    public void addWorldObject(WorldObject worldObject){
+        //get position
+        //insert into list and add to appropiate bucket
+    }
+
+    public ArrayList<WorldObject> getWorldObjects() {
+        return worldObjects;
+    }
+
+    public E getBucket(int x, int y){
+        return grid.get(y).get(x);
+    }
+
+    public void setBucket(int x, int y, E bucket){
+        grid.get(y).set(x, bucket);
+    }
+
+    public void setSize(double size) {
         this.size = size;
     }
 
-    public int getHeight() {
+    public double getHeight() {
         return height;
     }
 
-    public int getWidth() {
+    public double getWidth() {
         return width;
     }
 
-    public int getSize() {
+    public double getSize() {
         return size;
     }
 
