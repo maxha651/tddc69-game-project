@@ -1,4 +1,4 @@
-package model;
+package model.interfaces;
 
 
 public interface Moveable {

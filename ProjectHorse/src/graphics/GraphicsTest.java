@@ -1,5 +1,7 @@
 package graphics;
 
+import model.GameModel;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Max
@@ -10,6 +12,6 @@ package graphics;
 public class GraphicsTest {
 
     public static void main(String[] args) {
-        GameFrame gameFrame = new GameFrame("Graphics Test");
+        GameFrame gameFrame = new GameFrame(new GameModel(1));
     }
 }
