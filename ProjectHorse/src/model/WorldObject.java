@@ -7,5 +7,5 @@ package model;
  * Time: 00:19
  * To change this template use File | Settings | File Templates.
  */
-public class WorldObject extends AbstractGameObject  {
+public abstract class WorldObject extends AbstractGameObject  {
 }

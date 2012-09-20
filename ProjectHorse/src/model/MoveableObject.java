@@ -9,5 +9,5 @@ import model.interfaces.Moveable;
  * Time: 23:49
  * To change this template use File | Settings | File Templates.
  */
-public class MoveableObject extends WorldObject implements Moveable {
+public class abstract MoveableObject extends WorldObject implements Moveable {
 }
