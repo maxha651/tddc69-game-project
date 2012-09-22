@@ -8,9 +8,10 @@ import java.util.Observable;
 public class GameModel extends Observable {
 
 
-
+    boolean isAlive = true;
     Player player;
     int seed;
+    long tick = 0;
 
     public GameModel(){
         this(1);
@@ -36,5 +37,13 @@ public class GameModel extends Observable {
 
     public void setSeed(int seed) {
         this.seed = seed;
+    }
+
+    public void tick(){
+        tick++;
+    }
+
+    public boolean isGameAlive() {
+        return isAlive;
     }
 }
