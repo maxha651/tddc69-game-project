@@ -55,8 +55,8 @@ public class World { // Make to update when player moves
     }
 
     public void updateZones(){ //private / only tick/update function?
-        if(!center.contains(player.getPosition())){
-            Coordinate tempPlayerCoordinate = player.getPosition();
+        if(!center.contains(player.getCoordinate())){
+            Coordinate tempPlayerCoordinate = player.getCoordinate();
             Coordinate tempCenterCoordinate;
             tempCenterCoordinate = new Coordinate(center.getPosition());
 

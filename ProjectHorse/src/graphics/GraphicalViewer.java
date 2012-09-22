@@ -2,8 +2,11 @@ package graphics;
 
 import model.GameModel;
 import model.character.Player;
+import model.spacecraft.Spacecraft;
+import model.utility.shape.Coordinate;
 
 import javax.swing.*;
+import javax.swing.text.Position;
 import java.awt.*;
 
 /**
@@ -38,21 +41,34 @@ public class GraphicalViewer extends Viewer {
         Graphics2D g2d = (Graphics2D) g;
 
         paintBackground(g2d);
+        paintBackgroundObjects(g2d);
         paintPlayer(g2d);
-
+        paintWorldObjects(g2d);
     }
 
-    public void paintBackground(Graphics g2d){
+    public void paintBackground(Graphics2D g2d){
         g2d.setColor(backgroundColor);
         g2d.fillRect(0, 0, width, height);
     }
 
-    public void paintPlayer(Graphics g2d){
+    public void paintBackgroundObjects(Graphics2D g2d){
+
+    }
+
+    public void paintPlayer(Graphics2D g2d){
         g2d.setColor(paintColor);
-        g2d.fillRect((int)gameModel.getPlayer().getPosition().getX(),
-                     (int)gameModel.getPlayer().getPosition().getY(),
+
+        Coordinate position = gameModel.getPlayer().getCoordinate();
+        Spacecraft spacecraft = gameModel.getPlayer().getSpacecraft();
+
+        g2d.fillRect((int)gameModel.getPlayer().getCoordinate().getX(),
+                     (int)gameModel.getPlayer().getCoordinate().getY(),
                      (int)gameModel.getPlayer().getSpacecraft().getBoundingRectangle().getWidth(),
                      (int)gameModel.getPlayer().getSpacecraft().getBoundingRectangle().getHeight());
+    }
+
+    public void paintWorldObjects(Graphics2D g2d){
+
     }
 
 }

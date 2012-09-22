@@ -7,11 +7,20 @@ import java.util.Observable;
 
 public class GameModel extends Observable {
 
-
+    //game controllers
     boolean isAlive = true;
-    Player player;
     int seed;
     long tick = 0;
+
+    //player controllers
+    Player player;
+
+    //AI controllers
+
+    //object controllers
+    static final double MAX_SPACECRAFT_VELOCITY = 2.0;
+
+    //graphics controllers
 
     public GameModel(){
         this(1);

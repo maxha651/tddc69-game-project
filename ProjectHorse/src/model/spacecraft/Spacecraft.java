@@ -20,8 +20,6 @@ public class Spacecraft extends MoveableObject implements Boundable, Moveable {
     private Weapon weapon2 = null;
     private Hull hull = null;
 
-
-
     private String name = "Default Spacecraft";
     private String description = "Default description";
 
@@ -64,4 +62,35 @@ public class Spacecraft extends MoveableObject implements Boundable, Moveable {
         this.description = description;
     }
 
+    public Engine getEngine() {
+        return engine;
+    }
+
+    public ShieldGenerator getShield() {
+        return shield;
+    }
+
+    public Cargo getCargo() {
+        return cargo;
+    }
+
+    public Weapon getWeapon1() {
+        return weapon1;
+    }
+
+    public Weapon getWeapon2() {
+        return weapon2;
+    }
+
+    public Hull getHull() {
+        return hull;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 }

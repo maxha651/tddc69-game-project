@@ -15,11 +15,13 @@ public class Game {
     GameModel gameModel;
 
     public Game(){
-        GameModel gameModel = new GameModel();
-        GameFrame gameFrame = new GameFrame(gameModel);
+        final GameModel gameModel = new GameModel();
+        final GameFrame gameFrame = new GameFrame(gameModel);
 
-        final Action doOneStep = AbstractAction(ActionEvent e) {
-            gameModel.tick();
+        final Action doOneStep = new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                gameModel.tick();
+            }
         };
 
         final Timer updateTimer = new Timer(200, doOneStep);
@@ -28,6 +30,5 @@ public class Game {
 
     public static void main(String[] args) {
         Game game = new Game();
-
     }
 }
