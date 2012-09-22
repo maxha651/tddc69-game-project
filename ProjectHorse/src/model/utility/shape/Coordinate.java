@@ -22,6 +22,11 @@ public class Coordinate {
         this.y = p.y;
     }
 
+    public Coordinate(Coordinate c){
+        this.x = c.x;
+        this.y = c.y;
+    }
+
     public void add(Coordinate coordinate){
         x += coordinate.getX();
         y += coordinate.getY();
@@ -32,12 +37,12 @@ public class Coordinate {
         y -= coordinate.getY();
     }
 
-    public void add(int term){
+    public void add(double term){
         x += term;
         y += term;
     }
 
-    public void multiply(int factor){
+    public void multiply(double factor){
         x *= factor;
         y *= factor;
     }

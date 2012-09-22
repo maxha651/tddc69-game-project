@@ -19,20 +19,20 @@ public class Zone {
     private final static int NUM_OF_ZONES_PER_LEVEL = 10;
 
     private Coordinate pos;
-    private int size; //long?
+    private double size;
     private int numberOfLevels;
 
     private ArrayList<Zone> nextLevelZones;
     private HashMap<Coordinate, WorldObject> worldObjects;
 
-    public Zone(Coordinate position, int size, int numberOfLevels) {
+    public Zone(Coordinate position, double size, int numberOfLevels) {
         this.pos = position;
         this.size = size;
         this.numberOfLevels = numberOfLevels;
 
         if (numberOfLevels > 0){
             nextLevelZones = new ArrayList();
-            int sizeOfNewLevel = size/10;
+            double sizeOfNewLevel = size/10;
             for (int i = 0; i < NUM_OF_ZONES_PER_LEVEL; i++){
                 position.add(sizeOfNewLevel);
 
@@ -47,14 +47,21 @@ public class Zone {
         }
     }
 
-    private boolean withinBoundaries(Coordinate position){
-        if (position.getX() < pos.getX() || position.getX() > pos.getX() + size -1){
+    public boolean contains(Coordinate position){
+        if (!withinBoundaries(position)){
             return false;
         }
-        if (position.getY() < pos.getY() || position.getY() > pos.getY() + size -1){
-            return false;
+
+        if(isLastLevel()){
+            return worldObjects.containsKey(position);
         }
-        return true;
+        else{
+            position.subtract(pos);
+            int index = (int) position.getX() / NUM_OF_ZONES_PER_LEVEL;
+            Zone temp = nextLevelZones.get(index);
+            return temp.contains(position);
+        }
+
     }
 
     public void add(WorldObject object, Coordinate position) throws IndexOutOfBoundsException {
@@ -62,7 +69,7 @@ public class Zone {
             throw new IndexOutOfBoundsException();
         }
 
-        if(nextLevelZones == null){
+        if(isLastLevel()){
             worldObjects.put(position, object);
         }
         else{
@@ -78,7 +85,7 @@ public class Zone {
             throw new IndexOutOfBoundsException();
         }
 
-        if (nextLevelZones == null){
+        if (isLastLevel()){
             return worldObjects.get(position); // Not sure if works...
         }
         else{
@@ -89,11 +96,25 @@ public class Zone {
         }
     }
 
+    private boolean withinBoundaries(Coordinate position){
+        if (position.getX() < pos.getX() || position.getX() > pos.getX() + size -1){
+            return false;
+        }
+        if (position.getY() < pos.getY() || position.getY() > pos.getY() + size -1){
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isLastLevel(){
+        return numberOfLevels == 0;
+    }
+
     public Coordinate getPosition() {
         return pos;
     }
 
-    public int getSize() {
+    public double getSize() {
         return size;
     }
 }
