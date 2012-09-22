@@ -15,7 +15,7 @@ public class Player extends AbstractCharacter implements Moveable, Collideable {
 
 
     private Spacecraft spacecraft;
-
+    private double rotationAngle = 0;
     Coordinate position = new Coordinate(0,0);
 
     public Player(){
@@ -42,4 +42,6 @@ public class Player extends AbstractCharacter implements Moveable, Collideable {
     public void setPosition(Coordinate position) {
         this.position = position;
     }
+
+
 }

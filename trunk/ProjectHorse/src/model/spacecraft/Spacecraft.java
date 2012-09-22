@@ -20,7 +20,7 @@ public class Spacecraft extends MoveableObject implements Boundable, Moveable {
     private Weapon weapon2 = null;
     private Hull hull = null;
 
-    private double rotationAngle = 0;
+
 
     private String name = "Default Spacecraft";
     private String description = "Default description";
