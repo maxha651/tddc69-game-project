@@ -3,6 +3,8 @@ package graphics;
 import model.GameModel;
 
 import javax.swing.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -13,7 +15,7 @@ import java.util.Observer;
  * Time: 21:56
  * To change this template use File | Settings | File Templates.
  */
-public class GameFrame extends JFrame implements Observer {
+public class GameFrame extends JFrame implements KeyListener, Observer {
 
     JMenuBar menuBar;
     JMenu fileMenu, settingsMenu, viewMenu;
@@ -49,5 +51,28 @@ public class GameFrame extends JFrame implements Observer {
     @Override
     public void update(Observable observable, Object o) {
         //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        int keyCode = e.getKeyCode();
+
+        switch(keyCode){
+            case KeyEvent.VK_W:
+                System.out.println("W pressed");
+                break;
+
+        }
+
     }
 }
