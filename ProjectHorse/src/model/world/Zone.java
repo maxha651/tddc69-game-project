@@ -1,11 +1,10 @@
-package model;
+package model.world;
 
+import model.WorldObject;
 import model.utility.shape.Coordinate;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.

@@ -1,4 +1,4 @@
-package model;
+package model.world;
 
 import model.character.Player;
 import model.utility.shape.Coordinate;
