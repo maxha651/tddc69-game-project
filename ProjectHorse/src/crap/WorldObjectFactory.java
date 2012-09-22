@@ -1,7 +1,6 @@
-package tempfactory;
+package crap;
 
 import model.WorldObject;
-import model.character.NonPlayableCharacter;
 
 /**
  * Created with IntelliJ IDEA.

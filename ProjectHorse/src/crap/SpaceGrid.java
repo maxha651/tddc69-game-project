@@ -1,9 +1,12 @@
-package model;
+package crap;
+
+import model.WorldObject;
 
 import javax.swing.text.Position;
 import java.util.ArrayList;
 
 /**
+ * släng kanske
  * A grid containing an arbitrary element in every position. In our
  * case we will have either another SpaceGrid or a bucket. Also
  * contains all objects in the grid as well as their positions

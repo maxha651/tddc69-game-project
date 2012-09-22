@@ -1,5 +1,6 @@
-package model;
+package crap;
 
+import model.WorldObject;
 import model.utility.shape.Coordinate;
 
 import java.util.ArrayList;
