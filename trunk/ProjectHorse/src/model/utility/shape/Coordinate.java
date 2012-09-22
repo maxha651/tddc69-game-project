@@ -22,6 +22,26 @@ public class Coordinate {
         this.y = p.y;
     }
 
+    public void add(Coordinate coordinate){
+        x += coordinate.getX();
+        y += coordinate.getY();
+    }
+
+    public void subtract(Coordinate coordinate){
+        x -= coordinate.getX();
+        y -= coordinate.getY();
+    }
+
+    public void add(int term){
+        x += term;
+        y += term;
+    }
+
+    public void multiply(int factor){
+        x *= factor;
+        y *= factor;
+    }
+
     public Point getPoint(){
         return new Point((int) x, (int) y);
     }
