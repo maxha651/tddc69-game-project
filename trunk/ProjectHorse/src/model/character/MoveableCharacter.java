@@ -72,4 +72,20 @@ public class MoveableCharacter extends AbstractCharacter implements Boundable, C
     public void setCoordinate(Coordinate coordinate) {
         this.coordinate = coordinate;
     }
+
+    public void rotateLeft(double rad){
+
+    }
+
+    public void rotateRight(double rad){
+
+    }
+
+    public void rotateLeftOneDegree(){
+        rotationAngle -= (2*Math.PI)/360;
+    }
+
+    public void rotateRightOneDegree(){
+        rotationAngle += (2*Math.PI)/360;
+    }
 }
