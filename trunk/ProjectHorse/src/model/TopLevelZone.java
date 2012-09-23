@@ -13,10 +13,9 @@ import model.utility.shape.Coordinate;
 public class TopLevelZone extends Zone{ // Make to update when player moves
 
     private double size;
+    private Coordinate origo;
     private int numberOfLevels;
     private Player player;
-
-    private Coordinate origo;
 
     private Zone center;
     private Zone north;
@@ -29,11 +28,13 @@ public class TopLevelZone extends Zone{ // Make to update when player moves
     private Zone northWest;
 
 
-    public TopLevelZone(double size, int numberOfLevels) {
+    public TopLevelZone(double size, int numberOfLevels, Coordinate origo, Player player) {
         this.size = size;
-        this.origo = new Coordinate(0.0, 0.0);
+        this.origo = origo;
         this.numberOfLevels = numberOfLevels;
-        // place player with collision check
+        this.player = player;
+
+        // place player with collision check?
 
         Coordinate temp = new Coordinate(origo.getX(), origo.getY());
         center =    new Zone(temp, size, numberOfLevels);
@@ -55,7 +56,10 @@ public class TopLevelZone extends Zone{ // Make to update when player moves
         west =      new Zone(temp, size, numberOfLevels);
     }
 
-    public void updateZones(){ //private / only tick/update function?
+    @Override
+    public void update(){
+        super.update();
+
         if(!center.contains(player.getCoordinate())){
             Coordinate tempPlayerCoordinate = player.getCoordinate();
             Coordinate tempCenterCoordinate;
@@ -72,7 +76,7 @@ public class TopLevelZone extends Zone{ // Make to update when player moves
             }
             else if (tempPlayerCoordinate.getY() > tempCenterCoordinate.getY() + size){
                 moveWorldDown();
-            }
+            } // call update function?
         }
     }
 
