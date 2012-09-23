@@ -60,11 +60,16 @@ public class GraphicalViewer extends Viewer {
 
         Coordinate position = gameModel.getPlayer().getCoordinate();
         Spacecraft spacecraft = gameModel.getPlayer().getSpacecraft();
+        Player player = gameModel.getPlayer();
 
-        g2d.fillRect((int)gameModel.getPlayer().getCoordinate().getX(),
-                     (int)gameModel.getPlayer().getCoordinate().getY(),
-                     (int)gameModel.getPlayer().getSpacecraft().getBoundingRectangle().getWidth(),
-                     (int)gameModel.getPlayer().getSpacecraft().getBoundingRectangle().getHeight());
+        int paintX = width/2 - (int) spacecraft.getWidth();
+        int paintY = height/2 - (int) spacecraft.getHeight();
+
+        int paintWidth = (int) spacecraft.getWidth();
+        int paintHeight = (int) spacecraft.getHeight();
+
+        g2d.fillRect(paintX, paintY, paintWidth, paintHeight);
+
     }
 
     public void paintWorldObjects(Graphics2D g2d){

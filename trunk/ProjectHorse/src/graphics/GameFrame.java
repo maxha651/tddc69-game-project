@@ -27,6 +27,8 @@ public class GameFrame extends JFrame implements KeyListener, Observer {
         super(FRAME_TITLE);
 
         this.gameModel = gameModel;
+        this.addKeyListener(this);
+
         fileMenu = new JMenu("File");
         settingsMenu = new JMenu("Settings");
         viewMenu = new JMenu("View");
@@ -47,7 +49,6 @@ public class GameFrame extends JFrame implements KeyListener, Observer {
 
     }
 
-
     @Override
     public void update(Observable observable, Object o) {
         //To change body of implemented methods use File | Settings | File Templates.
@@ -60,7 +61,14 @@ public class GameFrame extends JFrame implements KeyListener, Observer {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        //To change body of implemented methods use File | Settings | File Templates.
+        int keyCode = e.getKeyCode();
+
+        switch(keyCode){
+            case KeyEvent.VK_W:
+                gameModel.accelerationRequest = true;
+                gameModel.accelerate = true;
+                break;
+        }
     }
 
     @Override
@@ -69,10 +77,8 @@ public class GameFrame extends JFrame implements KeyListener, Observer {
 
         switch(keyCode){
             case KeyEvent.VK_W:
-                System.out.println("W pressed");
+                gameModel.accelerationRequest = false;
                 break;
-
         }
-
     }
 }

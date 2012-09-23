@@ -26,12 +26,19 @@ public class Spacecraft extends MoveableObject implements Boundable, Moveable {
     public Spacecraft(){
         //add parts to the spacecraft
         this.hull = new Hull();
-
     }
 
     public Rectangle getBoundingRectangle(){
         //the bounding rectangle of the spacecraft only checks the hull size
         return new Rectangle((int)this.hull.getWidth(), (int)this.hull.getHeight());
+    }
+
+    public double getWidth(){
+        return this.hull.getWidth();
+    }
+
+    public double getHeight(){
+        return this.hull.getHeight();
     }
 
     public void setEngine(Engine engine) {

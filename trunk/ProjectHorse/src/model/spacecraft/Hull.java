@@ -10,7 +10,7 @@ import java.awt.*;
  * To change this template use File | Settings | File Templates.
  */
 public class Hull extends SpacecraftPart {
-    static final double DEFAULT_HEIGHT = 40, DEFAULT_WIDTH = 40;
+    static final int DEFAULT_HEIGHT = 40, DEFAULT_WIDTH = 40;
 
     public Hull(){
         this.height = DEFAULT_HEIGHT;

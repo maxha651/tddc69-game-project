@@ -15,7 +15,7 @@ public abstract class SpacecraftPart extends Item {
         return height;
     }
 
-    public void setHeight(double height) {
+    public void setHeight(int height) {
         this.height = height;
     }
 
@@ -23,7 +23,7 @@ public abstract class SpacecraftPart extends Item {
         return width;
     }
 
-    public void setWidth(double width) {
+    public void setWidth(int width) {
         this.width = width;
     }
 
