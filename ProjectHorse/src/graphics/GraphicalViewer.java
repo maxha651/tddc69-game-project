@@ -92,20 +92,23 @@ public class GraphicalViewer extends Viewer {
         InformationContainer ic = new InformationContainer(20, 20);
 
         //the strings to draw
-        String playerCoordinateString = p.getCoordinate().getX() + ", " + p.getCoordinate().getY();
+        String playerCoordinateString = toTruncatedStr(p.getCoordinate().getX(), 1) + ", " + toTruncatedStr(p.getCoordinate().getY(), 1);
         ic.add("Camera position: " + cameraX + ", " + cameraY);
         ic.add("Player position: " + playerCoordinateString);
         ic.add("Game version   : " + gameModel.VERSION);
-        String velX = model.utility.strings.StringManipulator.toString(e.getVelocityX(), 1);
-        String velY = model.utility.strings.StringManipulator.toString(e.getVelocityY(), 1);
+        String velX = toTruncatedStr(e.getVelocityX(), 1);
+        String velY = toTruncatedStr(e.getVelocityY(), 1);
 
         ic.add("Player velocity: " + velX + ", " + velY);
-        ic.add("Player absveloc: " + model.utility.strings.StringManipulator.toString(e.getAbsoluteVelocity(), 1));
-        ic.add("Player angle   : " + Math.toDegrees(p.getRotationAngle()) + " (degrees), " + p.getRotationAngle() + " (radians)");
+        ic.add("Player absveloc: " + toTruncatedStr(e.getAbsoluteVelocity(), 1));
+        ic.add("Player angle   : " + toTruncatedStr(Math.toDegrees(p.getRotationAngle()), 1) + " (degrees), " + toTruncatedStr(p.getRotationAngle(), 1) + " (radians)");
         //draw the strings
         ic.paint(g2d);
     }
 
+    static public String toTruncatedStr(double d, int decimals){
+        return model.utility.strings.StringManipulator.toString(d, decimals);
+    }
 
 
 }

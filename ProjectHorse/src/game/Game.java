@@ -1,12 +1,6 @@
 package game;
 
-import graphics.GameFrame;
-import graphics.GraphicalViewer;
-import graphics.Viewer;
 import model.GameModel;
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 

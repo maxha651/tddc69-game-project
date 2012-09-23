@@ -1,5 +1,6 @@
-package graphics;
+package game;
 
+import graphics.GraphicalViewer;
 import model.GameModel;
 
 import javax.swing.*;
@@ -69,10 +70,10 @@ public class GameFrame extends JFrame implements KeyListener, Observer {
                 gameModel.accelerate = true;
                 break;
             case KeyEvent.VK_A:
-                gameModel.getPlayer().rotateLeftOneDegree();
+                gameModel.getPlayer().rotateLeft(Math.toRadians(5));
                 break;
             case KeyEvent.VK_D:
-                gameModel.getPlayer().rotateRightOneDegree();
+                gameModel.getPlayer().rotateRight(Math.toRadians(5));
                 break;
         }
     }
