@@ -9,11 +9,11 @@ package model.utility.math;
  */
 public class StandardMath {
     public static double pyth(double a, double b){
-        return Math.sqrt(Math.pow(a, 2) + Math.pow(a, 2));
+        return Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
     }
 
     public static double pyth(int a, int b){
-        return Math.sqrt(Math.pow(a, 2) + Math.pow(a, 2));
+        return Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
     }
 
     public static double xPart(double x, double angle){
