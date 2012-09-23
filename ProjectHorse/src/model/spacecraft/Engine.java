@@ -93,9 +93,16 @@ public class Engine extends SpacecraftPart {
     }
 
     public void accelerate(double angle) {
-        if(StandardMath.pyth(velocityX, velocityY) < maxAcceleration){
+        if(StandardMath.pyth(velocityX, velocityY) < DEFAULT_VELOCITY_MAX){
             this.velocityX += StandardMath.xPart(acceleration, angle);
             this.velocityY += StandardMath.yPart(acceleration, angle);
+
+            double newVelocity = StandardMath.pyth(velocityX, velocityY);
+            if (newVelocity > DEFAULT_VELOCITY_MAX){
+                double maxAndNewVelocityRatio = DEFAULT_VELOCITY_MAX / newVelocity;
+                this.velocityX *= maxAndNewVelocityRatio;
+                this.velocityY *= maxAndNewVelocityRatio;
+            }
         }
     }
 
