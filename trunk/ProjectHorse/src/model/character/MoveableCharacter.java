@@ -75,14 +75,14 @@ public class MoveableCharacter extends AbstractCharacter implements Boundable, C
 
     public void rotateLeft(double rad){
         rotationAngle -= rad;
-        if(rotationAngle < 0){
+        while (rotationAngle < 0){
             rotationAngle = rotationAngle + 2*Math.PI;
         }
     }
 
     public void rotateRight(double rad){
         rotationAngle += rad;
-        if(rotationAngle > Math.PI*2){
+        while (rotationAngle > Math.PI*2){
             rotationAngle = rotationAngle - 2*Math.PI;
         }
     }

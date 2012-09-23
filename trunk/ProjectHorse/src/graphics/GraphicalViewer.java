@@ -73,8 +73,6 @@ public class GraphicalViewer extends Viewer {
         double positionX = position.getX();
         double positionY = position.getY();
 
-        System.out.println(cameraX + width/2);
-
         int paintX;
         int paintY;
 

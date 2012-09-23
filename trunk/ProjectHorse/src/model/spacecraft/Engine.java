@@ -11,10 +11,10 @@ import model.utility.math.StandardMath;
  */
 public class Engine extends SpacecraftPart {
 
-    static final double DEFAULT_VELOCITY_MAX = 0.25;
+    static final double DEFAULT_VELOCITY_MAX = 2.5;
     static final double DEFAULT_ACCELERATION = 0.5;
     static final double DEFAULT_ACCELERATION_MAX = 1;
-    static final double DEFAULT_SPACE_FRICTION = 0.995;
+    static final double DEFAULT_SPACE_FRICTION = 0.975;
     static final double VELOCITY_FLOOR = 0.20;
 
     boolean sideStep = false;
@@ -93,13 +93,14 @@ public class Engine extends SpacecraftPart {
     }
 
     public void accelerate(double angle) {
-        if(StandardMath.pyth(velocityX, velocityY) < DEFAULT_VELOCITY_MAX){
+        if(StandardMath.pyth(velocityX, velocityY) < maxVelocity){
             this.velocityX += StandardMath.xPart(acceleration, angle);
             this.velocityY += StandardMath.yPart(acceleration, angle);
 
             double newVelocity = StandardMath.pyth(velocityX, velocityY);
-            if (newVelocity > DEFAULT_VELOCITY_MAX){
-                double maxAndNewVelocityRatio = DEFAULT_VELOCITY_MAX / newVelocity;
+
+            if (newVelocity > maxVelocity){
+                double maxAndNewVelocityRatio = maxVelocity / newVelocity;
                 this.velocityX *= maxAndNewVelocityRatio;
                 this.velocityY *= maxAndNewVelocityRatio;
             }
@@ -114,7 +115,7 @@ public class Engine extends SpacecraftPart {
                 this.velocityX *= spaceFriction;
                 this.velocityY *= spaceFriction;
             } else {
-                this.velocityY = 0;
+                this.velocityX = 0;
                 this.velocityY = 0;
             }
 
