@@ -67,7 +67,6 @@ public class GameFrame extends JFrame implements KeyListener, Observer {
         switch(keyCode){
             case KeyEvent.VK_W:
                 gameModel.accelerationRequest = true;
-                gameModel.accelerate = true;
                 break;
             case KeyEvent.VK_A:
                 gameModel.getPlayer().rotateLeft(Math.toRadians(5));
@@ -85,6 +84,7 @@ public class GameFrame extends JFrame implements KeyListener, Observer {
         switch(keyCode){
             case KeyEvent.VK_W:
                 gameModel.accelerationRequest = false;
+                System.out.println("W released");
                 break;
         }
     }
