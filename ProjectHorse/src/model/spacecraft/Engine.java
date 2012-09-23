@@ -10,13 +10,13 @@ package model.spacecraft;
 public class Engine extends SpacecraftPart {
 
     static final double DEFAULT_VELOCITY_MAX = 0.25;
-    static final double DEFAULT_ACCELERATION_FACTOR = 0.1;
+    static final double DEFAULT_ACCELERATION_FACTOR = 1;
     static final double DEFAULT_ACCELERATION_MAX = 1;
 
     boolean sideStep = false;
     double accelerationX = 0;
     double accelerationY = 0;
-    double accelerationFactor = DEFAULT_ACCELERATION_FACTOR;
+    double acceleration = DEFAULT_ACCELERATION_FACTOR;
     double maxAcceleration = DEFAULT_ACCELERATION_MAX;
     double spaceFriction = 0.005; //percentage of total velocity removed each tick
 
@@ -46,14 +46,6 @@ public class Engine extends SpacecraftPart {
 
     public void setAccelerationY(double accelerationY) {
         this.accelerationY = accelerationY;
-    }
-
-    public double getAccelerationFactor() {
-        return accelerationFactor;
-    }
-
-    public void setAccelerationFactor(double accelerationFactor) {
-        this.accelerationFactor = accelerationFactor;
     }
 
     public double getMaxAcceleration() {
@@ -94,5 +86,15 @@ public class Engine extends SpacecraftPart {
 
     public void setMaxVelocity(double maxVelocity) {
         this.maxVelocity = maxVelocity;
+    }
+
+    public void accelerate() {
+        if(this.velocityX + acceleration < maxAcceleration){
+            this.velocityX += acceleration;
+        }
+    }
+
+    public void deaccelerate() {
+
     }
 }

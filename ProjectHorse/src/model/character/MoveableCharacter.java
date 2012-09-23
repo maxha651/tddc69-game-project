@@ -23,10 +23,14 @@ public class MoveableCharacter extends AbstractCharacter implements Boundable, C
 
 
 
-    private void updateAcceleration() {
+    private void updateAcceleration(boolean accelerate) {
         Engine e = this.spacecraft.getEngine();
 
-
+        if(accelerate){
+            e.accelerate();
+        } else {
+            e.deaccelerate();
+        }
     }
 
     private void updateVelocity() {
@@ -36,10 +40,10 @@ public class MoveableCharacter extends AbstractCharacter implements Boundable, C
     }
 
     @Override
-    public void updatePosition() {
+    public void updatePosition(boolean accelerate) {
         Engine e = this.spacecraft.getEngine();
 
-        this.updateAcceleration();
+        this.updateAcceleration(accelerate);
         this.updateVelocity();
 
         this.coordinate.setX(this.coordinate.getX() + e.getVelocityX());

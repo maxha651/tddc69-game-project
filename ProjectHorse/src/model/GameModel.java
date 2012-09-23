@@ -14,6 +14,8 @@ public class GameModel extends Observable {
 
     //player controllers
     Player player;
+    public boolean accelerate = false;
+    public boolean accelerationRequest = false;
 
     //AI controllers
 
@@ -29,7 +31,6 @@ public class GameModel extends Observable {
     public GameModel(int seed){
         this.seed = seed;
         player = new Player();
-
     }
 
     public Player getPlayer() {
@@ -50,9 +51,14 @@ public class GameModel extends Observable {
 
     public void tick(){
         tick++;
+        player.updatePosition(accelerate);
     }
 
     public boolean isGameAlive() {
         return isAlive;
+    }
+
+    public void printInformation(){
+        System.out.println("Player wants to accelerate: " + accelerate);
     }
 }
