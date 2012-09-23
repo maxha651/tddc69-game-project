@@ -1,6 +1,6 @@
 package crap;
 
-import model.WorldObject;
+import model.world.WorldObject;
 
 import javax.swing.text.Position;
 import java.util.ArrayList;
