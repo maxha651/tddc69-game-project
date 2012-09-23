@@ -6,7 +6,10 @@ import model.spacecraft.Engine;
 import model.spacecraft.Spacecraft;
 import model.utility.shape.Coordinate;
 
+import java.awt.image.BufferStrategy;
 import java.awt.*;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 
 /**
  * Created with IntelliJ IDEA.
@@ -43,13 +46,19 @@ public class GraphicalViewer extends Viewer {
 
     @Override
     public void paintComponent(Graphics g){
-        Graphics2D g2d = (Graphics2D) g;
+
+
+        BufferedImage bufferedImage = new BufferedImage(DEFAULT_SCREEN_WIDTH_PX, DEFAULT_SCREEN_HEIGHT_PX, BufferedImage.TYPE_4BYTE_ABGR);
+        Graphics2D g2d = bufferedImage.createGraphics();
 
         paintBackground(g2d);
         paintBackgroundObjects(g2d);
         paintPlayer(g2d);
         paintWorldObjects(g2d);
         paintExtraInformation(g2d);
+
+        Graphics2D g2dComponent = (Graphics2D) g;
+        g2dComponent.drawImage(bufferedImage, null, 0, 0);
     }
 
     public void paintBackground(Graphics2D g2d){
@@ -75,13 +84,13 @@ public class GraphicalViewer extends Viewer {
         int paintY;
 
         if(lockOnPlayer){
-            paintX = (int) Math.ceil((- cameraX + positionX) - spacecraft.getWidth()/2);
-            paintY = (int) Math.ceil((- cameraY + positionY) - spacecraft.getWidth()/2);
-            cameraX = (int) Math.ceil(positionX - width/2);
-            cameraY = (int) Math.ceil(positionY - height/2);
+            paintX = (int) Math.ceil((-cameraX + positionX) - spacecraft.getWidth() / 2);
+            paintY = (int) Math.ceil((-cameraY + positionY) - spacecraft.getWidth() / 2);
+            cameraX = (int) Math.ceil(positionX - width / 2);
+            cameraY = (int) Math.ceil(positionY - height / 2);
         } else {
-            paintX = (int) Math.ceil((- cameraX + positionX) - spacecraft.getWidth()/2);
-            paintY = (int) Math.ceil((- cameraY + positionY) - spacecraft.getWidth()/2);
+            paintX = (int) Math.ceil((-cameraX + positionX) - spacecraft.getWidth() / 2);
+            paintY = (int) Math.ceil((-cameraY + positionY) - spacecraft.getWidth() / 2);
         }
 
 

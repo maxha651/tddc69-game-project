@@ -84,7 +84,6 @@ public class GameFrame extends JFrame implements KeyListener, Observer {
         switch(keyCode){
             case KeyEvent.VK_W:
                 gameModel.accelerationRequest = false;
-                System.out.println("W released");
                 break;
         }
     }
