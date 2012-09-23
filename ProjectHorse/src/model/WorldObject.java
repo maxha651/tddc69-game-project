@@ -1,6 +1,7 @@
 package model;
 
 import model.AbstractGameObject;
+import model.utility.shape.Coordinate;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,4 +11,11 @@ import model.AbstractGameObject;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class WorldObject extends AbstractGameObject {
+
+    Coordinate pos;
+
+    public Coordinate getCoordinate() {
+        return pos;
+    }
+
 }
