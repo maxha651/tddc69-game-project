@@ -10,7 +10,7 @@ import model.utility.shape.Coordinate;
  * Time: 01:19
  * To change this template use File | Settings | File Templates.
  */
-public class World { // Make to update when player moves
+public class TopLevelZone extends Zone{ // Make to update when player moves
 
     private double size;
     private int numberOfLevels;
@@ -28,7 +28,8 @@ public class World { // Make to update when player moves
     private Zone west;
     private Zone northWest;
 
-    public World(double size, int numberOfLevels) {
+
+    public TopLevelZone(double size, int numberOfLevels) {
         this.size = size;
         this.origo = new Coordinate(0.0, 0.0);
         this.numberOfLevels = numberOfLevels;

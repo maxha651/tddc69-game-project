@@ -1,5 +1,6 @@
 package model;
 
+import model.character.Player;
 import model.utility.shape.Coordinate;
 
 import java.util.ArrayList;
@@ -16,9 +17,15 @@ import java.util.LinkedList;
  */
 public class Zone {
 
-    private final static int NUM_OF_ZONES_PER_LEVEL = 3; // per row i.e. 10 equals 10^2 = 100 zones
-
-
+    private Zone center;
+    private Zone north;
+    private Zone northEast;
+    private Zone east;
+    private Zone southEast;
+    private Zone south;
+    private Zone southWest;
+    private Zone west;
+    private Zone northWest;
 
     private Coordinate pos;
     private double size;
@@ -27,22 +34,39 @@ public class Zone {
     private ArrayList<Zone> nextLevelZones;
     private HashMap<Coordinate, LinkedList<WorldObject>> worldObjects;
 
+    protected Zone(){
+
+    }
+
     public Zone(Coordinate position, double size, int numberOfLevels) {
         this.pos = position;
         this.size = size;
         this.numberOfLevels = numberOfLevels;
 
-        if (!isLastLevel()){
-            nextLevelZones = new ArrayList<Zone>();
-            double sizeOfNewLevel = size / NUM_OF_ZONES_PER_LEVEL;
-
-            for (int i = 0; i < Math.pow(NUM_OF_ZONES_PER_LEVEL, 2); i++){
-                position.add(sizeOfNewLevel);
-                nextLevelZones.add(new Zone(position, sizeOfNewLevel, numberOfLevels -1));
-            }
+        if (isLastLevel()){
+            worldObjects = new HashMap<Coordinate, LinkedList<WorldObject>>();
         }
         else{
-            worldObjects = new HashMap<Coordinate, LinkedList<WorldObject>>();
+            double tempSize = size / 3.0;
+            int tempNumberOfLevels = numberOfLevels -1;
+            Coordinate temp = new Coordinate(position.getX(), position.getY());
+            northWest = new Zone(temp, tempSize, tempNumberOfLevels);
+            temp.setX(temp.getX() + tempSize);
+            north =     new Zone(temp, tempSize, tempNumberOfLevels);
+            temp.setX(temp.getX() + tempSize);
+            northEast = new Zone(temp, tempSize, tempNumberOfLevels);
+            temp.setY(temp.getY() + tempSize);
+            east =      new Zone(temp, tempSize, tempNumberOfLevels);
+            temp.setY(temp.getY() + tempSize);
+            southEast = new Zone(temp, tempSize, tempNumberOfLevels);
+            temp.setX(temp.getX() - tempSize);
+            south =     new Zone(temp, tempSize, tempNumberOfLevels);
+            temp.setX(temp.getX() - tempSize);
+            southWest = new Zone(temp, tempSize, tempNumberOfLevels);
+            temp.setY(temp.getY() - tempSize);
+            west =      new Zone(temp, tempSize, tempNumberOfLevels);
+            temp.setX(temp.getX() + tempSize);
+            center =    new Zone(temp, tempSize, tempNumberOfLevels);
         }
     }
 
@@ -132,23 +156,43 @@ public class Zone {
         }
     }
 
-    public void update(){
+    protected LinkedList<WorldObject> getObjectsToReinsert(){
+        LinkedList<WorldObject> resObjects = new LinkedList<WorldObject>();
+
         if(isLastLevel()){
             for(LinkedList<WorldObject> objects : worldObjects.values()){
                 for(WorldObject object : objects){
-                    LinkedList<WorldObject> tempObjects;
                     if(!withinBoundaries(object)){
-                        if (true){ // sic!
-                            tempObjects = new LinkedList<WorldObject>();
-                        }
-                        tempObjects.add(object);
+                        resObjects.add(object);
                         objects.remove(object);
-                        // Will change things
-                        if (objects.isEmpty()){
-                            worldObjects.remove(tempObjects.getFirst().getCoordinate());
+                        if (objects.isEmpty()){ // No more objects at that coordinate
+                            worldObjects.remove(resObjects.getFirst().getCoordinate());
                         }
                     }
                 }
+            }
+        }
+        else{
+            resObjects.addAll(northWest.getObjectsToReinsert());
+            resObjects.addAll(north.getObjectsToReinsert());
+            resObjects.addAll(northEast.getObjectsToReinsert());
+            resObjects.addAll(west.getObjectsToReinsert());
+            resObjects.addAll(center.getObjectsToReinsert());
+            resObjects.addAll(east.getObjectsToReinsert());
+            resObjects.addAll(southWest.getObjectsToReinsert());
+            resObjects.addAll(south.getObjectsToReinsert());
+            resObjects.addAll(southEast.getObjectsToReinsert());
+        }
+        return resObjects;
+    }
+
+    public void update(){
+        if(isLastLevel()){
+            LinkedList<WorldObject> objects;
+            objects = getObjectsToReinsert();
+
+            for (WorldObject object : objects){
+                this.add(object);
             }
         }
     }
@@ -158,9 +202,21 @@ public class Zone {
             return this;
         }
         position.subtract(pos);
-        int index = (int) (position.getX() / size) * NUM_OF_ZONES_PER_LEVEL;
-        index += ((int) (position.getY() / size) * NUM_OF_ZONES_PER_LEVEL) * NUM_OF_ZONES_PER_LEVEL;
-        return nextLevelZones.get(index);
+        int index = (int) (position.getX() / size) * 3;
+        index += ((int) (position.getY() / size) * 3) * 3;
+
+        switch (index){
+            case 0 : return northWest;
+            case 1 : return north;
+            case 2 : return northEast;
+            case 3 : return west;
+            case 4 : return center;
+            case 5 : return east;
+            case 6 : return southWest;
+            case 7 : return south;
+            case 8 : return southEast;
+        }
+        throw new IndexOutOfBoundsException();
     }
 
     private Zone getZone(WorldObject object){
