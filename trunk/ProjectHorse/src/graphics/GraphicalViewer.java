@@ -5,10 +5,7 @@ import model.character.Player;
 import model.spacecraft.Engine;
 import model.spacecraft.Spacecraft;
 import model.utility.shape.Coordinate;
-import model.utility.strings.StringManipulator;
 
-import javax.swing.*;
-import javax.swing.text.Position;
 import java.awt.*;
 
 /**
@@ -21,14 +18,18 @@ import java.awt.*;
 public class GraphicalViewer extends Viewer {
     GameModel gameModel;
     final static int DEFAULT_SCREEN_WIDTH_PX = 1366, DEFAULT_SCREEN_HEIGHT_PX = 768;
+    final static int DEFAULT_STRING_SIZE = 14;
     final static Color DEFAULT_PAINT_COLOR = Color.WHITE;
     final static Color DEFAULT_BACKGROUND_COLOR = Color.BLACK;
     final static Color DEFAULT_FONT_COLOR = Color.WHITE;
+
+
 
     Color backgroundColor = DEFAULT_BACKGROUND_COLOR;
     Color informationFontColor = DEFAULT_FONT_COLOR;
     Color paintColor = DEFAULT_PAINT_COLOR;
     int width, height;
+    boolean lockOnPlayer = false;
     int cameraX = - DEFAULT_SCREEN_WIDTH_PX/2, cameraY = - DEFAULT_SCREEN_HEIGHT_PX/2;
 
     public GraphicalViewer(GameModel gameModel){
@@ -72,8 +73,19 @@ public class GraphicalViewer extends Viewer {
         double positionX = position.getX();
         double positionY = position.getY();
 
-        int paintX = cameraX + (width/2 - (int) spacecraft.getWidth());
-        int paintY = cameraY + (height/2 - (int) spacecraft.getHeight());
+        System.out.println(cameraX + width/2);
+
+        int paintX;
+        int paintY;
+
+        if(lockOnPlayer){
+            paintX = (int) (cameraX + (width - spacecraft.getWidth()/2));
+            paintY = (int) (cameraY + (height - spacecraft.getHeight()/2));
+        } else {
+            paintX = (int) (- cameraX + positionX);
+            paintY = (int) (- cameraY + positionY);
+        }
+
 
         int paintWidth = (int) spacecraft.getWidth();
         int paintHeight = (int) spacecraft.getHeight();
@@ -87,21 +99,22 @@ public class GraphicalViewer extends Viewer {
 
     public void paintExtraInformation(Graphics2D g2d){
         g2d.setColor(informationFontColor);
+        setFontToMonospace(g2d);
         Player p = gameModel.getPlayer();
         Engine e = p.getSpacecraft().getEngine();
         InformationContainer ic = new InformationContainer(20, 20);
 
         //the strings to draw
         String playerCoordinateString = toTruncatedStr(p.getCoordinate().getX(), 1) + ", " + toTruncatedStr(p.getCoordinate().getY(), 1);
-        ic.add("Camera position: " + cameraX + ", " + cameraY);
-        ic.add("Player position: " + playerCoordinateString);
-        ic.add("Game version   : " + gameModel.VERSION);
+        ic.add("Camera position  : " + cameraX + ", " + cameraY);
+        ic.add("Player position  : " + playerCoordinateString);
+        ic.add("Game version     : " + gameModel.VERSION);
         String velX = toTruncatedStr(e.getVelocityX(), 1);
         String velY = toTruncatedStr(e.getVelocityY(), 1);
 
-        ic.add("Player velocity: " + velX + ", " + velY);
-        ic.add("Player absveloc: " + toTruncatedStr(e.getAbsoluteVelocity(), 1));
-        ic.add("Player angle   : " + toTruncatedStr(Math.toDegrees(p.getRotationAngle()), 1) + " (degrees), " + toTruncatedStr(p.getRotationAngle(), 1) + " (radians)");
+        ic.add("Player velocity  : " + velX + ", " + velY);
+        ic.add("Player absveloc  : " + toTruncatedStr(e.getAbsoluteVelocity(), 1));
+        ic.add("Player angle     : " + toTruncatedStr(Math.toDegrees(p.getRotationAngle()), 1) + " (degrees), " + toTruncatedStr(p.getRotationAngle(), 1) + " (radians)");
         //draw the strings
         ic.paint(g2d);
     }
@@ -110,5 +123,18 @@ public class GraphicalViewer extends Viewer {
         return model.utility.strings.StringManipulator.toString(d, decimals);
     }
 
+    static public void setFontToMonospace(Graphics2D g2d){
+        Font f = new Font("MONOSPACED", Font.BOLD, DEFAULT_STRING_SIZE);
+        g2d.setFont(f);
 
+    }
+
+    public boolean isLockOnPlayer() {
+        return lockOnPlayer;
+    }
+
+    public void setLockOnPlayer(boolean lockOnPlayer) {
+        this.lockOnPlayer = lockOnPlayer;
+    }
 }
+
