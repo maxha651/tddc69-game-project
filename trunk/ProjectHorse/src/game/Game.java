@@ -14,6 +14,7 @@ public class Game {
 
         final Action doOneStep = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
+
                 gameModel.tick();
                 gameFrame.repaint();
             }

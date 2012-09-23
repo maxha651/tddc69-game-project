@@ -23,8 +23,6 @@ public class GraphicalViewer extends Viewer {
     final static Color DEFAULT_BACKGROUND_COLOR = Color.BLACK;
     final static Color DEFAULT_FONT_COLOR = Color.WHITE;
 
-
-
     Color backgroundColor = DEFAULT_BACKGROUND_COLOR;
     Color informationFontColor = DEFAULT_FONT_COLOR;
     Color paintColor = DEFAULT_PAINT_COLOR;
@@ -77,11 +75,13 @@ public class GraphicalViewer extends Viewer {
         int paintY;
 
         if(lockOnPlayer){
-            paintX = (int) (cameraX + (width - spacecraft.getWidth()/2));
-            paintY = (int) (cameraY + (height - spacecraft.getHeight()/2));
+            paintX = (int) Math.ceil((- cameraX + positionX) - spacecraft.getWidth()/2);
+            paintY = (int) Math.ceil((- cameraY + positionY) - spacecraft.getWidth()/2);
+            cameraX = (int) Math.ceil(positionX - width/2);
+            cameraY = (int) Math.ceil(positionY - height/2);
         } else {
-            paintX = (int) (- cameraX + positionX);
-            paintY = (int) (- cameraY + positionY);
+            paintX = (int) Math.ceil((- cameraX + positionX) - spacecraft.getWidth()/2);
+            paintY = (int) Math.ceil((- cameraY + positionY) - spacecraft.getWidth()/2);
         }
 
 
