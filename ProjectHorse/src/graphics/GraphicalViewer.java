@@ -2,8 +2,10 @@ package graphics;
 
 import model.GameModel;
 import model.character.Player;
+import model.spacecraft.Engine;
 import model.spacecraft.Spacecraft;
 import model.utility.shape.Coordinate;
+import model.utility.strings.StringManipulator;
 
 import javax.swing.*;
 import javax.swing.text.Position;
@@ -19,9 +21,12 @@ import java.awt.*;
 public class GraphicalViewer extends Viewer {
     GameModel gameModel;
     final static int DEFAULT_SCREEN_WIDTH_PX = 1366, DEFAULT_SCREEN_HEIGHT_PX = 768;
-    Color DEFAULT_PAINT_COLOR = Color.WHITE;
-    Color DEFAULT_BACKGROUND_COLOR = Color.BLACK;
+    final static Color DEFAULT_PAINT_COLOR = Color.WHITE;
+    final static Color DEFAULT_BACKGROUND_COLOR = Color.BLACK;
+    final static Color DEFAULT_FONT_COLOR = Color.WHITE;
+
     Color backgroundColor = DEFAULT_BACKGROUND_COLOR;
+    Color informationFontColor = DEFAULT_FONT_COLOR;
     Color paintColor = DEFAULT_PAINT_COLOR;
     int width, height;
     int cameraX = - DEFAULT_SCREEN_WIDTH_PX/2, cameraY = - DEFAULT_SCREEN_HEIGHT_PX/2;
@@ -45,6 +50,7 @@ public class GraphicalViewer extends Viewer {
         paintBackgroundObjects(g2d);
         paintPlayer(g2d);
         paintWorldObjects(g2d);
+        paintExtraInformation(g2d);
     }
 
     public void paintBackground(Graphics2D g2d){
@@ -80,7 +86,26 @@ public class GraphicalViewer extends Viewer {
     }
 
     public void paintExtraInformation(Graphics2D g2d){
-        //paint strings if
+        g2d.setColor(informationFontColor);
+        Player p = gameModel.getPlayer();
+        Engine e = p.getSpacecraft().getEngine();
+        InformationContainer ic = new InformationContainer(20, 20);
+
+        //the strings to draw
+        String playerCoordinateString = p.getCoordinate().getX() + ", " + p.getCoordinate().getY();
+        ic.add("Camera position: " + cameraX + ", " + cameraY);
+        ic.add("Player position: " + playerCoordinateString);
+        ic.add("Game version   : " + gameModel.VERSION);
+        String velX = model.utility.strings.StringManipulator.toString(e.getVelocityX(), 1);
+        String velY = model.utility.strings.StringManipulator.toString(e.getVelocityY(), 1);
+
+        ic.add("Player velocity: " + velX + ", " + velY);
+        ic.add("Player absveloc: " + model.utility.strings.StringManipulator.toString(e.getAbsoluteVelocity(), 1));
+        ic.add("Player angle   : " + Math.toDegrees(p.getRotationAngle()) + " (degrees), " + p.getRotationAngle() + " (radians)");
+        //draw the strings
+        ic.paint(g2d);
     }
+
+
 
 }

@@ -113,4 +113,8 @@ public class Engine extends SpacecraftPart {
 
         }
     }
+
+    public double getAbsoluteVelocity(){
+        return model.utility.math.StandardMath.pyth(velocityX, velocityY);
+    }
 }

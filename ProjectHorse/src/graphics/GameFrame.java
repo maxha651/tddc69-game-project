@@ -68,6 +68,12 @@ public class GameFrame extends JFrame implements KeyListener, Observer {
                 gameModel.accelerationRequest = true;
                 gameModel.accelerate = true;
                 break;
+            case KeyEvent.VK_A:
+                gameModel.getPlayer().rotateLeftOneDegree();
+                break;
+            case KeyEvent.VK_D:
+                gameModel.getPlayer().rotateRightOneDegree();
+                break;
         }
     }
 
