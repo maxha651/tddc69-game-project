@@ -1,6 +1,7 @@
 package model;
 
 import model.interfaces.Moveable;
+import model.world.WorldObject;
 
 /**
  * Created with IntelliJ IDEA.

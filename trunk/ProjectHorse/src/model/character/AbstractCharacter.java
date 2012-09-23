@@ -1,6 +1,6 @@
 package model.character;
 
-import model.WorldObject;
+import model.world.WorldObject;
 
 public abstract class AbstractCharacter extends WorldObject {
     public abstract void updatePosition(boolean accelerate);

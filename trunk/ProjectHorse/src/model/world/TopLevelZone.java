@@ -1,8 +1,7 @@
-package model;
+package model.world;
 
 import model.character.Player;
 import model.utility.shape.Coordinate;
-import model.world.CardinalDirection;
 
 import static model.world.CardinalDirection.*;
 
