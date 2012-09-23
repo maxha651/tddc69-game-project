@@ -119,18 +119,38 @@ public class Zone {
             return getAllObjectsInArea(start, stop);
         }
         else{
-            Zone tempStart = getZone(start);
-            Zone tempStop = getZone(stop);
-            if (tempStart == tempStop){
-                return tempStart.getAll(start, stop);
-            }
-            else if (tempStart == center || tempStop == center){
-                WorldObjectContainer resObjects = tempStart.getAll(start, stop);
-                resObjects.addAll(tempStop.getAll(start, stop));
-                return resObjects;
-            }
-            else{ // if the searchzone spans over all Zones
+            if (start.getX() - stop.getX() >= size ||
+                    start.getY() - stop.getY() >= size){
                 return getAllObjectsInArea(start, stop);
+            }
+            else{
+
+                Coordinate upperRight, upperLeft, lowerRight, lowerLeft;
+                upperLeft = start;
+                lowerRight = stop;
+
+                Zone upperLeftZone = getZone(upperLeft);
+                Zone lowerRightZone = getZone(lowerRight);
+
+                if (upperLeftZone == lowerRightZone){
+                    return upperLeftZone.getAll(start, stop);
+                }
+                else{ // Has to check different zones
+                    WorldObjectContainer resObjects = new WorldObjectContainer();
+                    upperRight = new Coordinate(stop.getX(), start.getY());
+                    lowerLeft = new Coordinate(start.getX(), stop.getY());
+                    Zone upperRightZone = getZone(upperRight);
+                    Zone lowerLeftZone = getZone(lowerLeft);
+
+                    resObjects.addAll(upperLeftZone.getAll(start, stop));
+                    resObjects.addAll(lowerRightZone.getAll(start, stop));
+
+                    if(upperLeftZone != upperRightZone && upperLeftZone != lowerLeftZone){
+                        resObjects.addAll(lowerLeftZone.getAll(start,stop));
+                        resObjects.addAll(upperRightZone.getAll(start,stop));
+                    }
+                    return resObjects;
+                }
             }
         }
     }
