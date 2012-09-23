@@ -80,7 +80,7 @@ public class GraphicalViewer extends Viewer {
     }
 
     public void paintExtraInformation(Graphics2D g2d){
-
+        //paint strings if
     }
 
 }
