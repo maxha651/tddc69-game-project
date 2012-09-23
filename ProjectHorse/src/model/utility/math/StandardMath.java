@@ -8,19 +8,19 @@ package model.utility.math;
  * To change this template use File | Settings | File Templates.
  */
 public class StandardMath {
-    public double Pyth(double a, double b){
+    public static double pyth(double a, double b){
         return Math.sqrt(Math.pow(a, 2) + Math.pow(a, 2));
     }
 
-    public double Pyth(int a, int b){
+    public static double pyth(int a, int b){
         return Math.sqrt(Math.pow(a, 2) + Math.pow(a, 2));
     }
 
-    public double xPart(double x, double angle){
+    public static double xPart(double x, double angle){
         return Math.cos(angle) * x;
     }
 
-    public double yPart(double x, double angle){
+    public static double yPart(double x, double angle){
         return Math.sin(angle) * x;
     }
 }

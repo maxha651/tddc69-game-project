@@ -1,5 +1,7 @@
 package model.spacecraft;
 
+import model.utility.math.StandardMath;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Brain
@@ -10,15 +12,17 @@ package model.spacecraft;
 public class Engine extends SpacecraftPart {
 
     static final double DEFAULT_VELOCITY_MAX = 0.25;
-    static final double DEFAULT_ACCELERATION_FACTOR = 1;
+    static final double DEFAULT_ACCELERATION = 0.5;
     static final double DEFAULT_ACCELERATION_MAX = 1;
+    static final double DEFAULT_SPACE_FRICTION = 0.995;
+    static final double VELOCITY_FLOOR = 0.20;
 
     boolean sideStep = false;
     double accelerationX = 0;
     double accelerationY = 0;
-    double acceleration = DEFAULT_ACCELERATION_FACTOR;
+    double acceleration = DEFAULT_ACCELERATION;
     double maxAcceleration = DEFAULT_ACCELERATION_MAX;
-    double spaceFriction = 0.005; //percentage of total velocity removed each tick
+    double spaceFriction = DEFAULT_SPACE_FRICTION;
 
     double velocityX = 0;
     double velocityY = 0;
@@ -88,13 +92,25 @@ public class Engine extends SpacecraftPart {
         this.maxVelocity = maxVelocity;
     }
 
-    public void accelerate() {
-        if(this.velocityX + acceleration < maxAcceleration){
-            this.velocityX += acceleration;
+    public void accelerate(double angle) {
+        if(StandardMath.pyth(velocityX, velocityY) < maxAcceleration){
+            this.velocityX += StandardMath.xPart(acceleration, angle);
+            this.velocityY += StandardMath.yPart(acceleration, angle);
         }
     }
 
-    public void deaccelerate() {
+    public void deaccelerate(double angle) {
+        double velocityLength = StandardMath.pyth(velocityX, velocityY);
 
+        if(velocityLength > 0){
+            if(velocityLength > VELOCITY_FLOOR){
+                this.velocityX *= spaceFriction;
+                this.velocityY *= spaceFriction;
+            } else {
+                this.velocityY = 0;
+                this.velocityY = 0;
+            }
+
+        }
     }
 }

@@ -21,21 +21,15 @@ public class MoveableCharacter extends AbstractCharacter implements Boundable, C
     private double rotationAngle = 0;
     Coordinate coordinate = new Coordinate(0,0);
 
-
-
-    private void updateAcceleration(boolean accelerate) {
+    private void updateVelocity(boolean accelerate) {
         Engine e = this.spacecraft.getEngine();
 
         if(accelerate){
-            e.accelerate();
-        } else {
-            e.deaccelerate();
+            e.accelerate(rotationAngle);
         }
-    }
 
-    private void updateVelocity() {
-        Engine e = this.spacecraft.getEngine();
-
+        //space friction
+        e.deaccelerate(rotationAngle);
 
     }
 
@@ -43,8 +37,7 @@ public class MoveableCharacter extends AbstractCharacter implements Boundable, C
     public void updatePosition(boolean accelerate) {
         Engine e = this.spacecraft.getEngine();
 
-        this.updateAcceleration(accelerate);
-        this.updateVelocity();
+        this.updateVelocity(accelerate);
 
         this.coordinate.setX(this.coordinate.getX() + e.getVelocityX());
         this.coordinate.setY(this.coordinate.getY() + e.getVelocityY());
