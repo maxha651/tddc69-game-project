@@ -24,6 +24,7 @@ public class GraphicalViewer extends Viewer {
     Color backgroundColor = DEFAULT_BACKGROUND_COLOR;
     Color paintColor = DEFAULT_PAINT_COLOR;
     int width, height;
+    int cameraX = - DEFAULT_SCREEN_WIDTH_PX/2, cameraY = - DEFAULT_SCREEN_HEIGHT_PX/2;
 
     public GraphicalViewer(GameModel gameModel){
          this.gameModel = gameModel;
@@ -62,17 +63,23 @@ public class GraphicalViewer extends Viewer {
         Spacecraft spacecraft = gameModel.getPlayer().getSpacecraft();
         Player player = gameModel.getPlayer();
 
-        int paintX = width/2 - (int) spacecraft.getWidth();
-        int paintY = height/2 - (int) spacecraft.getHeight();
+        double positionX = position.getX();
+        double positionY = position.getY();
+
+        int paintX = cameraX + (width/2 - (int) spacecraft.getWidth());
+        int paintY = cameraY + (height/2 - (int) spacecraft.getHeight());
 
         int paintWidth = (int) spacecraft.getWidth();
         int paintHeight = (int) spacecraft.getHeight();
 
         g2d.fillRect(paintX, paintY, paintWidth, paintHeight);
-
     }
 
     public void paintWorldObjects(Graphics2D g2d){
+
+    }
+
+    public void paintExtraInformation(Graphics2D g2d){
 
     }
 

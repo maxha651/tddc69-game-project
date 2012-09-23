@@ -51,7 +51,9 @@ public class GameModel extends Observable {
 
     public void tick(){
         tick++;
+
         player.updatePosition(accelerate);
+        accelerate = false;
     }
 
     public boolean isGameAlive() {

@@ -26,6 +26,7 @@ public class Spacecraft extends MoveableObject implements Boundable, Moveable {
     public Spacecraft(){
         //add parts to the spacecraft
         this.hull = new Hull();
+        this.engine = new Engine();
     }
 
     public Rectangle getBoundingRectangle(){
