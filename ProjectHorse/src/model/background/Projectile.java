@@ -1,5 +1,7 @@
 package model.background;
 
+import model.utility.shape.Coordinate;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Max
@@ -10,10 +12,17 @@ package model.background;
 public class Projectile extends MoveableBackgroundObject {
     int minDamage, maxDamage;
     double speed;
+    Coordinate coordinate;
 
-    public Projectile(int minDamage, int maxDamage, double speed) {
+    public Projectile(int minDamage, int maxDamage, double speed, Coordinate coordinate) {
         this.minDamage = minDamage;
         this.maxDamage = maxDamage;
         this.speed = speed;
+        this.coordinate = coordinate;
     }
+
+    public void update(){
+
+    }
+
 }

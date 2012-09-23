@@ -1,5 +1,8 @@
 package model.spacecraft;
 
+import model.background.Projectile;
+import model.utility.shape.Coordinate;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Brain
@@ -11,13 +14,18 @@ public class Weapon extends SpacecraftPart {
     int minDamage, maxDamage;
     double speed;
     int energyCost;
+    Coordinate coordinate;
 
-    public Weapon(int minDamage, int maxDamage, double speed, int energyCost) {
+    public Weapon(int minDamage, int maxDamage, double speed, int energyCost, Coordinate coordinate) {
         this.minDamage = minDamage;
         this.maxDamage = maxDamage;
         this.speed = speed;
         this.energyCost = energyCost;
+        this.coordinate = coordinate;
     }
 
+    public void fire(){
+        new Projectile(minDamage, maxDamage, speed, coordinate);
+    }
 
 }
