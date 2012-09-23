@@ -2,6 +2,9 @@ package model;
 
 import model.character.Player;
 import model.utility.shape.Coordinate;
+import model.world.CardinalDirection;
+
+import static model.world.CardinalDirection.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,143 +15,136 @@ import model.utility.shape.Coordinate;
  */
 public class TopLevelZone extends Zone{ // Make to update when player moves
 
-    private double size;
-    private Coordinate origo;
-    private int numberOfLevels;
     private Player player;
 
-    private Zone center;
-    private Zone north;
-    private Zone northEast;
-    private Zone east;
-    private Zone southEast;
-    private Zone south;
-    private Zone southWest;
-    private Zone west;
-    private Zone northWest;
-
-
-    public TopLevelZone(double size, int numberOfLevels, Coordinate origo, Player player) {
-        this.size = size;
-        this.origo = origo;
-        this.numberOfLevels = numberOfLevels;
+    public TopLevelZone(Coordinate origo, double size, int numberOfLevels, Player player) {
+        super(origo, size, numberOfLevels);
         this.player = player;
 
         // place player with collision check?
-
-        Coordinate temp = new Coordinate(origo.getX(), origo.getY());
-        center =    new Zone(temp, size, numberOfLevels);
-        temp.setY(origo.getY() - size);
-        north =     new Zone(temp, size, numberOfLevels);
-        temp.setX(origo.getX() - size);
-        northWest = new Zone(temp, size, numberOfLevels);
-        temp.setX(origo.getX() + size);
-        northEast = new Zone(temp, size, numberOfLevels);
-        temp.setY(origo.getY());
-        east =      new Zone(temp, size, numberOfLevels);
-        temp.setY(origo.getY() + size);
-        southEast = new Zone(temp, size, numberOfLevels);
-        temp.setX(origo.getX());
-        south =     new Zone(temp, size, numberOfLevels);
-        temp.setX(origo.getX() - size);
-        southWest = new Zone(temp, size, numberOfLevels);
-        temp.setY(origo.getY());
-        west =      new Zone(temp, size, numberOfLevels);
     }
 
     @Override
     public void update(){
         super.update();
 
-        if(!center.contains(player.getCoordinate())){
+        if(!getZone(CENTER).contains(player.getCoordinate())){
             Coordinate tempPlayerCoordinate = player.getCoordinate();
             Coordinate tempCenterCoordinate;
-            tempCenterCoordinate = new Coordinate(center.getCoordinate());
+            tempCenterCoordinate = new Coordinate(getZone(CENTER).getCoordinate());
 
             if (tempPlayerCoordinate.getX() < tempCenterCoordinate.getX()){
                 moveWorldLeft();
             }
-            else if (tempPlayerCoordinate.getX() > tempCenterCoordinate.getX() + size){
+            else if (tempPlayerCoordinate.getX() > tempCenterCoordinate.getX() + getSize() / 3){
                 moveWorldRight();
             }
             if (tempPlayerCoordinate.getY() < tempCenterCoordinate.getY()){
                 moveWorldUp();
             }
-            else if (tempPlayerCoordinate.getY() > tempCenterCoordinate.getY() + size){
+            else if (tempPlayerCoordinate.getY() > tempCenterCoordinate.getY() + getSize() / 3){
                 moveWorldDown();
             } // call update function?
         }
     }
 
     private void moveWorldLeft(){
-        northEast = north;
-        east = center;
-        southEast = south;
-        north = northWest;
-        center = west;
-        south = southWest;
+        setZone(NORTHEAST, getZone(NORTH));
+        setZone(EAST, getZone(CENTER));
+        setZone(SOUTHEAST, getZone(SOUTH));
+        setZone(NORTH, getZone(NORTHWEST));
+        setZone(CENTER, getZone(WEST));
+        setZone(SOUTH, getZone(SOUTHWEST));
 
-        Coordinate temp;
-        temp = new Coordinate(center.getCoordinate());
-        temp.setX(temp.getX() - size);
-        west = new Zone(temp, size, numberOfLevels);
-        temp.setY(temp.getY() - size);
-        northWest = new Zone(temp, size, numberOfLevels);
-        temp.setY(temp.getY() + 2*size);
-        southWest = new Zone(temp, size, numberOfLevels);
+        Coordinate tempCoordinate;
+        Zone tempZone;
+        double tempSize = getSize() / 3;
+
+        tempCoordinate = new Coordinate(getZone(NORTH).getCoordinate());
+
+        tempCoordinate.setX(tempCoordinate.getX() - tempSize);
+        tempZone = new Zone(tempCoordinate, tempSize, getNumberOfLevels() -1);
+        setZone(NORTHWEST, tempZone);
+        tempCoordinate.setY(tempCoordinate.getY() + tempSize);
+        tempZone = new Zone(tempCoordinate, tempSize, getNumberOfLevels() -1);
+        setZone(WEST, tempZone);
+        tempCoordinate.setY(tempCoordinate.getY() + tempSize);
+        tempZone = new Zone(tempCoordinate, tempSize, getNumberOfLevels() -1);
+        setZone(SOUTHWEST, tempZone);
     }
 
     private void moveWorldRight(){
-        northWest = north;
-        west = center;
-        southWest = south;
-        north = northEast;
-        center = east;
-        south = southEast;
+        setZone(NORTHWEST, getZone(NORTH));
+        setZone(WEST, getZone(CENTER));
+        setZone(SOUTHWEST, getZone(SOUTH));
+        setZone(NORTH, getZone(NORTHEAST));
+        setZone(CENTER, getZone(EAST));
+        setZone(SOUTH, getZone(SOUTHEAST));
 
-        Coordinate temp;
-        temp = new Coordinate(center.getCoordinate());
-        temp.setX(temp.getX() + size);
-        east = new Zone(temp, size, numberOfLevels);
-        temp.setY(temp.getY() - size);
-        northEast = new Zone(temp, size, numberOfLevels);
-        temp.setY(temp.getY() + 2*size);
-        southEast = new Zone(temp, size, numberOfLevels);
+        Coordinate tempCoordinate;
+        Zone tempZone;
+        double tempSize = getSize() / 3;
+
+        tempCoordinate = new Coordinate(getZone(NORTH).getCoordinate());
+
+        tempCoordinate.setX(tempCoordinate.getX() + tempSize);
+        tempZone = new Zone(tempCoordinate, tempSize, getNumberOfLevels() -1);
+        setZone(NORTHEAST, tempZone);
+        tempCoordinate.setY(tempCoordinate.getY() + tempSize);
+        tempZone = new Zone(tempCoordinate, tempSize, getNumberOfLevels() -1);
+        setZone(EAST, tempZone);
+        tempCoordinate.setY(tempCoordinate.getY() + tempSize);
+        tempZone = new Zone(tempCoordinate, tempSize, getNumberOfLevels() -1);
+        setZone(SOUTHEAST, tempZone);
     }
 
     private void moveWorldUp(){
-        southWest = west;
-        south = center;
-        southEast = east;
-        west = northWest;
-        center = north;
-        east = northEast;
+        setZone(SOUTHWEST, getZone(WEST));
+        setZone(SOUTH, getZone(CENTER));
+        setZone(SOUTHEAST, getZone(EAST));
+        setZone(WEST, getZone(NORTHWEST));
+        setZone(CENTER, getZone(NORTH));
+        setZone(EAST, getZone(NORTHEAST));
 
-        Coordinate temp;
-        temp = new Coordinate(center.getCoordinate());
-        temp.setY(temp.getY() - size);
-        north = new Zone(temp, size, numberOfLevels);
-        temp.setX(temp.getX() - size);
-        northWest = new Zone(temp, size, numberOfLevels);
-        temp.setX(temp.getX() + 2 * size);
-        northEast = new Zone(temp, size, numberOfLevels);
+        Coordinate tempCoordinate;
+        Zone tempZone;
+        double tempSize = getSize() / 3;
+
+        tempCoordinate = new Coordinate(getZone(WEST).getCoordinate());
+
+        tempCoordinate.setY(tempCoordinate.getY() - tempSize);
+        tempZone = new Zone(tempCoordinate, tempSize, getNumberOfLevels() -1);
+        setZone(NORTHWEST, tempZone);
+        tempCoordinate.setX(tempCoordinate.getX() + tempSize);
+        tempZone = new Zone(tempCoordinate, tempSize, getNumberOfLevels() -1);
+        setZone(NORTH, tempZone);
+        tempCoordinate.setX(tempCoordinate.getX() + tempSize);
+        tempZone = new Zone(tempCoordinate, tempSize, getNumberOfLevels() -1);
+        setZone(NORTHEAST, tempZone);
     }
 
     private void moveWorldDown(){
-        northWest = west;
-        north = center;
-        northEast = east;
-        west = southWest;
-        center = south;
-        east = southEast;
+        setZone(NORTHWEST, getZone(WEST));
+        setZone(NORTH, getZone(CENTER));
+        setZone(NORTHEAST, getZone(EAST));
+        setZone(WEST, getZone(SOUTHWEST));
+        setZone(CENTER, getZone(SOUTH));
+        setZone(EAST, getZone(SOUTHEAST));
 
-        Coordinate temp;
-        temp = new Coordinate(center.getCoordinate());
-        temp.setY(temp.getY() + size);
-        south = new Zone(temp, size, numberOfLevels);
-        temp.setX(temp.getX() - size);
-        southWest = new Zone(temp, size, numberOfLevels);
-        temp.setX(temp.getX() + 2*size);
-        southEast = new Zone(temp, size, numberOfLevels);
+        Coordinate tempCoordinate;
+        Zone tempZone;
+        double tempSize = getSize() / 3;
+
+        tempCoordinate = new Coordinate(getZone(WEST).getCoordinate());
+
+        tempCoordinate.setY(tempCoordinate.getY() + tempSize);
+        tempZone = new Zone(tempCoordinate, tempSize, getNumberOfLevels() -1);
+        setZone(SOUTHWEST, tempZone);
+        tempCoordinate.setX(tempCoordinate.getX() + tempSize);
+        tempZone = new Zone(tempCoordinate, tempSize, getNumberOfLevels() -1);
+        setZone(SOUTH, tempZone);
+        tempCoordinate.setX(tempCoordinate.getX() + tempSize);
+        tempZone = new Zone(tempCoordinate, tempSize, getNumberOfLevels() -1);
+        setZone(SOUTHEAST, tempZone);
     }
 }

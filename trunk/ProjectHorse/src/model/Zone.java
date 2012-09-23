@@ -2,6 +2,7 @@ package model;
 
 import model.character.Player;
 import model.utility.shape.Coordinate;
+import model.world.CardinalDirection;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,12 +32,7 @@ public class Zone {
     private double size;
     private int numberOfLevels;
 
-    private ArrayList<Zone> nextLevelZones;
     private HashMap<Coordinate, LinkedList<WorldObject>> worldObjects;
-
-    protected Zone(){
-
-    }
 
     public Zone(Coordinate position, double size, int numberOfLevels) {
         this.pos = position;
@@ -197,7 +193,7 @@ public class Zone {
         }
     }
 
-    private Zone getZone(Coordinate position){
+    protected Zone getZone(Coordinate position){
         if(isLastLevel()){
             return this;
         }
@@ -219,7 +215,7 @@ public class Zone {
         throw new IndexOutOfBoundsException();
     }
 
-    private Zone getZone(WorldObject object){
+    protected Zone getZone(WorldObject object){
         return getZone(object.getCoordinate());
     }
 
@@ -233,13 +229,50 @@ public class Zone {
         return true;
     }
 
-
     private boolean withinBoundaries(WorldObject object){
         return withinBoundaries(object.getCoordinate());
     }
 
     public boolean isLastLevel(){
         return numberOfLevels == 0;
+    }
+
+    protected Zone getZone(CardinalDirection direction){
+        switch(direction){
+            case CENTER:    return center;
+            case NORTH:     return north;
+            case SOUTH:     return south;
+            case EAST:      return east;
+            case WEST:      return west;
+            case NORTHEAST: return northEast;
+            case NORTHWEST: return northWest;
+            case SOUTHEAST: return southEast;
+            case SOUTHWEST: return southWest;
+        }
+        //never happens
+        return null;
+    }
+
+    protected void setZone(CardinalDirection direction, Zone zone){
+        switch(direction){
+            case CENTER:    center = zone;
+            case NORTH:     north = zone;
+            case SOUTH:     south = zone;
+            case EAST:      east = zone;
+            case WEST:      west = zone;
+            case NORTHEAST: northEast = zone;
+            case NORTHWEST: northWest = zone;
+            case SOUTHEAST: southEast = zone;
+            case SOUTHWEST: southWest = zone;
+        }
+    }
+
+    protected HashMap<Coordinate, LinkedList<WorldObject>> getWorldObjects() {
+        return worldObjects;
+    }
+
+    protected int getNumberOfLevels() {
+        return numberOfLevels;
     }
 
     public Coordinate getCoordinate() {
