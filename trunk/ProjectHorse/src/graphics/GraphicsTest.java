@@ -1,5 +1,6 @@
 package graphics;
 
+import game.GameFrame;
 import model.GameModel;
 
 /**
