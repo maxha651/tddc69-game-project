@@ -30,7 +30,7 @@ public class GraphicalViewer extends Viewer {
     Color informationFontColor = DEFAULT_FONT_COLOR;
     Color paintColor = DEFAULT_PAINT_COLOR;
     int width, height;
-    boolean lockOnPlayer = false;
+    boolean lockOnPlayer = true;
     int cameraX = - DEFAULT_SCREEN_WIDTH_PX/2, cameraY = - DEFAULT_SCREEN_HEIGHT_PX/2;
 
     public GraphicalViewer(GameModel gameModel){
@@ -92,7 +92,6 @@ public class GraphicalViewer extends Viewer {
             paintX = (int) Math.ceil((-cameraX + positionX) - spacecraft.getWidth() / 2);
             paintY = (int) Math.ceil((-cameraY + positionY) - spacecraft.getWidth() / 2);
         }
-
 
         int paintWidth = (int) spacecraft.getWidth();
         int paintHeight = (int) spacecraft.getHeight();
