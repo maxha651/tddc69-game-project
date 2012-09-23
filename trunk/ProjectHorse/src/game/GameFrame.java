@@ -22,6 +22,7 @@ public class GameFrame extends JFrame implements KeyListener, Observer {
     JMenu fileMenu, settingsMenu, viewMenu;
     static final String FRAME_TITLE = "Space Explorer";
     GameModel gameModel;
+    GraphicalViewer viewer;
 
     public GameFrame(GameModel gameModel) {
 
@@ -43,7 +44,7 @@ public class GameFrame extends JFrame implements KeyListener, Observer {
         menuBar.add(viewMenu);
         this.add(menuBar);
 
-        GraphicalViewer viewer = new GraphicalViewer(gameModel);
+        viewer = new GraphicalViewer(gameModel);
         this.add(viewer);
         this.pack();
         this.setVisible(true);
@@ -69,11 +70,15 @@ public class GameFrame extends JFrame implements KeyListener, Observer {
                 gameModel.accelerationRequest = true;
                 break;
             case KeyEvent.VK_A:
-                gameModel.getPlayer().rotateLeft(Math.toRadians(5));
+                gameModel.getPlayer().rotateLeft(Math.toRadians(10));
                 break;
             case KeyEvent.VK_D:
-                gameModel.getPlayer().rotateRight(Math.toRadians(5));
+                gameModel.getPlayer().rotateRight(Math.toRadians(10));
                 break;
+            case KeyEvent.VK_F:
+                viewer.setLockOnPlayer(!viewer.isLockOnPlayer());
+                break;
+
         }
     }
 
