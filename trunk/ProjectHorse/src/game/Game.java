@@ -20,7 +20,7 @@ public class Game {
             }
         };
 
-        final Timer updateTimer = new Timer(50, doOneStep);
+        final Timer updateTimer = new Timer(15, doOneStep);
         updateTimer.start();
     }
 
