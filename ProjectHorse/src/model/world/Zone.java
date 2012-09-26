@@ -1,5 +1,6 @@
 package model.world;
 
+import model.utility.enums.CardinalDirection;
 import model.utility.shape.Coordinate;
 
 /**
@@ -60,7 +61,7 @@ public class Zone {
     }
 
     public boolean contains(Coordinate coordinate){
-        if (!withinBoundaries(coordinate)){
+        if (!isWithinBoundaries(coordinate)){
             return false;
         }
 
@@ -74,7 +75,7 @@ public class Zone {
     }
 
     public void add(WorldObject object) throws IndexOutOfBoundsException {
-        if (!withinBoundaries(object)){
+        if (!isWithinBoundaries(object)){
             throw new IndexOutOfBoundsException();
         }
 
@@ -88,7 +89,7 @@ public class Zone {
     }
 
     public WorldObjectContainer get(Coordinate position){
-        if (!withinBoundaries(position)){
+        if (!isWithinBoundaries(position)){
             throw new IndexOutOfBoundsException();
         }
 
@@ -110,18 +111,18 @@ public class Zone {
      * @return Returns all objects in the rectangular area from start to stop
      */
 
-    public WorldObjectContainer getAll(Coordinate start, Coordinate stop){
-        if (!withinBoundaries(start) && !withinBoundaries(stop)){
+    public WorldObjectContainer getAllObjectsInArea(Coordinate start, Coordinate stop){
+        if (!isWithinBoundaries(start) && !isWithinBoundaries(stop)){
             throw new IndexOutOfBoundsException();
         }
 
         if (isLastLevel()){
-            return getAllObjectsInArea(start, stop);
+            return getAllObjectsInAreaLastLevel(start, stop);
         }
         else{
             if (start.getX() - stop.getX() >= size ||
                     start.getY() - stop.getY() >= size){
-                return getAllObjectsInArea(start, stop);
+                return getAllObjectsInAreaLastLevel(start, stop);
             }
             else{
 
@@ -133,7 +134,7 @@ public class Zone {
                 Zone lowerRightZone = getZone(lowerRight);
 
                 if (upperLeftZone == lowerRightZone){
-                    return upperLeftZone.getAll(start, stop);
+                    return upperLeftZone.getAllObjectsInArea(start, stop);
                 }
                 else{ // Has to check different zones
                     WorldObjectContainer resObjects = new WorldObjectContainer();
@@ -142,12 +143,12 @@ public class Zone {
                     Zone upperRightZone = getZone(upperRight);
                     Zone lowerLeftZone = getZone(lowerLeft);
 
-                    resObjects.addAll(upperLeftZone.getAll(start, stop));
-                    resObjects.addAll(lowerRightZone.getAll(start, stop));
+                    resObjects.addAll(upperLeftZone.getAllObjectsInArea(start, stop));
+                    resObjects.addAll(lowerRightZone.getAllObjectsInArea(start, stop));
 
                     if(upperLeftZone != upperRightZone && upperLeftZone != lowerLeftZone){
-                        resObjects.addAll(lowerLeftZone.getAll(start,stop));
-                        resObjects.addAll(upperRightZone.getAll(start,stop));
+                        resObjects.addAll(lowerLeftZone.getAllObjectsInArea(start, stop));
+                        resObjects.addAll(upperRightZone.getAllObjectsInArea(start, stop));
                     }
                     return resObjects;
                 }
@@ -155,7 +156,7 @@ public class Zone {
         }
     }
 
-    private WorldObjectContainer getAllObjectsInArea(Coordinate start, Coordinate stop){
+    private WorldObjectContainer getAllObjectsInAreaLastLevel(Coordinate start, Coordinate stop){
         WorldObjectContainer resObjects = new WorldObjectContainer();
 
         for (WorldObject object : worldObjects){
@@ -175,7 +176,7 @@ public class Zone {
 
         if(isLastLevel()){
             for(WorldObject object : worldObjects){
-                if(!withinBoundaries(object)){
+                if(!isWithinBoundaries(object)){
                     resObjects.add(object);
                     worldObjects.remove(object);
                 }
@@ -206,6 +207,16 @@ public class Zone {
         }
     }
 
+    public void update(Coordinate start, Coordinate stop){
+
+        WorldObjectContainer objects;
+        objects = getAllObjectsInArea(start, stop);
+
+        for (WorldObject object : objects){
+            this.add(object);
+        }
+    }
+
     protected Zone getZone(Coordinate position){
         if(isLastLevel()){
             return this;
@@ -232,7 +243,7 @@ public class Zone {
         return getZone(object.getCoordinate());
     }
 
-    private boolean withinBoundaries(Coordinate position){
+    private boolean isWithinBoundaries(Coordinate position){
         if (position.getX() < pos.getX() || position.getX() > pos.getX() + size -1){
             return false;
         }
@@ -242,8 +253,8 @@ public class Zone {
         return true;
     }
 
-    private boolean withinBoundaries(WorldObject object){
-        return withinBoundaries(object.getCoordinate());
+    private boolean isWithinBoundaries(WorldObject object){
+        return isWithinBoundaries(object.getCoordinate());
     }
 
     public boolean isLastLevel(){
