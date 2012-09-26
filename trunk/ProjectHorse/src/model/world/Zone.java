@@ -120,7 +120,7 @@ public class Zone {
             return getAllObjectsInAreaLastLevel(start, stop);
         }
         else{
-            if (start.getX() - stop.getX() >= size ||
+            if (start.getX() - stop.getX() >= size || // if larger than subzones, return all objects in zone
                     start.getY() - stop.getY() >= size){
                 return getAllObjectsInAreaLastLevel(start, stop);
             }
@@ -175,7 +175,7 @@ public class Zone {
         WorldObjectContainer resObjects = new WorldObjectContainer();
 
         if(isLastLevel()){
-            for(WorldObject object : worldObjects){
+            for(WorldObject object : worldObjects){ // check if isMoveable
                 if(!isWithinBoundaries(object)){
                     resObjects.add(object);
                     worldObjects.remove(object);
@@ -195,7 +195,7 @@ public class Zone {
         }
         return resObjects;
     }
-
+    /* Broken, fix later
     public void update(){
         if(isLastLevel()){
             WorldObjectContainer objects;
@@ -215,7 +215,7 @@ public class Zone {
         for (WorldObject object : objects){
             this.add(object);
         }
-    }
+    }*/
 
     protected Zone getZone(Coordinate position){
         if(isLastLevel()){

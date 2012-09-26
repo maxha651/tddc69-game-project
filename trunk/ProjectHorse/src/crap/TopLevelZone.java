@@ -1,8 +1,9 @@
-package model.world;
+package crap;
 
 import model.character.Player;
 import model.utility.enums.CardinalDirection;
 import model.utility.shape.Coordinate;
+import model.world.*;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -16,22 +17,20 @@ import static model.utility.enums.CardinalDirection.*;
  * Time: 01:19
  * To change this template use File | Settings | File Templates.
  */
-public class TopLevelZone extends Zone{ // Make to update when player moves
+public class TopLevelZone extends model.world.Zone { // Will not use, probably
 
     private Player player;
-    private HashMap<Coordinate, Zone> oldZones;
+    private HashMap<Coordinate, model.world.Zone> oldZones;
 
     public TopLevelZone(Coordinate origo, double size, int numberOfLevels, Player player) {
         super(origo, size, numberOfLevels);
         this.player = player;
-        this.oldZones = new HashMap<Coordinate, Zone>();
+        this.oldZones = new HashMap<Coordinate, model.world.Zone>();
 
         // place player with collision check?
     }
 
-    @Override
     public void update(){
-        super.update();
 
         if(!getZone(CENTER).contains(player.getCoordinate())){
             Coordinate tempPlayerCoordinate = player.getCoordinate();
@@ -53,7 +52,7 @@ public class TopLevelZone extends Zone{ // Make to update when player moves
         }
     }
 
-    private Zone removeOldZone(Coordinate coordinate){
+    private model.world.Zone removeOldZone(Coordinate coordinate){
         return oldZones.remove(coordinate);
     }
 
@@ -70,7 +69,7 @@ public class TopLevelZone extends Zone{ // Make to update when player moves
         setZone(SOUTH, getZone(SOUTHWEST));
 
         Coordinate tempCoordinate;
-        Zone tempZone;
+        model.world.Zone tempZone;
         double tempSize = getSize();
 
         tempCoordinate = new Coordinate(getZone(NORTH).getCoordinate());
@@ -78,19 +77,19 @@ public class TopLevelZone extends Zone{ // Make to update when player moves
         tempCoordinate.setX(tempCoordinate.getX() - tempSize);
         tempZone = removeOldZone(tempCoordinate);
         if(tempZone == null){
-            tempZone = new Zone(tempCoordinate, tempSize, getNumberOfLevels());
+            tempZone = new model.world.Zone(tempCoordinate, tempSize, getNumberOfLevels());
         }
         setZone(NORTHWEST, tempZone);
         tempCoordinate.setY(tempCoordinate.getY() + tempSize);
         tempZone = removeOldZone(tempCoordinate);
         if(tempZone == null){
-            tempZone = new Zone(tempCoordinate, tempSize, getNumberOfLevels());
+            tempZone = new model.world.Zone(tempCoordinate, tempSize, getNumberOfLevels());
         }
         setZone(WEST, tempZone);
         tempCoordinate.setY(tempCoordinate.getY() + tempSize);
         tempZone = removeOldZone(tempCoordinate);
         if(tempZone == null){
-            tempZone = new Zone(tempCoordinate, tempSize, getNumberOfLevels());
+            tempZone = new model.world.Zone(tempCoordinate, tempSize, getNumberOfLevels());
         }
         setZone(SOUTHWEST, tempZone);
     }
@@ -108,7 +107,7 @@ public class TopLevelZone extends Zone{ // Make to update when player moves
         setZone(SOUTH, getZone(SOUTHEAST));
 
         Coordinate tempCoordinate;
-        Zone tempZone;
+        model.world.Zone tempZone;
         double tempSize = getSize();
 
         tempCoordinate = new Coordinate(getZone(NORTH).getCoordinate());
@@ -116,19 +115,19 @@ public class TopLevelZone extends Zone{ // Make to update when player moves
         tempCoordinate.setX(tempCoordinate.getX() + tempSize);
         tempZone = removeOldZone(tempCoordinate);
         if(tempZone == null){
-            tempZone = new Zone(tempCoordinate, tempSize, getNumberOfLevels());
+            tempZone = new model.world.Zone(tempCoordinate, tempSize, getNumberOfLevels());
         }
         setZone(NORTHEAST, tempZone);
         tempCoordinate.setY(tempCoordinate.getY() + tempSize);
         tempZone = removeOldZone(tempCoordinate);
         if(tempZone == null){
-            tempZone = new Zone(tempCoordinate, tempSize, getNumberOfLevels());
+            tempZone = new model.world.Zone(tempCoordinate, tempSize, getNumberOfLevels());
         }
         setZone(EAST, tempZone);
         tempCoordinate.setY(tempCoordinate.getY() + tempSize);
         tempZone = removeOldZone(tempCoordinate);
         if(tempZone == null){
-            tempZone = new Zone(tempCoordinate, tempSize, getNumberOfLevels());
+            tempZone = new model.world.Zone(tempCoordinate, tempSize, getNumberOfLevels());
         }
         setZone(SOUTHEAST, tempZone);
     }
@@ -147,7 +146,7 @@ public class TopLevelZone extends Zone{ // Make to update when player moves
         setZone(EAST, getZone(NORTHEAST));
 
         Coordinate tempCoordinate;
-        Zone tempZone;
+        model.world.Zone tempZone;
         double tempSize = getSize();
 
         tempCoordinate = new Coordinate(getZone(WEST).getCoordinate());
@@ -155,19 +154,19 @@ public class TopLevelZone extends Zone{ // Make to update when player moves
         tempCoordinate.setY(tempCoordinate.getY() - tempSize);
         tempZone = removeOldZone(tempCoordinate);
         if(tempZone == null){
-            tempZone = new Zone(tempCoordinate, tempSize, getNumberOfLevels());
+            tempZone = new model.world.Zone(tempCoordinate, tempSize, getNumberOfLevels());
         }
         setZone(NORTHWEST, tempZone);
         tempCoordinate.setX(tempCoordinate.getX() + tempSize);
         tempZone = removeOldZone(tempCoordinate);
         if(tempZone == null){
-            tempZone = new Zone(tempCoordinate, tempSize, getNumberOfLevels());
+            tempZone = new model.world.Zone(tempCoordinate, tempSize, getNumberOfLevels());
         }
         setZone(NORTH, tempZone);
         tempCoordinate.setX(tempCoordinate.getX() + tempSize);
         tempZone = removeOldZone(tempCoordinate);
         if(tempZone == null){
-            tempZone = new Zone(tempCoordinate, tempSize, getNumberOfLevels());
+            tempZone = new model.world.Zone(tempCoordinate, tempSize, getNumberOfLevels());
         }
         setZone(NORTHEAST, tempZone);
     }
@@ -185,7 +184,7 @@ public class TopLevelZone extends Zone{ // Make to update when player moves
         setZone(EAST, getZone(SOUTHEAST));
 
         Coordinate tempCoordinate;
-        Zone tempZone;
+        model.world.Zone tempZone;
         double tempSize = getSize();
 
         tempCoordinate = new Coordinate(getZone(WEST).getCoordinate());
@@ -193,19 +192,19 @@ public class TopLevelZone extends Zone{ // Make to update when player moves
         tempCoordinate.setY(tempCoordinate.getY() + tempSize);
         tempZone = removeOldZone(tempCoordinate);
         if(tempZone == null){
-            tempZone = new Zone(tempCoordinate, tempSize, getNumberOfLevels());
+            tempZone = new model.world.Zone(tempCoordinate, tempSize, getNumberOfLevels());
         }
         setZone(SOUTHWEST, tempZone);
         tempCoordinate.setX(tempCoordinate.getX() + tempSize);
         tempZone = removeOldZone(tempCoordinate);
         if(tempZone == null){
-            tempZone = new Zone(tempCoordinate, tempSize, getNumberOfLevels());
+            tempZone = new model.world.Zone(tempCoordinate, tempSize, getNumberOfLevels());
         }
         setZone(SOUTH, tempZone);
         tempCoordinate.setX(tempCoordinate.getX() + tempSize);
         tempZone = removeOldZone(tempCoordinate);
         if(tempZone == null){
-            tempZone = new Zone(tempCoordinate, tempSize, getNumberOfLevels());
+            tempZone = new model.world.Zone(tempCoordinate, tempSize, getNumberOfLevels());
         }
         setZone(SOUTHEAST, tempZone);
     }
