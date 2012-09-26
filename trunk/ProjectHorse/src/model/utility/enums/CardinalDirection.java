@@ -1,4 +1,4 @@
-package model.world;
+package model.utility.enums;
 
 /**
  * Created with IntelliJ IDEA.

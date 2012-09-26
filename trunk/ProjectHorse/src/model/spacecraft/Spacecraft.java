@@ -16,8 +16,8 @@ public class Spacecraft extends MoveableObject implements Boundable, Moveable {
     private Engine engine = null;
     private ShieldGenerator shield = null;
     private Cargo cargo = null;
-    private Weapon weapon1 = null;
-    private Weapon weapon2 = null;
+    private Weapon weapon1 = null; // weaponLeft?
+    private Weapon weapon2 = null; // weaponRight?
     private Hull hull = null;
 
     private String name = "Default Spacecraft";
