@@ -1,6 +1,11 @@
 package model.background;
 
+import model.interfaces.Collideable;
+import model.spacecraft.Weapon;
+import model.utility.enums.ProjectileType;
 import model.utility.shape.Coordinate;
+
+import java.awt.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -9,20 +14,21 @@ import model.utility.shape.Coordinate;
  * Time: 23:53
  * To change this template use File | Settings | File Templates.
  */
-public class Projectile extends MoveableBackgroundObject {
+public class Projectile extends MoveableBackgroundObject implements Collideable{
     int minDamage, maxDamage;
-    double speed;
-    Coordinate coordinate;
+    ProjectileType pt;
 
-    public Projectile(int minDamage, int maxDamage, double speed, Coordinate coordinate) {
-        this.minDamage = minDamage;
-        this.maxDamage = maxDamage;
-        this.speed = speed;
+    public Projectile(Weapon w, Coordinate coordinate, double angle) {
+        this.pt = w.getProjectileType();
+        this.minDamage = w.getMinDamage();
+        this.maxDamage = w.getMaxDamage();
+        this.velocityX = model.utility.math.StandardMath.xPart(w.getAbsVelocity(), this.rotationAngle);
+        this.velocityY = model.utility.math.StandardMath.yPart(w.getAbsVelocity(), this.rotationAngle);
         this.coordinate = coordinate;
     }
 
-    public void update(){
-
+    @Override
+    public boolean collidesWith(Rectangle r) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
-
 }

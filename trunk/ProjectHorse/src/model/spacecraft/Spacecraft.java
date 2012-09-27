@@ -1,9 +1,8 @@
 package model.spacecraft;
 
-import model.MoveableObject;
 import model.interfaces.Boundable;
-import model.interfaces.Collideable;
 import model.interfaces.Moveable;
+import model.items.Item;
 import model.utility.shape.Coordinate;
 
 import java.awt.*;
@@ -11,7 +10,7 @@ import java.awt.*;
 /**
   * A spacecraft is the model of a spacecraft that can then be used in stores, by players or by NPCs
  */
-public class Spacecraft extends MoveableObject implements Boundable, Moveable {
+public class Spacecraft extends Item implements Boundable {
 
     private Engine engine = null;
     private ShieldGenerator shield = null;
@@ -27,6 +26,7 @@ public class Spacecraft extends MoveableObject implements Boundable, Moveable {
         //add parts to the spacecraft
         this.hull = new Hull();
         this.engine = new Engine();
+        this.weapon1 = new Weapon(1, 3, 5, 10);
     }
 
     public Rectangle getBoundingRectangle(){

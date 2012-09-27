@@ -12,10 +12,10 @@ import model.utility.shape.Coordinate;
  */
 public abstract class WorldObject extends AbstractGameObject {
 
-    Coordinate pos;
+    protected Coordinate coordinate;
 
     public Coordinate getCoordinate() {
-        return pos;
+        return coordinate;
     }
 
 }

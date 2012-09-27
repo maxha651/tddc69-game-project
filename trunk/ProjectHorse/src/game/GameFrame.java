@@ -2,6 +2,7 @@ package game;
 
 import graphics.GraphicalViewer;
 import model.GameModel;
+import model.character.Player;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -64,21 +65,23 @@ public class GameFrame extends JFrame implements KeyListener, Observer {
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-
+        Player p = gameModel.getPlayer();
         switch(keyCode){
             case KeyEvent.VK_W:
                 gameModel.accelerationRequest = true;
                 break;
             case KeyEvent.VK_A:
-                gameModel.getPlayer().rotateLeft(Math.toRadians(10));
+                gameModel.turnLeftRequest = true;
                 break;
             case KeyEvent.VK_D:
-                gameModel.getPlayer().rotateRight(Math.toRadians(10));
+                gameModel.turnRightRequest = true;
                 break;
             case KeyEvent.VK_F:
                 viewer.setLockOnPlayer(!viewer.isLockOnPlayer());
                 break;
-
+            case KeyEvent.VK_SPACE:
+                p.fire(p.getSpacecraft().getWeapon1());
+                break;
         }
     }
 
@@ -90,6 +93,13 @@ public class GameFrame extends JFrame implements KeyListener, Observer {
             case KeyEvent.VK_W:
                 gameModel.accelerationRequest = false;
                 break;
+            case KeyEvent.VK_A:
+                gameModel.turnLeftRequest = false;
+                break;
+            case KeyEvent.VK_D:
+                gameModel.turnRightRequest = false;
+                break;
         }
+
     }
 }

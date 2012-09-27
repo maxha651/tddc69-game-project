@@ -83,14 +83,12 @@ public class GraphicalViewer extends Viewer {
         int paintX;
         int paintY;
 
+        paintX = (int) ((-cameraX + positionX) - spacecraft.getWidth() / 2);
+        paintY = (int) ((-cameraY + positionY) - spacecraft.getHeight() / 2);
+
         if(lockOnPlayer){
-            paintX = (int) Math.ceil((-cameraX + positionX) - spacecraft.getWidth() / 2);
-            paintY = (int) Math.ceil((-cameraY + positionY) - spacecraft.getWidth() / 2);
-            cameraX = (int) Math.ceil(positionX - width / 2);
-            cameraY = (int) Math.ceil(positionY - height / 2);
-        } else {
-            paintX = (int) Math.ceil((-cameraX + positionX) - spacecraft.getWidth() / 2);
-            paintY = (int) Math.ceil((-cameraY + positionY) - spacecraft.getWidth() / 2);
+            cameraX = (int) (positionX - width / 2);
+            cameraY = (int) (positionY - height / 2);
         }
 
         int paintWidth = (int) spacecraft.getWidth();
@@ -115,11 +113,11 @@ public class GraphicalViewer extends Viewer {
         ic.add("Camera position  : " + cameraX + ", " + cameraY);
         ic.add("Player position  : " + playerCoordinateString);
         ic.add("Game version     : " + gameModel.VERSION);
-        String velX = toTruncatedStr(e.getVelocityX(), 1);
-        String velY = toTruncatedStr(e.getVelocityY(), 1);
+        String velX = toTruncatedStr(p.getVelocityX(), 1);
+        String velY = toTruncatedStr(p.getVelocityY(), 1);
 
         ic.add("Player velocity  : " + velX + ", " + velY);
-        ic.add("Player absveloc  : " + toTruncatedStr(e.getAbsoluteVelocity(), 1));
+        ic.add("Player absveloc  : " + toTruncatedStr(p.getAbsoluteVelocity(), 1));
         ic.add("Player angle     : " + toTruncatedStr(Math.toDegrees(p.getRotationAngle()), 1) + " (degrees), " + toTruncatedStr(p.getRotationAngle(), 1) + " (radians)");
         //draw the strings
         ic.paint(g2d);
