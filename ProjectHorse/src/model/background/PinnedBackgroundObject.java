@@ -13,8 +13,5 @@ import java.awt.*;
  * To change this template use File | Settings | File Templates.
  */
 public class PinnedBackgroundObject extends PinnedObject {
-    @Override
-    public boolean collidesWith(Rectangle r) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
+
 }

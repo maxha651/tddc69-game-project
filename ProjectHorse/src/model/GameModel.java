@@ -15,11 +15,14 @@ public class GameModel extends Observable {
     //player controllers
     Player player;
     public boolean accelerationRequest = false;
+    public boolean turnLeftRequest = false;
+    public boolean turnRightRequest = false;
 
     //AI controllers
 
     //object controllers
-    static final double MAX_SPACECRAFT_VELOCITY = 2.0;
+    public static final double DEFAULT_VELOCITY_FLOOR = 0.2;
+    public static final double DEFAULT_SPACE_FRICTION = 0.99;
 
     //graphics controllers
 
@@ -54,7 +57,28 @@ public class GameModel extends Observable {
     public void tick(){
         tick++;
 
+        //add collision checks and method for returning all moveable objects
+        updatePlayer();
+        updateProjectiles();
+        updateEnemies();
+    }
+
+    public void updatePlayer(){
+
+        if(turnLeftRequest){
+            player.rotateLeft(Math.toRadians(player.getSpacecraft().getEngine().getRotationSpeed()));
+        } else if (turnRightRequest) {
+            player.rotateRight(Math.toRadians(player.getSpacecraft().getEngine().getRotationSpeed()));
+        }
         player.updatePosition(accelerationRequest);
+    }
+
+    public void updateEnemies(){
+
+    }
+
+    public void updateProjectiles(){
+
     }
 
     public boolean isGameAlive() {
