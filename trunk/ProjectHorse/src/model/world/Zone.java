@@ -112,9 +112,9 @@ public class Zone {
      */
 
     public WorldObjectContainer getAllObjectsInArea(Coordinate start, Coordinate stop){
-        if (!isWithinBoundaries(start) && !isWithinBoundaries(stop)){
+      /*  if (!isWithinBoundaries(start) && !isWithinBoundaries(stop)){
             throw new IndexOutOfBoundsException();
-        }
+        } */
 
         if (isLastLevel()){
             return getAllObjectsInAreaLastLevel(start, stop);

@@ -107,17 +107,18 @@ public class GraphicalViewer extends Viewer {
         }
     }
 
-    public void paintWorldObjectBounds(Graphics2D g2d, Boundable b, Color c){
+    public void paintWorldObjectBounds(Graphics2D g2d, WorldObject wo, Color c){
+        g2d.setColor(c);
 
-        Coordinate positionInZone = gameModel.getPlayer().getCoordinate();
-        ZoneCoordinate zoneCoordinate = gameModel.getPlayer().getZoneCoordinate();
+        Coordinate positionInZone = wo.getCoordinate();
+        ZoneCoordinate zoneCoordinate = wo.getZoneCoordinate();
         double zoneSize = gameModel.getZoneSize();
 
         int positionX =(int) (positionInZone.getX() + zoneSize*zoneCoordinate.getX());
         int positionY =(int) (positionInZone.getY() + zoneSize*zoneCoordinate.getY());
 
-        int bWidth = (int) b.getBounds().getWidth();
-        int bHeight = (int) b.getBounds().getHeight();
+        int bWidth = (int) wo.getBounds().getWidth();
+        int bHeight = (int) wo.getBounds().getHeight();
 
         int paintX;
         int paintY;
@@ -125,11 +126,11 @@ public class GraphicalViewer extends Viewer {
         paintX = (int) ((-cameraX + positionX) - bWidth / 2);
         paintY = (int) ((-cameraY + positionY) - bHeight / 2);
 
-        paintBounds(g2d, paintX, paintY, width, height);
+        paintBounds(g2d, paintX, paintY, bWidth, bHeight);
     }
 
     public void paintBounds(Graphics2D g2d, int x, int y, int width, int height){
-        g2d.drawRect(x, y, width, height);
+        g2d.fillRect(x, y, width, height);
     }
 
     public void paintExtraInformation(Graphics2D g2d){

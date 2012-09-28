@@ -32,6 +32,7 @@ public class Spacecraft extends Item implements Boundable {
     public Rectangle getBounds(){
         //the bounding rectangle of the spacecraft only checks the hull size
         return new Rectangle((int)this.hull.getWidth(), (int)this.hull.getHeight());
+
     }
 
     public double getWidth(){
