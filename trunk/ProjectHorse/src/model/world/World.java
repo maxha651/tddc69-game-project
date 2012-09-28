@@ -46,6 +46,8 @@ public class World {
     }
 
     public WorldObjectContainer getAllObjectsInArea(Coordinate start, Coordinate stop){
+
+
         //TEmporary
         WorldObjectContainer worldObjects = new WorldObjectContainer();
 

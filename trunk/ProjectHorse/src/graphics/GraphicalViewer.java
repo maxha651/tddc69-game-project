@@ -3,6 +3,7 @@ package graphics;
 import model.GameModel;
 import model.character.Player;
 import model.interfaces.Boundable;
+import model.spacecraft.Cargo;
 import model.spacecraft.Engine;
 import model.spacecraft.Spacecraft;
 import model.utility.shape.Coordinate;
@@ -108,7 +109,12 @@ public class GraphicalViewer extends Viewer {
     }
 
     public void paintWorldObjectBounds(Graphics2D g2d, WorldObject wo, Color c){
-        g2d.setColor(c);
+        if(wo.getClass() == Player.class){
+            g2d.setColor(Color.WHITE);
+        }
+        else{
+            g2d.setColor(c);
+        }
 
         Coordinate positionInZone = wo.getCoordinate();
         ZoneCoordinate zoneCoordinate = wo.getZoneCoordinate();
