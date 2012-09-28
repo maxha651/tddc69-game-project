@@ -5,6 +5,7 @@ import model.character.Player;
 import model.spacecraft.Engine;
 import model.spacecraft.Spacecraft;
 import model.utility.shape.Coordinate;
+import model.utility.shape.ZoneCoordinate;
 
 import java.awt.image.BufferStrategy;
 import java.awt.*;
@@ -73,12 +74,16 @@ public class GraphicalViewer extends Viewer {
     public void paintPlayer(Graphics2D g2d){
         g2d.setColor(paintColor);
 
-        Coordinate position = gameModel.getPlayer().getCoordinate();
+        Coordinate positionInZone = gameModel.getPlayer().getCoordinate();
+        ZoneCoordinate zoneCoordinate = gameModel.getPlayer().getZoneCoordinate();
+        double zoneSize = gameModel.getZoneSize();
         Spacecraft spacecraft = gameModel.getPlayer().getSpacecraft();
         Player player = gameModel.getPlayer();
 
-        double positionX = position.getX();
-        double positionY = position.getY();
+        int positionX = (int) (positionInZone.getX() + zoneSize*zoneCoordinate.getX());
+        double positionY =(int) (positionInZone.getY() + zoneSize*zoneCoordinate.getY());
+
+
 
         int paintX;
         int paintY;

@@ -103,6 +103,10 @@ public class GameModel extends Observable {
         }
     }
 
+    public double getZoneSize(){
+        return ZONE_SIZE;
+    }
+
     public void updateEnemies(){
 
     }
