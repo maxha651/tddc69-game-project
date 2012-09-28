@@ -129,6 +129,8 @@ public class Zone {
                 Coordinate upperRight, upperLeft, lowerRight, lowerLeft;
                 upperLeft = start;
                 lowerRight = stop;
+                upperRight = new Coordinate(stop.getX(), start.getY());
+                lowerLeft = new Coordinate(start.getX(), stop.getY());
 
                 Zone upperLeftZone = getZone(upperLeft);
                 Zone lowerRightZone = getZone(lowerRight);
@@ -138,8 +140,7 @@ public class Zone {
                 }
                 else{ // Has to check different zones
                     WorldObjectContainer resObjects = new WorldObjectContainer();
-                    upperRight = new Coordinate(stop.getX(), start.getY());
-                    lowerLeft = new Coordinate(start.getX(), stop.getY());
+
                     Zone upperRightZone = getZone(upperRight);
                     Zone lowerLeftZone = getZone(lowerLeft);
 

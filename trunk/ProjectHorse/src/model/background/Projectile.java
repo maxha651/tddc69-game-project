@@ -29,6 +29,7 @@ public class Projectile extends MoveableBackgroundObject implements Collideable{
 
     @Override
     public boolean collidesWith(Rectangle r) {
+        
         return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

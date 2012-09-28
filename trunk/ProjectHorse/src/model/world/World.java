@@ -4,6 +4,7 @@ import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 /**
  * Created with IntelliJ IDEA.
@@ -27,8 +28,54 @@ public class World {
         createZones();
     }
 
+    public Zone getZone(Coordinate coordinate){
+        return getZone(toZoneCoordinate(coordinate));
+    }
+
     public void addWorldObject(WorldObject worldObject){
         getZone(worldObject.getCoordinate()).add(worldObject);
+    }
+
+    public WorldObjectContainer getAllObjectsInArea(Coordinate start, Coordinate stop){
+        Coordinate upperRight, upperLeft, lowerRight, lowerLeft;
+        upperLeft = start;
+        lowerRight = stop;
+        upperRight = new Coordinate(stop.getX(), start.getY());
+        lowerLeft = new Coordinate(start.getX(), stop.getY());
+
+        Zone upperLeftZone = getZone(upperLeft);
+        Zone lowerRightZone = getZone(lowerRight);
+
+        if (upperLeftZone == lowerRightZone){
+            return upperLeftZone.getAllObjectsInArea(start, stop);
+        }
+        else{ // Has to check different zones
+            WorldObjectContainer resObjects = new WorldObjectContainer();
+
+            Zone upperRightZone = getZone(upperRight);
+            Zone lowerLeftZone = getZone(lowerLeft);
+
+            resObjects.addAll(upperLeftZone.getAllObjectsInArea(start, stop));
+            resObjects.addAll(lowerRightZone.getAllObjectsInArea(start, stop));
+
+            if(upperLeftZone != upperRightZone && upperLeftZone != lowerLeftZone){
+                resObjects.addAll(lowerLeftZone.getAllObjectsInArea(start, stop));
+                resObjects.addAll(upperRightZone.getAllObjectsInArea(start, stop));
+            }
+            return resObjects;
+        }
+    }
+
+    public void update(){ // Temporary, should only update used zones
+        WorldObjectContainer worldObjects = new WorldObjectContainer();
+
+        for(Zone zone : zones.values()){
+            worldObjects.addAll(zone.getObjectsToReinsert());
+        }
+
+        for(WorldObject object : worldObjects){
+            addWorldObject(object);
+        }
     }
 
     private void createZones(){
@@ -51,10 +98,6 @@ public class World {
         tempY = (int) Math.floor(coordinate.getY() / size);
 
         return new ZoneCoordinate(tempX, tempY);
-    }
-
-    public Zone getZone(Coordinate coordinate){
-        return getZone(toZoneCoordinate(coordinate));
     }
 
     private Zone getZone(ZoneCoordinate coordinate){
