@@ -34,12 +34,10 @@ public class World {
         if (zone == null){
             zones.put(coordinate, new Zone(zonesRelativeOrigo, size, numberOfLevels));
         }
-        return zone;
+        return zones.get(coordinate);
     }
 
-    public Zone getZone(Coordinate coordinate){
-        return getZone(toZoneCoordinate(coordinate));
-    }
+
 
     public void addWorldObject(WorldObject worldObject){
         ZoneCoordinate zoneCoord = worldObject.getZoneCoordinate();
