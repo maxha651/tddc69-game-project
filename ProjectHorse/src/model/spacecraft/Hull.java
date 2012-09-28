@@ -17,5 +17,7 @@ public class Hull extends SpacecraftPart {
         this.width = DEFAULT_WIDTH;
     }
 
-
+    public Rectangle getRectangle(){
+        return new Rectangle((int) width, (int) height);
+    }
 }
