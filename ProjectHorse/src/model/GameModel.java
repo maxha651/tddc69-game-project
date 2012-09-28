@@ -92,7 +92,11 @@ public class GameModel extends Observable {
         if(fireRequest){
             if (fireDelay == 0){
                 Projectile temp = player.fire();
+                System.out.println("Proj: " + projectiles);
+                System.out.println("Temp: " + temp);
+
                 projectiles.add(temp);
+
                 world.addWorldObject(temp); // Error when firing weapon and changing zone y at the same time
                 fireRequest = false;
                 fireDelay = fireDelayDefault;

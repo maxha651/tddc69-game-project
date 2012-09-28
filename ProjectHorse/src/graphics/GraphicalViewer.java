@@ -124,6 +124,8 @@ public class GraphicalViewer extends Viewer {
         ic.add("Player velocity  : " + velX + ", " + velY);
         ic.add("Player absveloc  : " + toTruncatedStr(p.getAbsoluteVelocity(), 1));
         ic.add("Player angle     : " + toTruncatedStr(Math.toDegrees(p.getRotationAngle()), 1) + " (degrees), " + toTruncatedStr(p.getRotationAngle(), 1) + " (radians)");
+        playerCoordinateString = toTruncatedStr(p.getZoneCoordinate().getX(), 0) + ", " + toTruncatedStr(p.getZoneCoordinate().getY(), 0);
+        ic.add("Player zone coord: " + playerCoordinateString);
         //draw the strings
         ic.paint(g2d);
     }
