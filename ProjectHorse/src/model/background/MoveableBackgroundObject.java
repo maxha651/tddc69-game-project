@@ -13,7 +13,7 @@ import model.interfaces.Moveable;
 public class MoveableBackgroundObject extends MoveableObject {
 
     @Override
-    public void updatePosition() {
+    public void updatePosition(double zoneSize) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 }
