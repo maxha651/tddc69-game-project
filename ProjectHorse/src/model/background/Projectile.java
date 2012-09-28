@@ -17,11 +17,13 @@ import java.awt.*;
 public class Projectile extends MoveableBackgroundObject implements Collideable{
     int minDamage, maxDamage;
     ProjectileType pt;
+    boolean impact;
 
     public Projectile(Weapon w, Coordinate coordinate, double angle) {
         this.pt = w.getProjectileType();
         this.minDamage = w.getMinDamage();
         this.maxDamage = w.getMaxDamage();
+        this.impact = false;
         this.velocityX = model.utility.math.StandardMath.xPart(w.getAbsVelocity(), this.rotationAngle);
         this.velocityY = model.utility.math.StandardMath.yPart(w.getAbsVelocity(), this.rotationAngle);
         this.coordinate = coordinate;
@@ -29,7 +31,11 @@ public class Projectile extends MoveableBackgroundObject implements Collideable{
 
     @Override
     public boolean collidesWith(Rectangle r) {
-        
+
         return false;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public void impact(){
+        impact = true;
     }
 }

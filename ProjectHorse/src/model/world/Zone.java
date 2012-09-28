@@ -245,6 +245,8 @@ public class Zone {
     }
 
     private boolean isWithinBoundaries(Coordinate position){
+        /*System.out.println("object x: " + position.getX() + " y: " + position.getY());
+        System.out.println("zone x  : " + pos.getX() + " y: " + pos.getY());*/
         if (position.getX() < pos.getX() || position.getX() > pos.getX() + size -1){
             return false;
         }

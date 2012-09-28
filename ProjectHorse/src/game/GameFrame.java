@@ -65,7 +65,7 @@ public class GameFrame extends JFrame implements KeyListener, Observer {
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
-        Player p = gameModel.getPlayer();
+        // Player p = gameModel.getPlayer();
         switch(keyCode){
             case KeyEvent.VK_W:
                 gameModel.accelerationRequest = true;
@@ -80,8 +80,11 @@ public class GameFrame extends JFrame implements KeyListener, Observer {
                 viewer.setLockOnPlayer(!viewer.isLockOnPlayer());
                 break;
             case KeyEvent.VK_SPACE:
-                p.fire(p.getSpacecraft().getWeapon1());
+                //gameModel.fireRequest = true;
                 break;
+            /*case KeyEvent.VK_SPACE:
+                p.fire(p.getSpacecraft().getWeapon1());
+                break;*/
         }
     }
 
@@ -98,6 +101,9 @@ public class GameFrame extends JFrame implements KeyListener, Observer {
                 break;
             case KeyEvent.VK_D:
                 gameModel.turnRightRequest = false;
+                break;
+            case KeyEvent.VK_SPACE:
+                gameModel.fireRequest = false;
                 break;
         }
 
