@@ -3,6 +3,8 @@ package model.background;
 import model.MoveableObject;
 import model.interfaces.Moveable;
 
+import java.awt.*;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Brain
@@ -15,5 +17,10 @@ public class MoveableBackgroundObject extends MoveableObject {
     @Override
     public void updatePosition(double zoneSize) {
         //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public Rectangle getBounds() {
+        return new Rectangle();
     }
 }

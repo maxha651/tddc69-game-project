@@ -111,7 +111,7 @@ public class GraphicalViewer extends Viewer {
         WorldObjectContainer woc = gameModel.getAllObjectsInArea(zs, new Coordinate(cameraX - 100, cameraY - 100), new Coordinate(cameraX + width, cameraY + height));
         WorldObject wo;
 
-        for(int i = 0; i < woc.size(); i++){
+      /*  for(int i = 0; i < woc.size(); i++){
 
 
             wo = woc.get(i);
@@ -126,7 +126,7 @@ public class GraphicalViewer extends Viewer {
                 paintY = (int) ((-cameraY + positionY) - wo.getHeight() / 2);
             }
 
-        }
+        }*/
 
 
     }

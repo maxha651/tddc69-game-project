@@ -12,4 +12,9 @@ public class NPC extends AbstractCharacter {
     public void updatePosition(double zoneSize) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
+
+    @Override
+    public Rectangle getBounds() {
+        return spacecraft.getHull().getRectangle();
+    }
 }
