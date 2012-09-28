@@ -1,6 +1,7 @@
 package model;
 
 import model.utility.shape.Coordinate;
+import model.utility.shape.ZoneCoordinate;
 import model.world.WorldObject;
 
 /**
@@ -23,11 +24,35 @@ public abstract class MoveableObject extends WorldObject{
         this.rotationAngle = rotationAngle;
     }
 
-    public void updatePosition(){
-        Coordinate c = this.coordinate;
+    public void updatePosition(double zoneSize){
+        Coordinate c = new Coordinate();
 
-        c.setX(c.getX() + velocityX);
-        c.setY(c.getY() + velocityY);
+        c.setX(coordinate.getX() + velocityX);
+        c.setY(coordinate.getY() + velocityY);
+
+        if (c.getX() > zoneSize){
+            ZoneCoordinate TempZoneCord = zoneCoordinate;
+            zoneCoordinate.setX(zoneCoordinate.getX() +1);
+            c.setX(c.getX() % zoneSize);
+        }
+        if (c.getX() < 0.0){
+            ZoneCoordinate TempZoneCord = zoneCoordinate;
+            zoneCoordinate.setX(zoneCoordinate.getX() -1);
+            c.setX(zoneSize + c.getX());
+        }
+        if (c.getY() > zoneSize){
+            ZoneCoordinate TempZoneCord = zoneCoordinate;
+            zoneCoordinate.setY(zoneCoordinate.getY() +1);
+            c.setY(c.getY() % zoneSize);
+        }
+        if (c.getY() < 0.0){
+            ZoneCoordinate TempZoneCord = zoneCoordinate;
+            zoneCoordinate.setY(zoneCoordinate.getY() -1);
+            c.setY(zoneSize + c.getY());
+        }
+
+        coordinate.setX(c.getX());
+        coordinate.setY(c.getY());
     };
 
     public double getVelocityX() {

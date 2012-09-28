@@ -22,18 +22,21 @@ public class GameModel extends Observable {
     public boolean accelerationRequest = false;
     public boolean turnLeftRequest = false;
     public boolean turnRightRequest = false;
-    public boolean fireRequest = true;
+    public boolean fireRequest = false;
 
     //AI controllers
 
     // Projectile controllers
+    private int fireDelayDefault = 10;
+    private int fireDelay = 0;
     LinkedList<Projectile> projectiles = new LinkedList<Projectile>();
 
     //object controllers
     public static final double DEFAULT_VELOCITY_FLOOR = 0.2;
     public static final double DEFAULT_SPACE_FRICTION = 0.99;
+    public static final double ZONE_SIZE = 1000;
 
-    World world = new World(0, 2000);
+    World world = new World(0, 1000);
 
     //graphics controllers
 
@@ -70,6 +73,7 @@ public class GameModel extends Observable {
         tick++;
 
         //add collision checks and method for returning all moveable objects
+
         world.update();
         updatePlayer();
         updateProjectiles();
@@ -83,12 +87,18 @@ public class GameModel extends Observable {
         } else if (turnRightRequest) {
             player.rotateRight(Math.toRadians(player.getSpacecraft().getEngine().getRotationSpeed()));
         }
-        player.updatePosition(accelerationRequest);
+        player.updatePosition(accelerationRequest, ZONE_SIZE);
         if(fireRequest){
-            Projectile temp = player.fire();
-            projectiles.add(temp);
-            world.addWorldObject(temp);
-            fireRequest = false;
+            if (fireDelay == 0){
+                Projectile temp = player.fire();
+                projectiles.add(temp);
+                world.addWorldObject(temp); // Error when firing weapon and changing zone y at the same time
+                fireRequest = false;
+                fireDelay = fireDelayDefault;
+            }
+            else{
+                fireDelay--;
+            }
         }
     }
 

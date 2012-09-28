@@ -4,6 +4,7 @@ import model.interfaces.Collideable;
 import model.spacecraft.Weapon;
 import model.utility.enums.ProjectileType;
 import model.utility.shape.Coordinate;
+import model.utility.shape.ZoneCoordinate;
 
 import java.awt.*;
 
@@ -19,7 +20,7 @@ public class Projectile extends MoveableBackgroundObject implements Collideable{
     ProjectileType pt;
     boolean impact;
 
-    public Projectile(Weapon w, Coordinate coordinate, double angle) {
+    public Projectile(Weapon w, Coordinate coordinate, double angle, ZoneCoordinate zoneCoordinate) {
         this.pt = w.getProjectileType();
         this.minDamage = w.getMinDamage();
         this.maxDamage = w.getMaxDamage();
@@ -27,6 +28,7 @@ public class Projectile extends MoveableBackgroundObject implements Collideable{
         this.velocityX = model.utility.math.StandardMath.xPart(w.getAbsVelocity(), this.rotationAngle);
         this.velocityY = model.utility.math.StandardMath.yPart(w.getAbsVelocity(), this.rotationAngle);
         this.coordinate = coordinate;
+        this.zoneCoordinate = zoneCoordinate;
     }
 
     @Override

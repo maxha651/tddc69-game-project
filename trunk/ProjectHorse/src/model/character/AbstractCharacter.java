@@ -44,9 +44,9 @@ public abstract class AbstractCharacter extends MoveableObject {
     }
 
 
-    public void updatePosition(boolean accelerate) {
+    public void updatePosition(boolean accelerate, double zoneSize) {
         this.updateVelocity(accelerate);
-        super.updatePosition();
+        super.updatePosition(zoneSize);
     }
 
 

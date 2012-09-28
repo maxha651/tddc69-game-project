@@ -2,6 +2,7 @@ package model.world;
 
 import model.AbstractGameObject;
 import model.utility.shape.Coordinate;
+import model.utility.shape.ZoneCoordinate;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,9 +14,21 @@ import model.utility.shape.Coordinate;
 public abstract class WorldObject extends AbstractGameObject {
 
     protected Coordinate coordinate;
+    protected ZoneCoordinate zoneCoordinate;
 
     public Coordinate getCoordinate() {
         return coordinate;
     }
 
+    public ZoneCoordinate getZoneCoordinate(){
+        return zoneCoordinate;
+    }
+
+    public void setCoordinate(Coordinate coordinate) {
+        this.coordinate = coordinate;
+    }
+
+    public void setZoneCoordinate(ZoneCoordinate zoneCoordinate) {
+        this.zoneCoordinate = zoneCoordinate;
+    }
 }

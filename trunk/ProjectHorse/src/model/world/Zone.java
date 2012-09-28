@@ -172,7 +172,7 @@ public class Zone {
         return resObjects;
     }
 
-    protected WorldObjectContainer getObjectsToReinsert(){
+    protected WorldObjectContainer removeObjectsToReinsert(){
         WorldObjectContainer resObjects = new WorldObjectContainer();
 
         if(isLastLevel()){
@@ -184,15 +184,15 @@ public class Zone {
             }
         }
         else{
-            resObjects.addAll(northWest.getObjectsToReinsert());
-            resObjects.addAll(north.getObjectsToReinsert());
-            resObjects.addAll(northEast.getObjectsToReinsert());
-            resObjects.addAll(west.getObjectsToReinsert());
-            resObjects.addAll(center.getObjectsToReinsert());
-            resObjects.addAll(east.getObjectsToReinsert());
-            resObjects.addAll(southWest.getObjectsToReinsert());
-            resObjects.addAll(south.getObjectsToReinsert());
-            resObjects.addAll(southEast.getObjectsToReinsert());
+            resObjects.addAll(northWest.removeObjectsToReinsert());
+            resObjects.addAll(north.removeObjectsToReinsert());
+            resObjects.addAll(northEast.removeObjectsToReinsert());
+            resObjects.addAll(west.removeObjectsToReinsert());
+            resObjects.addAll(center.removeObjectsToReinsert());
+            resObjects.addAll(east.removeObjectsToReinsert());
+            resObjects.addAll(southWest.removeObjectsToReinsert());
+            resObjects.addAll(south.removeObjectsToReinsert());
+            resObjects.addAll(southEast.removeObjectsToReinsert());
         }
         return resObjects;
     }
@@ -200,7 +200,7 @@ public class Zone {
     public void update(){
         if(isLastLevel()){
             WorldObjectContainer objects;
-            objects = getObjectsToReinsert();
+            objects = removeObjectsToReinsert();
 
             for (WorldObject object : objects){
                 this.add(object);
@@ -245,12 +245,10 @@ public class Zone {
     }
 
     private boolean isWithinBoundaries(Coordinate position){
-        /*System.out.println("object x: " + position.getX() + " y: " + position.getY());
-        System.out.println("zone x  : " + pos.getX() + " y: " + pos.getY());*/
-        if (position.getX() < pos.getX() || position.getX() > pos.getX() + size -1){
+        if (position.getX() < pos.getX() || position.getX() > pos.getX() + size){
             return false;
         }
-        if (position.getY() < pos.getY() || position.getY() > pos.getY() + size -1){
+        if (position.getY() < pos.getY() || position.getY() > pos.getY() + size){
             return false;
         }
         return true;
