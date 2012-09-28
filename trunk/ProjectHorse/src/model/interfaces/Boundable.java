@@ -1,5 +1,7 @@
 package model.interfaces;
 
+import java.awt.*;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Brain
@@ -8,4 +10,6 @@ package model.interfaces;
  * To change this template use File | Settings | File Templates.
  */
 public interface Boundable {
+
+    Rectangle getBounds();
 }

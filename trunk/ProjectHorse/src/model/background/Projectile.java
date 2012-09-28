@@ -1,5 +1,6 @@
 package model.background;
 
+import model.interfaces.Boundable;
 import model.interfaces.Collideable;
 import model.spacecraft.Weapon;
 import model.utility.enums.ProjectileType;
@@ -15,8 +16,9 @@ import java.awt.*;
  * Time: 23:53
  * To change this template use File | Settings | File Templates.
  */
-public class Projectile extends MoveableBackgroundObject implements Collideable{
+public class Projectile extends MoveableBackgroundObject implements Collideable, Boundable{
     int minDamage, maxDamage;
+    double boundingWidth = 10, boundingHeight = 10;
     ProjectileType pt;
     boolean impact;
 
@@ -39,5 +41,10 @@ public class Projectile extends MoveableBackgroundObject implements Collideable{
 
     public void impact(){
         impact = true;
+    }
+
+    @Override
+    public Rectangle getBounds() {
+        return new Rectangle((int) this.coordinate.getX(), (int) this.coordinate.getY(), (int) boundingWidth, (int) boundingHeight);
     }
 }
