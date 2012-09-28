@@ -2,6 +2,7 @@ package model.character;
 
 
 import model.background.Projectile;
+import model.interfaces.Boundable;
 import model.interfaces.Collideable;
 import model.interfaces.Moveable;
 import model.spacecraft.Engine;
@@ -13,7 +14,7 @@ import model.utility.shape.ZoneCoordinate;
 
 import java.awt.*;
 
-public class Player extends AbstractCharacter{
+public class Player extends AbstractCharacter implements Collideable, Boundable{
 
     public Player(){
         this.setSpacecraft(new Spacecraft());
@@ -23,5 +24,15 @@ public class Player extends AbstractCharacter{
 
     public Projectile fire(){
         return new Projectile(spacecraft.getWeapon1(), new Coordinate(this.getCoordinate()), this.rotationAngle, this.zoneCoordinate);
+    }
+
+    @Override
+    public Rectangle getBounds() {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean collidesWith(Rectangle r) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }
