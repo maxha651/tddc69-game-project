@@ -41,7 +41,7 @@ public class World {
 
     public void addWorldObject(WorldObject worldObject){
         ZoneCoordinate zoneCoord = worldObject.getZoneCoordinate();
-        Zone zone= getZone(zoneCoord);
+        Zone zone = getZone(zoneCoord);
         zone.add(worldObject);
     }
 
