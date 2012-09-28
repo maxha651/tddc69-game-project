@@ -1,6 +1,7 @@
 package model.world;
 
 import model.AbstractGameObject;
+import model.interfaces.Boundable;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 
@@ -11,7 +12,7 @@ import model.utility.shape.ZoneCoordinate;
  * Time: 00:19
  * To change this template use File | Settings | File Templates.
  */
-public abstract class WorldObject extends AbstractGameObject {
+public abstract class WorldObject extends AbstractGameObject implements Boundable {
 
     protected Coordinate coordinate;
     protected ZoneCoordinate zoneCoordinate;

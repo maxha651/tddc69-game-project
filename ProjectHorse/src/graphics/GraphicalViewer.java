@@ -6,6 +6,8 @@ import model.spacecraft.Engine;
 import model.spacecraft.Spacecraft;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
+import model.world.WorldObject;
+import model.world.WorldObjectContainer;
 
 import java.awt.image.BufferStrategy;
 import java.awt.*;
@@ -103,6 +105,29 @@ public class GraphicalViewer extends Viewer {
     }
 
     public void paintWorldObjects(Graphics2D g2d){
+        Player p = gameModel.getPlayer();
+        ZoneCoordinate zs = p.getZoneCoordinate();
+
+        WorldObjectContainer woc = gameModel.getAllObjectsInArea(zs, new Coordinate(cameraX - 100, cameraY - 100), new Coordinate(cameraX + width, cameraY + height));
+        WorldObject wo;
+
+        for(int i = 0; i < woc.size(); i++){
+
+
+            wo = woc.get(i);
+
+            //paint boundables
+            if(wo.getClass()){
+                Coordinate co = new Coordinate(wo.getCoordinate());
+                int paintX = (int) co.getX();
+                int paintY = (int) co.getY();
+
+                paintX = (int) ((-cameraX + positionX) - wo.getWidth() / 2);
+                paintY = (int) ((-cameraY + positionY) - wo.getHeight() / 2);
+            }
+
+        }
+
 
     }
 
