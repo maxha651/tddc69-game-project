@@ -1,8 +1,13 @@
 package model;
 
 
+import model.background.Projectile;
 import model.character.Player;
+import model.utility.shape.Coordinate;
+import model.world.World;
+import model.world.WorldObjectContainer;
 
+import java.util.LinkedList;
 import java.util.Observable;
 
 public class GameModel extends Observable {
@@ -17,12 +22,18 @@ public class GameModel extends Observable {
     public boolean accelerationRequest = false;
     public boolean turnLeftRequest = false;
     public boolean turnRightRequest = false;
+    public boolean fireRequest = true;
 
     //AI controllers
+
+    // Projectile controllers
+    LinkedList<Projectile> projectiles = new LinkedList<Projectile>();
 
     //object controllers
     public static final double DEFAULT_VELOCITY_FLOOR = 0.2;
     public static final double DEFAULT_SPACE_FRICTION = 0.99;
+
+    World world = new World(0, 2000);
 
     //graphics controllers
 
@@ -36,6 +47,7 @@ public class GameModel extends Observable {
     public GameModel(int seed){
         this.seed = seed;
         player = new Player();
+        world.addWorldObject(player);
     }
 
     public Player getPlayer() {
@@ -58,6 +70,7 @@ public class GameModel extends Observable {
         tick++;
 
         //add collision checks and method for returning all moveable objects
+        world.update();
         updatePlayer();
         updateProjectiles();
         updateEnemies();
@@ -71,6 +84,12 @@ public class GameModel extends Observable {
             player.rotateRight(Math.toRadians(player.getSpacecraft().getEngine().getRotationSpeed()));
         }
         player.updatePosition(accelerationRequest);
+        if(fireRequest){
+            Projectile temp = player.fire();
+            projectiles.add(temp);
+            world.addWorldObject(temp);
+            fireRequest = false;
+        }
     }
 
     public void updateEnemies(){
@@ -78,7 +97,20 @@ public class GameModel extends Observable {
     }
 
     public void updateProjectiles(){
+        for (Projectile projectile : projectiles){
+            Coordinate upperLeftToCheck, lowerRightToCheck;
 
+            lowerRightToCheck = projectile.getCoordinate();
+            upperLeftToCheck = new Coordinate(lowerRightToCheck.getX() - 10.0, lowerRightToCheck.getY() - 10.0);
+
+            WorldObjectContainer worldObjects = world.getAllObjectsInArea(upperLeftToCheck, lowerRightToCheck);
+
+            if(worldObjects.size() > 1){
+                projectile.impact();
+                //worldObjects.remove(projectile);
+                System.out.println("impact");
+            }
+        }
     }
 
     public boolean isGameAlive() {

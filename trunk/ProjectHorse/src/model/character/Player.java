@@ -19,7 +19,7 @@ public class Player extends AbstractCharacter{
         this.coordinate = new Coordinate(0,0);
     }
 
-    public Projectile fire(Weapon w){
-        return new Projectile(w, this.coordinate, this.rotationAngle);
+    public Projectile fire(){
+        return new Projectile(spacecraft.getWeapon1(), new Coordinate(this.getCoordinate()), this.rotationAngle);
     }
 }

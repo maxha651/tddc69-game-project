@@ -4,6 +4,7 @@ import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 /**
@@ -23,7 +24,7 @@ public class World {
     public World(int numberOfLevels, double size){
         this.numberOfLevels = numberOfLevels;
         this.size = size;
-
+        this.zones = new HashMap<ZoneCoordinate, Zone>();
         // creates 9 zones around origo to start with
         createZones();
     }
@@ -79,7 +80,7 @@ public class World {
     }
 
     private void createZones(){
-        zones.put(new ZoneCoordinate(-1,-1), new Zone(zonesRelativeOrigo, size, numberOfLevels));
+        zones.put(new ZoneCoordinate(-1, -1), new Zone(zonesRelativeOrigo, size, numberOfLevels));
         zones.put(new ZoneCoordinate(0,-1), new Zone(zonesRelativeOrigo, size, numberOfLevels));
         zones.put(new ZoneCoordinate(1,-1), new Zone(zonesRelativeOrigo, size, numberOfLevels));
         zones.put(new ZoneCoordinate(-1,0), new Zone(zonesRelativeOrigo, size, numberOfLevels));
