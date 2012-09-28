@@ -4,6 +4,7 @@ package model;
 import model.background.Projectile;
 import model.character.Player;
 import model.utility.shape.Coordinate;
+import model.utility.shape.ZoneCoordinate;
 import model.world.World;
 import model.world.WorldObjectContainer;
 
@@ -130,6 +131,10 @@ public class GameModel extends Observable {
                 System.out.println("impact");
             }
         }
+    }
+
+    public WorldObjectContainer getAllObjectsInArea(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
+        return world.getAllObjectsInArea(start, stop);
     }
 
     public boolean isGameAlive() {
