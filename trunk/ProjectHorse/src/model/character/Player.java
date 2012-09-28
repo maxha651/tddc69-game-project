@@ -28,7 +28,7 @@ public class Player extends AbstractCharacter implements Collideable, Boundable{
 
     @Override
     public Rectangle getBounds() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return getSpacecraft().getBounds();
     }
 
     @Override
