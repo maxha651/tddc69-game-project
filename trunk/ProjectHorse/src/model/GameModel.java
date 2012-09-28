@@ -51,7 +51,6 @@ public class GameModel extends Observable {
     public GameModel(int seed){
         this.seed = seed;
         player = new Player();
-        world.addWorldObject(player);
     }
 
     public Player getPlayer() {
