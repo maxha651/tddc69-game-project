@@ -82,6 +82,7 @@ public class GameModel extends Observable {
 
     public void updatePlayer(){
 
+
         if(turnLeftRequest){
             player.rotateLeft(Math.toRadians(player.getSpacecraft().getEngine().getRotationSpeed()));
         } else if (turnRightRequest) {
