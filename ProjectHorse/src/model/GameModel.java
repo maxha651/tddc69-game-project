@@ -37,7 +37,7 @@ public class GameModel extends Observable {
     public static final double DEFAULT_SPACE_FRICTION = 0.99;
     public static final double ZONE_SIZE = 1000;
 
-    World world = new World(0, 1000);
+    World world = new World(0, ZONE_SIZE);
 
     //graphics controllers
 
@@ -91,7 +91,7 @@ public class GameModel extends Observable {
         }
         player.updatePosition(accelerationRequest, ZONE_SIZE);
         if(fireRequest){
-            if (fireDelay == 0){
+            if (fireDelay <= 0){
                 Projectile temp = player.fire();
                 System.out.println("Proj: " + projectiles);
                 System.out.println("Temp: " + temp);
@@ -99,7 +99,7 @@ public class GameModel extends Observable {
                 projectiles.add(temp);
 
                 world.addWorldObject(temp); // Error when firing weapon and changing zone y at the same time
-                fireRequest = false;
+
                 fireDelay = fireDelayDefault;
             }
             else{
