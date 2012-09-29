@@ -13,16 +13,9 @@ import model.world.WorldObject;
  */
 public abstract class MoveableObject extends WorldObject{
 
-    protected double rotationAngle;
     protected double velocityX, velocityY;
 
-    public double getRotationAngle() {
-        return rotationAngle;
-    }
 
-    public void setRotationAngle(double rotationAngle) {
-        this.rotationAngle = rotationAngle;
-    }
 
     public void updatePosition(double zoneSize){
         Coordinate c = new Coordinate();

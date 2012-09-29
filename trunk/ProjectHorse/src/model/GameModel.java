@@ -16,7 +16,7 @@ public class GameModel extends Observable {
     //game controllers
     boolean isAlive = true;
     int seed;
-    long tick = 0;
+    public long tick = 0;
 
     //player controllers
     Player player;
@@ -88,6 +88,11 @@ public class GameModel extends Observable {
         world.update();
 
         updateTime = System.currentTimeMillis() - start;
+
+        //to make the game not fuck up the computer if memory leaks
+        if(tick > 1000){
+            System.exit(0);
+        }
     }
 
     public void updatePlayer(){
