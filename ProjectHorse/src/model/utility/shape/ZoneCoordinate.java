@@ -17,6 +17,11 @@ public class ZoneCoordinate {
         this.y = y;
     }
 
+    public ZoneCoordinate (ZoneCoordinate zoneCoordinate){
+        this.x = zoneCoordinate.getX();
+        this.y = zoneCoordinate.getY();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

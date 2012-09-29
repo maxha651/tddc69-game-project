@@ -102,6 +102,7 @@ public class GraphicalViewer extends Viewer {
 
         for(int i = 0; i < woc.size(); i++){
             wo = woc.get(i);
+            zs = wo.getZoneCoordinate();
 
             //paint boundables
             paintWorldObjectBounds(g2d, wo, Color.RED);
