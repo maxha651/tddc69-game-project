@@ -43,6 +43,8 @@ public class GameModel extends Observable {
 
     //other
     public static final String VERSION = "1.0a";
+    public int numberOfWorldObjects = 0;
+    public long updateTime = 0;
 
     public GameModel(){
         this(1);
@@ -71,6 +73,10 @@ public class GameModel extends Observable {
     }
 
     public void tick(){
+
+        long start = System.currentTimeMillis();
+
+        numberOfWorldObjects = world.getNumberOfWorldObjects();
         tick++;
 
         //add collision checks and method for returning all moveable objects
@@ -79,6 +85,8 @@ public class GameModel extends Observable {
         updatePlayer();
         updateProjectiles();
         updateEnemies();
+
+        updateTime = System.currentTimeMillis() - start;
     }
 
     public void updatePlayer(){

@@ -160,6 +160,8 @@ public class GraphicalViewer extends Viewer {
         ic.add("Player angle     : " + toTruncatedStr(Math.toDegrees(p.getRotationAngle()), 1) + " (degrees), " + toTruncatedStr(p.getRotationAngle(), 1) + " (radians)");
         playerCoordinateString = toTruncatedStr(p.getZoneCoordinate().getX(), 0) + ", " + toTruncatedStr(p.getZoneCoordinate().getY(), 0);
         ic.add("Player zone coord: " + playerCoordinateString);
+        ic.add("World objects #  : " + gameModel.numberOfWorldObjects);
+        ic.add("Tick Update Time : " + gameModel.updateTime);
         //draw the strings
         ic.paint(g2d);
     }

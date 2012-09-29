@@ -20,6 +20,12 @@ public class World {
     double size;
     HashMap<ZoneCoordinate, Zone> zones;
 
+    public int getNumberOfWorldObjects() {
+        return numberOfWorldObjects;
+    }
+
+    int numberOfWorldObjects = 0;
+
     public World(int numberOfLevels, double size){
         this.numberOfLevels = numberOfLevels;
         this.size = size;
@@ -43,6 +49,7 @@ public class World {
         ZoneCoordinate zoneCoord = worldObject.getZoneCoordinate();
         Zone zone = getZone(zoneCoord);
         zone.add(worldObject);
+        numberOfWorldObjects++;
     }
 
     public WorldObjectContainer getAllObjectsInArea(Coordinate start, Coordinate stop){
