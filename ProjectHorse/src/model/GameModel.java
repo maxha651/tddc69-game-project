@@ -83,9 +83,9 @@ public class GameModel extends Observable {
 
 
         updatePlayer();
-        world.update();
-        updateProjectiles();
+        //updateProjectiles();
         updateEnemies();
+        world.update();
 
         updateTime = System.currentTimeMillis() - start;
     }
@@ -98,7 +98,10 @@ public class GameModel extends Observable {
         } else if (turnRightRequest) {
             player.rotateRight(Math.toRadians(player.getSpacecraft().getEngine().getRotationSpeed()));
         }
-        player.updatePosition(accelerationRequest, ZONE_SIZE);
+        if (accelerationRequest){
+            player.accelerate();
+        }
+        //player.updatePosition(accelerationRequest, ZONE_SIZE);
         if(fireRequest){
             if (fireDelay <= 0){
                 Projectile temp = player.fire();

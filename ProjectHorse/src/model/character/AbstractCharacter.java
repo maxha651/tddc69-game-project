@@ -5,7 +5,6 @@ import model.MoveableObject;
 import model.spacecraft.Engine;
 import model.spacecraft.Spacecraft;
 import model.utility.math.StandardMath;
-import model.world.WorldObject;
 
 public abstract class AbstractCharacter extends MoveableObject {
     public Spacecraft getSpacecraft() {
@@ -20,15 +19,20 @@ public abstract class AbstractCharacter extends MoveableObject {
         Engine e = this.spacecraft.getEngine();
 
         if(accelerate){
-            accelerate(rotationAngle);
+            accelerate();
         }
 
         //space friction
-        deaccelerate(rotationAngle);
-
+        deaccelerate();
     }
 
-    public void deaccelerate(double angle) {
+    @Override
+    public void updatePosition(double zoneSize) {
+        super.updatePosition(zoneSize);
+        deaccelerate();
+    }
+
+    public void deaccelerate() {
         double velocityLength = StandardMath.pyth(velocityX, velocityY);
 
         if(velocityLength > 0.1){
@@ -49,16 +53,13 @@ public abstract class AbstractCharacter extends MoveableObject {
         super.updatePosition(zoneSize);
     }
 
-
-
-    public void accelerate(double angle) {
-
+    public void accelerate() {
         double acceleration = spacecraft.getEngine().getAcceleration();
         double maxVelocity = spacecraft.getEngine().getVelocityMax();
 
         if(StandardMath.pyth(velocityX, velocityY) < maxVelocity){
-            this.velocityX += StandardMath.xPart(acceleration, angle);
-            this.velocityY += StandardMath.yPart(acceleration, angle);
+            this.velocityX += StandardMath.xPart(acceleration, rotationAngle);
+            this.velocityY += StandardMath.yPart(acceleration, rotationAngle);
 
             double newVelocity = StandardMath.pyth(velocityX, velocityY);
 

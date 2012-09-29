@@ -1,10 +1,11 @@
 package model.world;
 
-import model.background.Projectile;
+import model.MoveableObject;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 
 import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,7 +19,7 @@ public class World {
 
     int numberOfLevels;
     double size;
-    HashMap<ZoneCoordinate, Zone> zones;
+    ConcurrentHashMap<ZoneCoordinate, Zone> zones;
 
     public int getNumberOfWorldObjects() {
         return numberOfWorldObjects;
@@ -29,7 +30,7 @@ public class World {
     public World(int numberOfLevels, double size){
         this.numberOfLevels = numberOfLevels;
         this.size = size;
-        this.zones = new HashMap<ZoneCoordinate, Zone>();
+        this.zones = new ConcurrentHashMap<ZoneCoordinate, Zone>();
         // creates 9 zones around origo to start with
         createZones();
     }
@@ -118,16 +119,20 @@ public class World {
     }
 
     public void update(){
-        WorldObjectContainer worldObjects = new WorldObjectContainer();
-
         for(Zone zone : zones.values()){
-            worldObjects.addAll(zone.removeObjectsToReinsert());
+            for(WorldObject object : zone.getWorldObjects()){
+                if(MoveableObject.class.isAssignableFrom(object.getClass())){
+                    ((MoveableObject) object).updatePosition(size);
+                }
+            }
 
         }
 
-        for(WorldObject object : worldObjects){
-            updateZone(object);
-            addWorldObject(object);
+        for(Zone zone : zones.values()){
+            for(WorldObject object : zone.removeObjectsToReinsert()){
+                updateZone(object);
+                addWorldObject(object);
+            }
         }
     }
 

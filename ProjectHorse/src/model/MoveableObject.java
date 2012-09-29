@@ -83,7 +83,6 @@ public abstract class MoveableObject extends WorldObject{
         }
     }
 
-
     public double getAbsoluteVelocity(){
         return model.utility.math.StandardMath.pyth(velocityX, velocityY);
     }
