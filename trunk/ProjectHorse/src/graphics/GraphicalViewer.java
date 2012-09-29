@@ -97,7 +97,7 @@ public class GraphicalViewer extends Viewer {
         Player p = gameModel.getPlayer();
         ZoneCoordinate zs = p.getZoneCoordinate();
 
-        WorldObjectContainer woc = gameModel.getAllObjectsInArea(zs, new Coordinate(cameraX - 100, cameraY - 100), new Coordinate(cameraX + width, cameraY + height));
+        WorldObjectContainer woc = gameModel.getAllObjectsInArea(zs, new Coordinate(cameraX - 10000, cameraY - 10000), new Coordinate(cameraX + width * 2, cameraY + height * 2));
         WorldObject wo;
 
         for(int i = 0; i < woc.size(); i++){
