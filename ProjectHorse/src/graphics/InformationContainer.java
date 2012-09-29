@@ -14,6 +14,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class InformationContainer {
     int stringPaddingY = 20;
     int stringPaddingX = 20;
+    int originX = 0;
+    int originY = 0;
     int numberOfRows = 0;
     LinkedBlockingQueue<String> queue = new LinkedBlockingQueue<String>();
 

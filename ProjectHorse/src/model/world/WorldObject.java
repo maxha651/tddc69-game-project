@@ -16,6 +16,16 @@ public abstract class WorldObject extends AbstractGameObject implements Boundabl
 
     protected Coordinate coordinate;
     protected ZoneCoordinate zoneCoordinate;
+    protected double rotationAngle;
+
+
+    public double getRotationAngle() {
+        return rotationAngle;
+    }
+
+    public void setRotationAngle(double rotationAngle) {
+        this.rotationAngle = rotationAngle;
+    }
 
     public Coordinate getCoordinate() {
         return coordinate;

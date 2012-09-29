@@ -11,6 +11,7 @@ import model.utility.shape.ZoneCoordinate;
 import model.world.WorldObject;
 import model.world.WorldObjectContainer;
 
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -34,19 +35,19 @@ public class GraphicalViewer extends Viewer {
     Color backgroundColor = DEFAULT_BACKGROUND_COLOR;
     Color informationFontColor = DEFAULT_FONT_COLOR;
     Color paintColor = DEFAULT_PAINT_COLOR;
+
+
+
     int width, height;
     boolean lockOnPlayer = true;
-
-    public boolean isPaintExtraInformation() {
-        return paintExtraInformation;
-    }
-
-    public void setPaintExtraInformation(boolean paintExtraInformation) {
-        this.paintExtraInformation = paintExtraInformation;
-    }
-
+    boolean drawCross = true;
     boolean paintExtraInformation = true;
+
+
+
+    boolean paintKeyBindings = true;
     int cameraX = - DEFAULT_SCREEN_WIDTH_PX/2, cameraY = - DEFAULT_SCREEN_HEIGHT_PX/2;
+
 
     public GraphicalViewer(GameModel gameModel){
          this.gameModel = gameModel;
@@ -66,14 +67,18 @@ public class GraphicalViewer extends Viewer {
         BufferedImage bufferedImage = new BufferedImage(DEFAULT_SCREEN_WIDTH_PX, DEFAULT_SCREEN_HEIGHT_PX, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics2D g2d = bufferedImage.createGraphics();
 
+
         paintBackground(g2d);
         paintBackgroundObjects(g2d);
+        if(drawCross){
+            drawCross(g2d);
+        }
         paintPlayer(g2d);
         paintWorldObjects(g2d);
         if(paintExtraInformation){
-
+            paintExtraInformation(g2d);
         }
-        paintExtraInformation(g2d);
+
 
         Graphics2D g2dComponent = (Graphics2D) g;
         g2dComponent.drawImage(bufferedImage, null, 0, 0);
@@ -103,7 +108,15 @@ public class GraphicalViewer extends Viewer {
             cameraY = (int) (positionY - height / 2);
         }
 
+
+
+        //paint
         paintWorldObjectBounds(g2d, player, paintColor);
+
+    }
+
+    public void paintKeyBindings(Graphics2D g2d){
+
     }
 
     public void paintWorldObjects(Graphics2D g2d){
@@ -144,18 +157,36 @@ public class GraphicalViewer extends Viewer {
         int paintX;
         int paintY;
 
+        int rotateX;
+        int rotateY;
+
+        rotateX = (int) ((-cameraX + positionX));
+        rotateY = (int) ((-cameraY + positionY));
+
         paintX = (int) ((-cameraX + positionX) - bWidth / 2);
         paintY = (int) ((-cameraY + positionY) - bHeight / 2);
 
-        paintBounds(g2d, paintX, paintY, bWidth, bHeight);
+        //rotation
+        double angle = wo.getRotationAngle();
+
+        final AffineTransform saved = g2d.getTransform();
+        final AffineTransform rotate = AffineTransform.getRotateInstance(angle, rotateX, rotateY);
+        g2d.transform(rotate);
+
+        g2d.draw(new Rectangle(paintX, paintY, bWidth, bHeight));
+        g2d.setTransform(saved);
+
     }
 
-    public void paintBounds(Graphics2D g2d, int x, int y, int width, int height){
-        g2d.fillRect(x, y, width, height);
+    public void drawCross(Graphics2D g2d){
+        g2d.setColor(Color.GREEN);
+        //draw vertical lines
+        g2d.drawLine(width/2, 0, width/2, height);
+        g2d.drawLine(0, height/2, width, height/2);
     }
 
     public void paintExtraInformation(Graphics2D g2d){
-        g2d.setColor(informationFontColor);
+
         setFontToMonospace(g2d);
         Player p = gameModel.getPlayer();
         Engine e = p.getSpacecraft().getEngine();
@@ -176,7 +207,25 @@ public class GraphicalViewer extends Viewer {
         ic.add("Player zone coord: " + playerCoordinateString);
         ic.add("World objects #  : " + gameModel.numberOfWorldObjects);
         ic.add("Tick Update Time : " + gameModel.updateTime);
+        ic.add("Tick#(upd. done) : " + gameModel.tick);
+
+        if(paintKeyBindings){
+            ic.add("         ");
+            ic.add("SPACECRAFT CONTROLS");
+            ic.add("W     : Thrust");
+            ic.add("A     : Rotate left");
+            ic.add("D     : Rotate right");
+            ic.add("SPACE : FIRE");
+            ic.add("         ");
+            ic.add("OTHER CONTROLS");
+            ic.add("F     : Toggle camera lock");
+            ic.add("I     : Toggle dev information");
+            ic.add("K     : Toggle show keybinding");
+            ic.add("C     : Toggle draw cross");
+
+        }
         //draw the strings
+        g2d.setColor(informationFontColor);
         ic.paint(g2d);
     }
 
@@ -196,6 +245,30 @@ public class GraphicalViewer extends Viewer {
 
     public void setLockOnPlayer(boolean lockOnPlayer) {
         this.lockOnPlayer = lockOnPlayer;
+    }
+
+    public boolean isPaintExtraInformation() {
+        return paintExtraInformation;
+    }
+
+    public void setPaintExtraInformation(boolean paintExtraInformation) {
+        this.paintExtraInformation = paintExtraInformation;
+    }
+
+    public boolean isDrawCross() {
+        return drawCross;
+    }
+
+    public void setDrawCross(boolean drawCross) {
+        this.drawCross = drawCross;
+    }
+
+    public boolean isPaintKeyBindings() {
+        return paintKeyBindings;
+    }
+
+    public void setPaintKeyBindings(boolean paintKeyBindings) {
+        this.paintKeyBindings = paintKeyBindings;
     }
 }
 

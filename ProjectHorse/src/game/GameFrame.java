@@ -85,9 +85,12 @@ public class GameFrame extends JFrame implements KeyListener, Observer {
             case KeyEvent.VK_I :
                 viewer.setPaintExtraInformation(!viewer.isPaintExtraInformation());
                 break;
-            /*case KeyEvent.VK_SPACE:
-                p.fire(p.getSpacecraft().getWeapon1());
-                break;*/
+            case KeyEvent.VK_C :
+                viewer.setDrawCross(!viewer.isDrawCross());
+                break;
+            case KeyEvent.VK_K :
+                viewer.setPaintKeyBindings(!viewer.isPaintKeyBindings());
+                break;
         }
     }
 
