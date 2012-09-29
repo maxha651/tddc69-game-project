@@ -46,13 +46,11 @@ public class World {
     }
 
     public WorldObjectContainer getAllObjectsInArea(Coordinate start, Coordinate stop){
-
-
         //TEmporary
         WorldObjectContainer worldObjects = new WorldObjectContainer();
 
         for(Zone zone : zones.values()){
-            worldObjects.addAll(zone.getAllObjectsInArea(start, stop));
+            worldObjects.addAll(zone.getWorldObjects());
         }
 
         return worldObjects;
