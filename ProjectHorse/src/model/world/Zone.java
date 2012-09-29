@@ -1,5 +1,6 @@
 package model.world;
 
+import model.background.Asteroid;
 import model.utility.enums.CardinalDirection;
 import model.utility.shape.Coordinate;
 
@@ -58,6 +59,8 @@ public class Zone {
             temp.setX(temp.getX() + tempSize);
             center =    new Zone(temp, tempSize, tempNumberOfLevels);
         }
+
+
     }
 
     public boolean contains(Coordinate coordinate){

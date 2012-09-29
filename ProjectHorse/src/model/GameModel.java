@@ -1,8 +1,10 @@
 package model;
 
 
+import model.background.Asteroid;
 import model.background.Projectile;
 import model.character.Player;
+import model.utility.math.Randomizer;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 import model.world.World;
@@ -89,10 +91,27 @@ public class GameModel extends Observable {
 
         updateTime = System.currentTimeMillis() - start;
 
-        //to make the game not fuck up the computer if memory leaks
-        if(tick > 1000){
+        // add new asteroids
+        if(tick % Randomizer.randomInt(100, 125) == 0){
+            spawnAsteroid();
+        }
+
+        if(tick > 2000 && true){ //change true to false
+            //to make the game not fuck up the computer if memory leaks
+            System.out.println("Exited game to prevent fucked up memory leaks");
+            System.out.println("Check in Game Model in tick() to remove");
             System.exit(0);
         }
+
+
+    }
+
+    public void spawnAsteroid(){
+        Coordinate c = new Coordinate(player.getCoordinate()); //make this some other arbitary coordinate .. now spawns on top of player
+        ZoneCoordinate z = new ZoneCoordinate(player.getZoneCoordinate());
+        world.addWorldObject(new Asteroid(c, z));
+        projectiles.add(new Asteroid(c, z));
+        System.out.println("Asteroid ahoy!");
     }
 
     public void updatePlayer(){

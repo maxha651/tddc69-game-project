@@ -15,6 +15,16 @@ public abstract class MoveableObject extends WorldObject{
 
     protected double velocityX, velocityY;
 
+    public double getRotationSpeed() {
+        return rotationSpeed;
+    }
+
+    public void setRotationSpeed(double rotationSpeed) {
+        this.rotationSpeed = rotationSpeed;
+    }
+
+    protected double rotationSpeed = 0;
+
 
 
     public void updatePosition(double zoneSize){
