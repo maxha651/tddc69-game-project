@@ -30,30 +30,9 @@ public abstract class MoveableObject extends WorldObject{
         c.setX(coordinate.getX() + velocityX);
         c.setY(coordinate.getY() + velocityY);
 
-        updateZone(c, zoneSize);
-
         coordinate.setX(c.getX());
         coordinate.setY(c.getY());
     };
-
-    private void updateZone(Coordinate c, double zoneSize){
-        if (c.getX() > zoneSize){
-            zoneCoordinate.setX(zoneCoordinate.getX() +1);
-            c.setX(c.getX() % zoneSize);
-        }
-        if (c.getX() < 0.0){
-            zoneCoordinate.setX(zoneCoordinate.getX() -1);
-            c.setX(zoneSize + c.getX());
-        }
-        if (c.getY() > zoneSize){
-            zoneCoordinate.setY(zoneCoordinate.getY() +1);
-            c.setY(c.getY() % zoneSize);
-        }
-        if (c.getY() < 0.0){
-            zoneCoordinate.setY(zoneCoordinate.getY() -1);
-            c.setY(zoneSize + c.getY());
-        }
-    }
 
     public double getVelocityX() {
         return velocityX;

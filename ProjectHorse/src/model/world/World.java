@@ -61,7 +61,7 @@ public class World {
     private void moveOneZoneDown(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
         start.setY(start.getY() - size);
         stop.setY(stop.getY() - size);
-        zoneCoordinate.setY(zoneCoordinate.getY() +1);
+        zoneCoordinate.setY(zoneCoordinate.getY() + 1);
     }
 
     private void moveOneZoneLeft(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
@@ -117,7 +117,7 @@ public class World {
         return resObjects;
     }
 
-    public void update(){ // Temporary, should only update used zones
+    public void update(){
         WorldObjectContainer worldObjects = new WorldObjectContainer();
 
         for(Zone zone : zones.values()){
@@ -125,7 +125,30 @@ public class World {
         }
 
         for(WorldObject object : worldObjects){
+            updateZone(object);
             addWorldObject(object);
+        }
+    }
+
+    private void updateZone(WorldObject object){
+        ZoneCoordinate zoneCoordinate = object.getZoneCoordinate();
+        Coordinate c = object.getCoordinate();
+
+        if (c.getX() > size){
+            zoneCoordinate.setX(zoneCoordinate.getX() +1);
+            c.setX(c.getX() % size);
+        }
+        if (c.getX() < 0.0){
+            zoneCoordinate.setX(zoneCoordinate.getX() -1);
+            c.setX(size + c.getX());
+        }
+        if (c.getY() > size){
+            zoneCoordinate.setY(zoneCoordinate.getY() +1);
+            c.setY(c.getY() % size);
+        }
+        if (c.getY() < 0.0){
+            zoneCoordinate.setY(zoneCoordinate.getY() -1);
+            c.setY(size + c.getY());
         }
     }
 
@@ -139,20 +162,5 @@ public class World {
         zones.put(new ZoneCoordinate(-1,1), new Zone(zonesRelativeOrigo, size, numberOfLevels));
         zones.put(new ZoneCoordinate(0,1), new Zone(zonesRelativeOrigo, size, numberOfLevels));
         zones.put(new ZoneCoordinate(1,1), new Zone(zonesRelativeOrigo, size, numberOfLevels));
-    }
-
-    private ZoneCoordinate toZoneCoordinate(Coordinate coordinate){
-
-        System.out.println("before X: " + coordinate.getX() + " Y: " + coordinate.getY());
-
-        int tempX;
-        int tempY;
-
-        tempX = (int) Math.floor(coordinate.getX() / size);
-        tempY = (int) Math.floor(coordinate.getY() / size);
-
-        System.out.println("after X: " + tempX + " Y: " + tempY);
-
-        return new ZoneCoordinate(tempX, tempY);
     }
 }
