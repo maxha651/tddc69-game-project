@@ -14,10 +14,7 @@ import java.awt.*;
  */
 public class MoveableBackgroundObject extends MoveableObject {
 
-    @Override
-    public void updatePosition(double zoneSize) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+
 
     @Override
     public Rectangle getBounds() {

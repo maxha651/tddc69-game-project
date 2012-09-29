@@ -23,6 +23,7 @@ public class Projectile extends MoveableBackgroundObject implements Collideable,
     boolean impact;
 
     public Projectile(Weapon w, Coordinate coordinate, double angle, ZoneCoordinate zoneCoordinate) {
+        this.rotationAngle = angle;
         this.pt = w.getProjectileType();
         this.minDamage = w.getMinDamage();
         this.maxDamage = w.getMaxDamage();

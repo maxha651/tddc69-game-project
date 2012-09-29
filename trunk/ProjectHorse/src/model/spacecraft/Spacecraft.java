@@ -26,7 +26,7 @@ public class Spacecraft extends Item implements Boundable {
         //add parts to the spacecraft
         this.hull = new Hull();
         this.engine = new Engine();
-        this.weapon1 = new Weapon(1, 3, 5, 10);
+        this.weapon1 = new Weapon(1, 3, 20, 5);
     }
 
     public Rectangle getBounds(){
