@@ -81,9 +81,10 @@ public class GameModel extends Observable {
 
         //add collision checks and method for returning all moveable objects
 
-        world.update();
+
         updatePlayer();
-        //updateProjectiles();
+        world.update();
+        updateProjectiles();
         updateEnemies();
 
         updateTime = System.currentTimeMillis() - start;

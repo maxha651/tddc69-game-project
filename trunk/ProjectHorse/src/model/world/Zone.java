@@ -176,7 +176,7 @@ public class Zone {
         WorldObjectContainer resObjects = new WorldObjectContainer();
 
         if(isLastLevel()){
-            for(WorldObject object : worldObjects){ // check if isMoveable
+            for(WorldObject object : worldObjects){
                 if(!isWithinBoundaries(object)){
                     resObjects.add(object);
                     worldObjects.remove(object);

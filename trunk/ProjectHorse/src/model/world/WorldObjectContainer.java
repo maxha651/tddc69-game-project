@@ -2,9 +2,9 @@ package model.world;
 
 import model.utility.shape.Coordinate;
 
-import java.util.LinkedList;
+import java.util.concurrent.CopyOnWriteArrayList;
 
-public class WorldObjectContainer extends LinkedList<WorldObject>{
+public class WorldObjectContainer extends CopyOnWriteArrayList<WorldObject> {
 
     public WorldObjectContainer() {
     }
