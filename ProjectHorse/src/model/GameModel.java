@@ -83,7 +83,7 @@ public class GameModel extends Observable {
 
         world.update();
         updatePlayer();
-        updateProjectiles();
+        //updateProjectiles();
         updateEnemies();
 
         updateTime = System.currentTimeMillis() - start;
@@ -102,9 +102,10 @@ public class GameModel extends Observable {
             if (fireDelay <= 0){
                 Projectile temp = player.fire();
 
+
                 projectiles.add(temp);
 
-                world.addWorldObject(temp); // Error when firing weapon and changing zone y at the same time
+                world.addWorldObject(temp);
 
                 fireDelay = fireDelayDefault;
             }
@@ -132,7 +133,8 @@ public class GameModel extends Observable {
             lowerRightToCheck = projectile.getCoordinate();
             upperLeftToCheck = new Coordinate(lowerRightToCheck.getX() - 10.0, lowerRightToCheck.getY() - 10.0);
 
-            WorldObjectContainer worldObjects = world.getAllObjectsInArea(upperLeftToCheck, lowerRightToCheck);
+
+            WorldObjectContainer worldObjects = world.getAllObjectsInArea(projectile.getZoneCoordinate(), upperLeftToCheck, lowerRightToCheck);
 
             if(worldObjects.size() > 1){
                 projectile.impact();
@@ -143,7 +145,7 @@ public class GameModel extends Observable {
     }
 
     public WorldObjectContainer getAllObjectsInArea(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
-        return world.getAllObjectsInArea(start, stop);
+        return world.getAllObjectsInArea(zoneCoordinate, start, stop);
     }
 
     public boolean isGameAlive() {

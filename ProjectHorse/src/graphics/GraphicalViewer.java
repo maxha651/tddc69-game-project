@@ -97,12 +97,13 @@ public class GraphicalViewer extends Viewer {
         Player p = gameModel.getPlayer();
         ZoneCoordinate zs = p.getZoneCoordinate();
 
-        WorldObjectContainer woc = gameModel.getAllObjectsInArea(zs, new Coordinate(cameraX - 10000, cameraY - 10000), new Coordinate(cameraX + width * 2, cameraY + height * 2));
+        Coordinate start = new Coordinate(p.getCoordinate().getX() - 400, p.getCoordinate().getY() - 200);
+        Coordinate stop = new Coordinate(p.getCoordinate().getX() + 400, p.getCoordinate().getY() + 200);
+        WorldObjectContainer woc = gameModel.getAllObjectsInArea(zs, start, stop);
         WorldObject wo;
 
         for(int i = 0; i < woc.size(); i++){
             wo = woc.get(i);
-            zs = wo.getZoneCoordinate();
 
             //paint boundables
             paintWorldObjectBounds(g2d, wo, Color.RED);

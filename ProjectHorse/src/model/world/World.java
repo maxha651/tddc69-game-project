@@ -1,9 +1,9 @@
 package model.world;
 
+import model.background.Projectile;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 
-import java.awt.*;
 import java.util.HashMap;
 
 /**
@@ -52,25 +52,69 @@ public class World {
         numberOfWorldObjects++;
     }
 
-    public WorldObjectContainer getAllObjectsInArea(Coordinate start, Coordinate stop){
-        //TEmporary
-        WorldObjectContainer worldObjects = new WorldObjectContainer();
+    private void moveOneZoneUp(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
+        start.setY(start.getY() + size);
+        stop.setY(stop.getY() + size);
+        zoneCoordinate.setY(zoneCoordinate.getY() -1);
+    }
 
-        for(Zone zone : zones.values()){
-            worldObjects.addAll(zone.getWorldObjects());
+    private void moveOneZoneDown(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
+        start.setY(start.getY() - size);
+        stop.setY(stop.getY() - size);
+        zoneCoordinate.setY(zoneCoordinate.getY() +1);
+    }
+
+    private void moveOneZoneLeft(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
+        start.setX(start.getX() + size);
+        stop.setX(stop.getX() + size);
+        zoneCoordinate.setX(zoneCoordinate.getX() - 1);
+    }
+
+    private void moveOneZoneRight(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
+        start.setX(start.getX() - size);
+        stop.setX(stop.getX() - size);
+        zoneCoordinate.setX(zoneCoordinate.getX() + 1);
+    }
+
+    private void moveToFirstZoneToCheck(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
+        while (start.getY() < 0){
+            moveOneZoneUp(zoneCoordinate, start, stop);
+        }
+        while (start.getY() > size){
+            moveOneZoneDown(zoneCoordinate, start, stop);
+        }
+        while (start.getX() < 0){
+            moveOneZoneLeft(zoneCoordinate, start, stop);
+        }
+        while (start.getX() > size){
+            moveOneZoneRight(zoneCoordinate, start, stop);
+        }
+    }
+
+    public WorldObjectContainer getAllObjectsInArea(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
+        WorldObjectContainer resObjects = new WorldObjectContainer();
+        ZoneCoordinate tempZoneCoordinate = new ZoneCoordinate(zoneCoordinate);
+        Coordinate tempStart = new Coordinate(start);
+        Coordinate tempStop = new Coordinate(stop);
+
+        moveToFirstZoneToCheck(tempZoneCoordinate, tempStart, tempStop);
+        double tempStartY = tempStart.getY();
+        double tempStopY = tempStop.getY();
+        int tempZoneY = tempZoneCoordinate.getY();
+
+        while (tempStop.getX() > 0){
+            tempStart.setY(tempStartY);
+            tempStop.setY(tempStopY);
+            tempZoneCoordinate.setY(tempZoneY);
+
+            while (tempStop.getY() > 0){
+                resObjects.addAll(getZone(tempZoneCoordinate).getAllObjectsInArea(tempStart, tempStop));
+                moveOneZoneDown(tempZoneCoordinate, tempStart, tempStop);
+            }
+            moveOneZoneRight(tempZoneCoordinate, tempStart, tempStop);
         }
 
-        return worldObjects;
-
-        /*Rectangle tempRectangle = new Rectangle(rectangle); // FIXA HÄR
-
-        if(rectangle.getMinX() < 0){
-            tempRectangle.setSize(0, (int) Math.ceil(size - rectangle.getMinX()));
-            tempRectangle.setRect(rectangle);
-        }
-        if(rectangle.getMinY() < 0){
-            tempRectangle.setSize(0, (int) Math.ceil(size - rectangle.getMinX()));
-        }*/
+        return resObjects;
     }
 
     public void update(){ // Temporary, should only update used zones
