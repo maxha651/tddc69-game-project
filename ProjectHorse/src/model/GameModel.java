@@ -93,8 +93,6 @@ public class GameModel extends Observable {
         if(fireRequest){
             if (fireDelay <= 0){
                 Projectile temp = player.fire();
-                System.out.println("Proj: " + projectiles);
-                System.out.println("Temp: " + temp);
 
                 projectiles.add(temp);
 
@@ -118,7 +116,10 @@ public class GameModel extends Observable {
 
     public void updateProjectiles(){
         for (Projectile projectile : projectiles){
+
             Coordinate upperLeftToCheck, lowerRightToCheck;
+
+            projectile.updatePosition(ZONE_SIZE);
 
             lowerRightToCheck = projectile.getCoordinate();
             upperLeftToCheck = new Coordinate(lowerRightToCheck.getX() - 10.0, lowerRightToCheck.getY() - 10.0);
@@ -128,7 +129,7 @@ public class GameModel extends Observable {
             if(worldObjects.size() > 1){
                 projectile.impact();
                 //worldObjects.remove(projectile);
-                System.out.println("impact");
+                //System.out.println("impact");
             }
         }
     }

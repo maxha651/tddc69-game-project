@@ -27,6 +27,7 @@ public abstract class MoveableObject extends WorldObject{
     public void updatePosition(double zoneSize){
         Coordinate c = new Coordinate();
 
+
         c.setX(coordinate.getX() + velocityX);
         c.setY(coordinate.getY() + velocityY);
 
