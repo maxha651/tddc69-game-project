@@ -21,6 +21,7 @@ public class Projectile extends MoveableBackgroundObject implements Collideable,
     double boundingWidth = 10, boundingHeight = 10;
     ProjectileType pt;
     boolean impact;
+    double rotationSpeed = 0;
 
     public Projectile(Weapon w, Coordinate coordinate, double angle, ZoneCoordinate zoneCoordinate) {
         this.rotationAngle = angle;
@@ -32,6 +33,10 @@ public class Projectile extends MoveableBackgroundObject implements Collideable,
         this.velocityY = model.utility.math.StandardMath.yPart(w.getAbsVelocity(), this.rotationAngle);
         this.coordinate = coordinate;
         this.zoneCoordinate = zoneCoordinate;
+    }
+
+    public Projectile() {
+        System.out.println("DO NOT USE THIS CONSTRUCTOR");
     }
 
     @Override

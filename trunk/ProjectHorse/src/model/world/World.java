@@ -122,6 +122,7 @@ public class World {
 
         for(Zone zone : zones.values()){
             worldObjects.addAll(zone.removeObjectsToReinsert());
+
         }
 
         for(WorldObject object : worldObjects){

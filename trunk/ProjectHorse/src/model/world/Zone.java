@@ -180,6 +180,7 @@ public class Zone {
                 if(!isWithinBoundaries(object)){
                     resObjects.add(object);
                     worldObjects.remove(object);
+
                 }
             }
         }
