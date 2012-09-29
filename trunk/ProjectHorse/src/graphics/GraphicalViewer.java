@@ -1,6 +1,7 @@
 package graphics;
 
 import model.GameModel;
+import model.background.Asteroid;
 import model.character.Player;
 import model.interfaces.Boundable;
 import model.spacecraft.Cargo;
@@ -11,6 +12,7 @@ import model.utility.shape.ZoneCoordinate;
 import model.world.WorldObject;
 import model.world.WorldObjectContainer;
 
+import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferStrategy;
 import java.awt.*;
@@ -36,18 +38,13 @@ public class GraphicalViewer extends Viewer {
     Color informationFontColor = DEFAULT_FONT_COLOR;
     Color paintColor = DEFAULT_PAINT_COLOR;
 
-
-
     int width, height;
     boolean lockOnPlayer = true;
     boolean drawCross = true;
     boolean paintExtraInformation = true;
 
-
-
     boolean paintKeyBindings = true;
     int cameraX = - DEFAULT_SCREEN_WIDTH_PX/2, cameraY = - DEFAULT_SCREEN_HEIGHT_PX/2;
-
 
     public GraphicalViewer(GameModel gameModel){
          this.gameModel = gameModel;
@@ -73,7 +70,9 @@ public class GraphicalViewer extends Viewer {
         if(drawCross){
             drawCross(g2d);
         }
-        paintPlayer(g2d);
+        if(lockOnPlayer){
+            lockCameraOnPlayer();
+        }
         paintWorldObjects(g2d);
         if(paintExtraInformation){
             paintExtraInformation(g2d);
@@ -93,31 +92,8 @@ public class GraphicalViewer extends Viewer {
 
     }
 
-    public void paintPlayer(Graphics2D g2d){
-
-        Coordinate positionInZone = gameModel.getPlayer().getCoordinate();
-        ZoneCoordinate zoneCoordinate = gameModel.getPlayer().getZoneCoordinate();
-        double zoneSize = gameModel.getZoneSize();
-        Player player = gameModel.getPlayer();
-
-        int positionX =(int) (positionInZone.getX() + zoneSize*zoneCoordinate.getX());
-        int positionY =(int) (positionInZone.getY() + zoneSize*zoneCoordinate.getY());
-
-        if(lockOnPlayer){
-            cameraX = (int) (positionX - width / 2);
-            cameraY = (int) (positionY - height / 2);
-        }
 
 
-
-        //paint
-        paintWorldObjectBounds(g2d, player, paintColor);
-
-    }
-
-    public void paintKeyBindings(Graphics2D g2d){
-
-    }
 
     public void paintWorldObjects(Graphics2D g2d){
         Player p = gameModel.getPlayer();
@@ -166,6 +142,8 @@ public class GraphicalViewer extends Viewer {
         paintX = (int) ((-cameraX + positionX) - bWidth / 2);
         paintY = (int) ((-cameraY + positionY) - bHeight / 2);
 
+
+
         //rotation
         double angle = wo.getRotationAngle();
 
@@ -173,10 +151,25 @@ public class GraphicalViewer extends Viewer {
         final AffineTransform rotate = AffineTransform.getRotateInstance(angle, rotateX, rotateY);
         g2d.transform(rotate);
 
+
         g2d.draw(new Rectangle(paintX, paintY, bWidth, bHeight));
+
+        g2d.setTransform(saved);
+        //random stuff for asteroid that can be removed but its fun
+        if(wo.getClass() == Asteroid.class){
+            g2d.setColor(Color.WHITE);
+            g2d.translate(paintX, paintY);
+            Font f = getFont().deriveFont(Font.TRUETYPE_FONT, 12);
+
+            GlyphVector v = f.createGlyphVector(getFontMetrics(f).getFontRenderContext(), "I am an asteroid");
+            g2d.draw(v.getOutline());
+
+        }
         g2d.setTransform(saved);
 
     }
+
+
 
     public void drawCross(Graphics2D g2d){
         g2d.setColor(Color.GREEN);
@@ -203,7 +196,7 @@ public class GraphicalViewer extends Viewer {
         ic.add("Player velocity  : " + velX + ", " + velY);
         ic.add("Player absveloc  : " + toTruncatedStr(p.getAbsoluteVelocity(), 1));
         ic.add("Player angle     : " + toTruncatedStr(Math.toDegrees(p.getRotationAngle()), 1) + " (degrees), " + toTruncatedStr(p.getRotationAngle(), 1) + " (radians)");
-        playerCoordinateString = toTruncatedStr(p.getZoneCoordinate().getX(), 0) + ", " + toTruncatedStr(p.getZoneCoordinate().getY(), 0);
+        playerCoordinateString = (p.getZoneCoordinate().getX() + ", " + p.getZoneCoordinate().getY());
         ic.add("Player zone coord: " + playerCoordinateString);
         ic.add("World objects #  : " + gameModel.numberOfWorldObjects);
         ic.add("Tick Update Time : " + gameModel.updateTime);
@@ -229,6 +222,18 @@ public class GraphicalViewer extends Viewer {
         ic.paint(g2d);
     }
 
+    public void lockCameraOnPlayer(){
+        Coordinate positionInZone = gameModel.getPlayer().getCoordinate();
+        ZoneCoordinate zoneCoordinate = gameModel.getPlayer().getZoneCoordinate();
+        double zoneSize = gameModel.getZoneSize();
+
+        int positionX =(int) (positionInZone.getX() + zoneSize*zoneCoordinate.getX());
+        int positionY =(int) (positionInZone.getY() + zoneSize*zoneCoordinate.getY());
+
+        cameraX = (int) (positionX - width / 2);
+        cameraY = (int) (positionY - height / 2);
+    }
+
     static public String toTruncatedStr(double d, int decimals){
         return model.utility.strings.StringManipulator.toString(d, decimals);
     }
@@ -238,6 +243,7 @@ public class GraphicalViewer extends Viewer {
         g2d.setFont(f);
 
     }
+
 
     public boolean isLockOnPlayer() {
         return lockOnPlayer;
