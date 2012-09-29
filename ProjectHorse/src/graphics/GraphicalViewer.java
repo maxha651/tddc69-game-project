@@ -36,6 +36,16 @@ public class GraphicalViewer extends Viewer {
     Color paintColor = DEFAULT_PAINT_COLOR;
     int width, height;
     boolean lockOnPlayer = true;
+
+    public boolean isPaintExtraInformation() {
+        return paintExtraInformation;
+    }
+
+    public void setPaintExtraInformation(boolean paintExtraInformation) {
+        this.paintExtraInformation = paintExtraInformation;
+    }
+
+    boolean paintExtraInformation = true;
     int cameraX = - DEFAULT_SCREEN_WIDTH_PX/2, cameraY = - DEFAULT_SCREEN_HEIGHT_PX/2;
 
     public GraphicalViewer(GameModel gameModel){
@@ -60,6 +70,9 @@ public class GraphicalViewer extends Viewer {
         paintBackgroundObjects(g2d);
         paintPlayer(g2d);
         paintWorldObjects(g2d);
+        if(paintExtraInformation){
+
+        }
         paintExtraInformation(g2d);
 
         Graphics2D g2dComponent = (Graphics2D) g;
@@ -97,8 +110,8 @@ public class GraphicalViewer extends Viewer {
         Player p = gameModel.getPlayer();
         ZoneCoordinate zs = p.getZoneCoordinate();
 
-        Coordinate start = new Coordinate(p.getCoordinate().getX() - 500, p.getCoordinate().getY() - 400);
-        Coordinate stop = new Coordinate(p.getCoordinate().getX() + 500, p.getCoordinate().getY() + 400);
+        Coordinate start = new Coordinate(p.getCoordinate().getX() - width/2, p.getCoordinate().getY() - width/2);
+        Coordinate stop = new Coordinate(p.getCoordinate().getX() + width/2, p.getCoordinate().getY() + width/2);
         WorldObjectContainer woc = gameModel.getAllObjectsInArea(zs, start, stop);
         WorldObject wo;
 
