@@ -86,7 +86,6 @@ public class GraphicalViewer extends Viewer {
             paintExtraInformation(g2d);
         }
 
-
         Graphics2D g2dComponent = (Graphics2D) g;
 
         g2dComponent.drawImage(bufferedImage, null, 0, 0);

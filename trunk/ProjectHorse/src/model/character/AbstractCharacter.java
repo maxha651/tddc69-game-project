@@ -29,7 +29,6 @@ public abstract class AbstractCharacter extends MoveableObject {
     @Override
     public void updatePosition(double zoneSize) {
         super.updatePosition(zoneSize);
-        deaccelerate();
     }
 
     public void deaccelerate() {

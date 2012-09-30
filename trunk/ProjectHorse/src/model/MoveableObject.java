@@ -25,7 +25,27 @@ public abstract class MoveableObject extends WorldObject{
 
     protected double rotationSpeed = 0;
 
+    public void updateZone(double zoneSize){
+        ZoneCoordinate zoneCoordinate = getZoneCoordinate();
+        Coordinate c = getCoordinate();
 
+        if (c.getX() > zoneSize){
+            zoneCoordinate.setX(zoneCoordinate.getX() +1);
+            c.setX(c.getX() % zoneSize);
+        }
+        if (c.getX() < 0.0){
+            zoneCoordinate.setX(zoneCoordinate.getX() -1);
+            c.setX(zoneSize + c.getX());
+        }
+        if (c.getY() > zoneSize){
+            zoneCoordinate.setY(zoneCoordinate.getY() +1);
+            c.setY(c.getY() % zoneSize);
+        }
+        if (c.getY() < 0.0){
+            zoneCoordinate.setY(zoneCoordinate.getY() -1);
+            c.setY(zoneSize + c.getY());
+        }
+    }
 
     public void updatePosition(double zoneSize){
         Coordinate c = new Coordinate();
@@ -35,7 +55,9 @@ public abstract class MoveableObject extends WorldObject{
 
         coordinate.setX(c.getX());
         coordinate.setY(c.getY());
-
+        
+        updateZone(zoneSize);
+        
         this.rotationAngle = this.rotationAngle + this.rotationSpeed;
     };
 

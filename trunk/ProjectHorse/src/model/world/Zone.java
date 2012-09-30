@@ -91,6 +91,16 @@ public class Zone {
         }
     }
 
+    public boolean removeWorldObject(WorldObject object){
+        if(isLastLevel()){
+            return worldObjects.remove(object);
+        }
+        else{
+            Zone temp = getZone(object);
+            return temp.removeWorldObject(object);
+        }
+    }
+
     public WorldObjectContainer get(Coordinate position){
         if (!isWithinBoundaries(position)){
             throw new IndexOutOfBoundsException();
@@ -258,7 +268,7 @@ public class Zone {
         return true;
     }
 
-    private boolean isWithinBoundaries(WorldObject object){
+    public boolean isWithinBoundaries(WorldObject object){
         return isWithinBoundaries(object.getCoordinate());
     }
 

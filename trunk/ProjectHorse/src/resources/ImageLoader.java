@@ -51,6 +51,7 @@ public class ImageLoader {
     public BufferedImage load(String path, BufferedImage bf){
         try {
             bf = ImageIO.read(this.getClass().getResource(path));
+
         } catch (IOException e) {
             //e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             System.err.print("[ImageLoader] Could not load image from path: " + path);
