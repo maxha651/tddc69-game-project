@@ -20,7 +20,7 @@ public class Asteroid extends Projectile {
     public Asteroid(Coordinate c, ZoneCoordinate z){
         this.boundingHeight = Randomizer.randomInt(20, 60);
         this.boundingWidth = this.boundingHeight + Randomizer.randomInt(0, 20) - Randomizer.randomInt(0, 20);
-        this.rotationSpeed = Randomizer.randomInt(0,20) - Randomizer.randomInt(0,20);
+        this.rotationSpeed = (Randomizer.randomInt(0,300) - Randomizer.randomInt(0,300))/3000.0;
         this.velocityX = Randomizer.randomDouble(0, 4) - Randomizer.randomDouble(0, 4);
         this.velocityY = Randomizer.randomDouble(0, 4) - Randomizer.randomDouble(0, 4);
         this.setRotationAngle(Randomizer.randomDouble(0,10));
@@ -28,5 +28,11 @@ public class Asteroid extends Projectile {
         this.coordinate = c;
         this.zoneCoordinate = z;
 
+    }
+
+    @Override
+    public void updatePosition(double size){
+        super.updatePosition(size);
+        this.setRotationAngle(this.getRotationSpeed() + this.getRotationAngle());
     }
 }
