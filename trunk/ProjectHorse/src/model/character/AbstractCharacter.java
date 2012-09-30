@@ -56,17 +56,16 @@ public abstract class AbstractCharacter extends MoveableObject {
         double acceleration = spacecraft.getEngine().getAcceleration();
         double maxVelocity = spacecraft.getEngine().getVelocityMax();
 
-        if(StandardMath.pyth(velocityX, velocityY) < maxVelocity){
-            this.velocityX += StandardMath.xPart(acceleration, rotationAngle);
-            this.velocityY += StandardMath.yPart(acceleration, rotationAngle);
 
-            double newVelocity = StandardMath.pyth(velocityX, velocityY);
+        this.velocityX += StandardMath.xPart(acceleration, rotationAngle);
+        this.velocityY += StandardMath.yPart(acceleration, rotationAngle);
 
-            if (newVelocity > maxVelocity){
-                double maxAndNewVelocityRatio = maxVelocity / newVelocity;
-                this.velocityX *= maxAndNewVelocityRatio;
-                this.velocityY *= maxAndNewVelocityRatio;
-            }
+        double newVelocity = StandardMath.pyth(velocityX, velocityY);
+
+        if (newVelocity > maxVelocity){
+            double maxAndNewVelocityRatio = maxVelocity / newVelocity;
+            this.velocityX *= maxAndNewVelocityRatio;
+            this.velocityY *= maxAndNewVelocityRatio;
         }
     }
 
