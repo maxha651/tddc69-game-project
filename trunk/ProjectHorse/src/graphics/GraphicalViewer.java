@@ -11,6 +11,7 @@ import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 import model.world.WorldObject;
 import model.world.WorldObjectContainer;
+import resources.ImageLoader;
 
 import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
@@ -28,6 +29,8 @@ import java.awt.image.BufferedImage;
  */
 public class GraphicalViewer extends Viewer {
     GameModel gameModel;
+    ImageLoader imageLoader;
+
     final static int DEFAULT_SCREEN_WIDTH_PX = 1366, DEFAULT_SCREEN_HEIGHT_PX = 768;
     final static int DEFAULT_STRING_SIZE = 14;
     final static Color DEFAULT_PAINT_COLOR = Color.WHITE;
@@ -42,12 +45,14 @@ public class GraphicalViewer extends Viewer {
     boolean lockOnPlayer = true;
     boolean drawCross = true;
     boolean paintExtraInformation = true;
+    long paintTime = 0;
 
     boolean paintKeyBindings = true;
     int cameraX = - DEFAULT_SCREEN_WIDTH_PX/2, cameraY = - DEFAULT_SCREEN_HEIGHT_PX/2;
 
     public GraphicalViewer(GameModel gameModel){
          this.gameModel = gameModel;
+         this.imageLoader = new ImageLoader();
          this.width = DEFAULT_SCREEN_WIDTH_PX;
          this.height = DEFAULT_SCREEN_HEIGHT_PX;
     }
@@ -59,7 +64,7 @@ public class GraphicalViewer extends Viewer {
 
     @Override
     public void paintComponent(Graphics g){
-
+        long begin = System.currentTimeMillis();
 
         BufferedImage bufferedImage = new BufferedImage(DEFAULT_SCREEN_WIDTH_PX, DEFAULT_SCREEN_HEIGHT_PX, BufferedImage.TYPE_4BYTE_ABGR);
         Graphics2D g2d = bufferedImage.createGraphics();
@@ -81,6 +86,8 @@ public class GraphicalViewer extends Viewer {
 
         Graphics2D g2dComponent = (Graphics2D) g;
         g2dComponent.drawImage(bufferedImage, null, 0, 0);
+
+        paintTime = System.currentTimeMillis() - begin;
     }
 
     public void paintBackground(Graphics2D g2d){
@@ -108,7 +115,8 @@ public class GraphicalViewer extends Viewer {
             wo = woc.get(i);
 
             //paint boundables
-            paintWorldObjectBounds(g2d, wo, Color.RED);
+            //paintWorldObjectBounds(g2d, wo, Color.RED);
+            paintWorldObject(g2d, wo, Color.RED);
         }
     }
 
@@ -169,6 +177,56 @@ public class GraphicalViewer extends Viewer {
 
     }
 
+    public void paintWorldObject(Graphics2D g2d, WorldObject wo, Color c){
+        if(wo.getClass() == Player.class){
+            g2d.setColor(Color.WHITE);
+        }
+        else{
+            g2d.setColor(c);
+        }
+
+        Coordinate positionInZone = wo.getCoordinate();
+        ZoneCoordinate zoneCoordinate = wo.getZoneCoordinate();
+        double zoneSize = gameModel.getZoneSize();
+
+        int positionX =(int) (positionInZone.getX() + zoneSize*zoneCoordinate.getX());
+        int positionY =(int) (positionInZone.getY() + zoneSize*zoneCoordinate.getY());
+
+        int bWidth = (int) wo.getBounds().getWidth();
+        int bHeight = (int) wo.getBounds().getHeight();
+
+        int paintX;
+        int paintY;
+
+        int rotateX;
+        int rotateY;
+
+        rotateX = (int) ((-cameraX + positionX));
+        rotateY = (int) ((-cameraY + positionY));
+
+        paintX = (int) ((-cameraX + positionX) - bWidth / 2);
+        paintY = (int) ((-cameraY + positionY) - bHeight / 2);
+
+
+
+        //rotation
+        double angle = wo.getRotationAngle();
+
+
+        final AffineTransform saved = g2d.getTransform();
+        final AffineTransform rotate = AffineTransform.getRotateInstance(angle, rotateX, rotateY);
+        g2d.transform(rotate);
+
+        //random stuff for asteroid that can be removed but its fun
+        if(wo.getClass() == Asteroid.class){
+            g2d.drawImage(imageLoader.getAsteroidImage(), paintX, paintY, bWidth, bHeight, this);
+        } else {
+            g2d.draw(new Rectangle(paintX, paintY, bWidth, bHeight));
+        }
+        g2d.setTransform(saved);
+
+    }
+
 
 
     public void drawCross(Graphics2D g2d){
@@ -199,7 +257,8 @@ public class GraphicalViewer extends Viewer {
         playerCoordinateString = (p.getZoneCoordinate().getX() + ", " + p.getZoneCoordinate().getY());
         ic.add("Player zone coord: " + playerCoordinateString);
         ic.add("World objects #  : " + gameModel.numberOfWorldObjects);
-        ic.add("Tick Update Time : " + gameModel.updateTime);
+        ic.add("Update Time (ms) : " + gameModel.updateTime);
+        ic.add("Paint Time  (ms) : " + this.paintTime);
         ic.add("Tick#(upd. done) : " + gameModel.tick);
 
         if(paintKeyBindings){
