@@ -48,6 +48,10 @@ public class GraphicalViewer extends Viewer {
     long paintTime = 0;
 
     boolean paintKeyBindings = true;
+
+
+
+    boolean paintWorldObjectBounds = true;
     int cameraX = - DEFAULT_SCREEN_WIDTH_PX/2, cameraY = - DEFAULT_SCREEN_HEIGHT_PX/2;
 
     public GraphicalViewer(GameModel gameModel){
@@ -116,7 +120,10 @@ public class GraphicalViewer extends Viewer {
 
             //paint boundables
             //paintWorldObjectBounds(g2d, wo, Color.RED);
-            paintWorldObject(g2d, wo, Color.RED);
+            if(paintWorldObjectBounds){
+                paintWorldObjectBounds(g2d, wo, Color.RED);
+            }
+            paintWorldObject(g2d, wo);
         }
     }
 
@@ -164,6 +171,8 @@ public class GraphicalViewer extends Viewer {
 
         g2d.setTransform(saved);
         //random stuff for asteroid that can be removed but its fun
+
+        /*
         if(wo.getClass() == Asteroid.class){
             g2d.setColor(Color.WHITE);
             g2d.translate(paintX, paintY);
@@ -172,18 +181,16 @@ public class GraphicalViewer extends Viewer {
             GlyphVector v = f.createGlyphVector(getFontMetrics(f).getFontRenderContext(), "I am an asteroid");
             g2d.draw(v.getOutline());
 
-        }
-        g2d.setTransform(saved);
+
+        } g2d.setTransform(saved);
+        */
+
+
 
     }
 
-    public void paintWorldObject(Graphics2D g2d, WorldObject wo, Color c){
-        if(wo.getClass() == Player.class){
-            g2d.setColor(Color.WHITE);
-        }
-        else{
-            g2d.setColor(c);
-        }
+    public void paintWorldObject(Graphics2D g2d, WorldObject wo){
+
 
         Coordinate positionInZone = wo.getCoordinate();
         ZoneCoordinate zoneCoordinate = wo.getZoneCoordinate();
@@ -221,7 +228,7 @@ public class GraphicalViewer extends Viewer {
         if(wo.getClass() == Asteroid.class){
             g2d.drawImage(imageLoader.getAsteroidImage(), paintX, paintY, bWidth, bHeight, this);
         } else {
-            g2d.draw(new Rectangle(paintX, paintY, bWidth, bHeight));
+            //g2d.draw(new Rectangle(paintX, paintY, bWidth, bHeight));
         }
         g2d.setTransform(saved);
 
@@ -274,6 +281,7 @@ public class GraphicalViewer extends Viewer {
             ic.add("I     : Toggle dev information");
             ic.add("K     : Toggle show keybinding");
             ic.add("C     : Toggle draw cross");
+            ic.add("B     : Toggle bounds");
 
         }
         //draw the strings
@@ -334,6 +342,14 @@ public class GraphicalViewer extends Viewer {
 
     public void setPaintKeyBindings(boolean paintKeyBindings) {
         this.paintKeyBindings = paintKeyBindings;
+    }
+
+    public boolean isPaintWorldObjectBounds() {
+        return paintWorldObjectBounds;
+    }
+
+    public void setPaintWorldObjectBounds(boolean paintWorldObjectBounds) {
+        this.paintWorldObjectBounds = paintWorldObjectBounds;
     }
 }
 

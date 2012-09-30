@@ -89,21 +89,21 @@ public class GameModel extends Observable {
         updateEnemies();
         world.update();
 
-        updateTime = System.currentTimeMillis() - start;
+
 
         // add new asteroids
         if(tick % Randomizer.randomInt(1, 55) == 0){
             spawnAsteroid();
         }
 
-        if(tick > 2000 && true){ //change true to false
+        if(tick > 8000 && true){ //change true to false
             //to make the game not fuck up the computer if memory leaks
             System.out.println("Exited game to prevent fucked up memory leaks");
             System.out.println("Check in Game Model in tick() to remove");
             System.exit(0);
         }
 
-
+        updateTime = System.currentTimeMillis() - start;
     }
 
     public void spawnAsteroid(){
