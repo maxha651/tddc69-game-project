@@ -44,15 +44,12 @@ public class GraphicalViewer extends Viewer {
 
     int width, height;
     boolean lockOnPlayer = true;
-    boolean drawCross = true;
+    boolean drawCross = false;
     boolean paintExtraInformation = true;
     long paintTime = 0;
-
     boolean paintKeyBindings = true;
+    boolean paintWorldObjectBounds = false;
 
-
-
-    boolean paintWorldObjectBounds = true;
     int cameraX = - DEFAULT_SCREEN_WIDTH_PX/2, cameraY = - DEFAULT_SCREEN_HEIGHT_PX/2;
 
     public GraphicalViewer(GameModel gameModel){
