@@ -15,6 +15,7 @@ import java.util.HashMap;
  */
 public class Zone {
 
+    //test
     private final static int NUM_OF_ZONES_PER_LEVEL = 10;
 
     private Coordinate pos;
