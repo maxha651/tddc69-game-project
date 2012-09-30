@@ -111,7 +111,6 @@ public class GameModel extends Observable {
         ZoneCoordinate z = new ZoneCoordinate(player.getZoneCoordinate());
         world.addWorldObject(new Asteroid(c, z));
         projectiles.add(new Asteroid(c, z));
-        System.out.println("Asteroid ahoy!");
     }
 
     public void updatePlayer(){
