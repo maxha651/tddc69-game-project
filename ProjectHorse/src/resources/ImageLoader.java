@@ -1,5 +1,8 @@
 package resources;
 
+import model.background.Projectile;
+import model.character.Player;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -17,23 +20,42 @@ import java.util.LinkedList;
  */
 public class ImageLoader {
 
-    String asteroid1ImagePath = "asteroid1.png";
     BufferedImage asteroid1;
-
-    public ImageLoader(){
-        String currentPath = "[error - no path was loaded]";
-        try {
-            //load all images here
-            currentPath = asteroid1ImagePath;
-            asteroid1 = ImageIO.read(this.getClass().getResource(currentPath));
-        } catch (IOException e) {
-            //e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-            System.err.print("[ImageLoader] Could not load image from path: " + currentPath);
-            System.exit(0);
-        }
-    }
+    BufferedImage spaceship1;
+    BufferedImage laserblue1;
 
     public BufferedImage getAsteroidImage(){
+        asteroid1 = getImage(asteroid1, "asteroid1.png");
         return asteroid1;
+    }
+
+    public BufferedImage getPlayerImage(Player p){
+        spaceship1 = getImage(spaceship1, "spaceship1.png");
+        return spaceship1;
+    }
+
+    public BufferedImage getProjectileImage(Projectile p){
+        //check what type and return for that
+        laserblue1 = getImage(laserblue1, "laserblue1.png");
+        return laserblue1;
+    }
+
+    private BufferedImage getImage(BufferedImage bf, String path){
+        if(bf == null){
+            bf = load(path, bf);
+            return bf;
+        }
+        return bf;
+    }
+
+    public BufferedImage load(String path, BufferedImage bf){
+        try {
+            bf = ImageIO.read(this.getClass().getResource(path));
+        } catch (IOException e) {
+            //e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            System.err.print("[ImageLoader] Could not load image from path: " + path);
+            System.exit(0);
+        }
+        return bf;
     }
 }

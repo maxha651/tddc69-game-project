@@ -35,4 +35,14 @@ public class Asteroid extends Projectile {
         super.updatePosition(size);
         this.setRotationAngle(this.getRotationSpeed() + this.getRotationAngle());
     }
+
+    @Override
+    public double getWidth(){
+        return boundingWidth;
+    }
+
+    @Override
+    public double getHeight(){
+        return boundingHeight;
+    }
 }
