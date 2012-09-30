@@ -37,7 +37,7 @@ public class GameModel extends Observable {
 
     //object controllers
     public static final double DEFAULT_VELOCITY_FLOOR = 0.2;
-    public static final double DEFAULT_SPACE_FRICTION = 0.99;
+    public static final double DEFAULT_SPACE_FRICTION = 0.95;
     public static final double ZONE_SIZE = 1000;
 
     World world = new World(0, ZONE_SIZE);
@@ -83,12 +83,20 @@ public class GameModel extends Observable {
         tick++;
 
         //add collision checks and method for returning all moveable objects
-
-
         updatePlayer();
         //updateProjectiles();
         updateEnemies();
-        world.update();
+
+        // Temporary
+        ZoneCoordinate startZoneToUpdate = new ZoneCoordinate(player.getZoneCoordinate());
+        startZoneToUpdate.setX(startZoneToUpdate.getX() - 10);
+        startZoneToUpdate.setY(startZoneToUpdate.getY() -10);
+
+        ZoneCoordinate stopZoneToUpdate = new ZoneCoordinate(player.getZoneCoordinate());
+        stopZoneToUpdate.setX(stopZoneToUpdate.getX() +10);
+        stopZoneToUpdate.setY(stopZoneToUpdate.getY() +10);
+
+        world.update(startZoneToUpdate, stopZoneToUpdate);
 
 
 
@@ -125,6 +133,10 @@ public class GameModel extends Observable {
         if (accelerationRequest){
             player.accelerate();
         }
+        else{
+            player.deaccelerate();
+        }
+
         //player.updatePosition(accelerationRequest, ZONE_SIZE);
         if(fireRequest){
             if (fireDelay <= 0){

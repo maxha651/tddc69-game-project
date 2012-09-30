@@ -4,6 +4,7 @@ import model.MoveableObject;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -35,6 +36,10 @@ public class World {
         createZones();
     }
 
+    private Zone getZone(WorldObject worldObject){
+        return getZone(worldObject.getZoneCoordinate());
+    }
+
     private Zone getZone(ZoneCoordinate coordinate){
         Zone zone = zones.get(coordinate);
 
@@ -43,8 +48,6 @@ public class World {
         }
         return zones.get(coordinate);
     }
-
-
 
     public void addWorldObject(WorldObject worldObject){
         ZoneCoordinate zoneCoord = worldObject.getZoneCoordinate();
@@ -56,7 +59,7 @@ public class World {
     private void moveOneZoneUp(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
         start.setY(start.getY() + size);
         stop.setY(stop.getY() + size);
-        zoneCoordinate.setY(zoneCoordinate.getY() -1);
+        zoneCoordinate.setY(zoneCoordinate.getY() - 1);
     }
 
     private void moveOneZoneDown(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
@@ -120,41 +123,38 @@ public class World {
 
     public void update(){
         for(Zone zone : zones.values()){
-            for(WorldObject object : zone.getWorldObjects()){
-                if(MoveableObject.class.isAssignableFrom(object.getClass())){
-                    ((MoveableObject) object).updatePosition(size);
-                }
-            }
-
+            update(zone);
         }
+    }
 
-        for(Zone zone : zones.values()){
-            for(WorldObject object : zone.removeObjectsToReinsert()){
-                updateZone(object);
-                addWorldObject(object);
+    public void update(ZoneCoordinate start, ZoneCoordinate stop){
+        for(int x = start.getX(); x <= stop.getX(); x++){
+            for(int y = start.getY(); y <= stop.getY(); y++){
+                update(new ZoneCoordinate(x, y));
             }
         }
     }
 
-    private void updateZone(WorldObject object){
-        ZoneCoordinate zoneCoordinate = object.getZoneCoordinate();
-        Coordinate c = object.getCoordinate();
+    public void update(ZoneCoordinate zoneCoordinate){
+        update(getZone(zoneCoordinate));
+    }
 
-        if (c.getX() > size){
-            zoneCoordinate.setX(zoneCoordinate.getX() +1);
-            c.setX(c.getX() % size);
-        }
-        if (c.getX() < 0.0){
-            zoneCoordinate.setX(zoneCoordinate.getX() -1);
-            c.setX(size + c.getX());
-        }
-        if (c.getY() > size){
-            zoneCoordinate.setY(zoneCoordinate.getY() +1);
-            c.setY(c.getY() % size);
-        }
-        if (c.getY() < 0.0){
-            zoneCoordinate.setY(zoneCoordinate.getY() -1);
-            c.setY(size + c.getY());
+    private void update(Zone zone){
+        for(WorldObject object : zone.getWorldObjects()){
+            if(object.isAlive()){
+                if(MoveableObject.class.isAssignableFrom(object.getClass())){
+                    ((MoveableObject) object).updatePosition(size);
+
+                    // change zone if needed
+                    if(zone != getZone(object)){
+                        zone.removeWorldObject(object);
+                        addWorldObject(object);
+                    }
+                }
+                else{
+                    zone.removeWorldObject(object);
+                }
+            }
         }
     }
 
