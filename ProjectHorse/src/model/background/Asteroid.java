@@ -15,7 +15,7 @@ import java.awt.*;
  * Time: 19:53
  * To change this template use File | Settings | File Templates.
  */
-public class Asteroid extends Projectile {
+public class Asteroid extends AbstractProjectile {
 
     public Asteroid(Coordinate c, ZoneCoordinate z){
         this.boundingHeight = Randomizer.randomInt(20, 60);
@@ -44,5 +44,10 @@ public class Asteroid extends Projectile {
     @Override
     public double getHeight(){
         return boundingHeight;
+    }
+
+    @Override
+    public Rectangle getBounds() {
+        return new Rectangle((int) this.coordinate.getX(), (int) this.coordinate.getY(), (int) boundingWidth, (int) boundingHeight);
     }
 }

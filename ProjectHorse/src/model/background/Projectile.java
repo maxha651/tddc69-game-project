@@ -16,11 +16,11 @@ import java.awt.*;
  * Time: 23:53
  * To change this template use File | Settings | File Templates.
  */
-public class Projectile extends MoveableBackgroundObject implements Collideable, Boundable{
-    int minDamage, maxDamage;
-    double boundingWidth = 10, boundingHeight = 10;
+public class Projectile extends AbstractProjectile implements Collideable, Boundable{
+
     ProjectileType pt;
-    boolean impact;
+
+    int tick = 0;
 
     public Projectile(Weapon w, Coordinate coordinate, double angle, ZoneCoordinate zoneCoordinate) {
         this.rotationAngle = angle;
@@ -44,12 +44,22 @@ public class Projectile extends MoveableBackgroundObject implements Collideable,
         return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public void impact(){
-        impact = true;
-    }
+
 
     @Override
     public Rectangle getBounds() {
         return new Rectangle((int) this.coordinate.getX(), (int) this.coordinate.getY(), (int) boundingWidth, (int) boundingHeight);
+    }
+
+    @Override
+    public void updatePosition(double size){
+        super.updatePosition(size);
+        this.setRotationAngle(this.getRotationSpeed() + this.getRotationAngle());
+        if(tick < 125){
+            this.tick++;
+        } else {
+            this.setAlive(false);
+            this.setRemove(true);
+        }
     }
 }

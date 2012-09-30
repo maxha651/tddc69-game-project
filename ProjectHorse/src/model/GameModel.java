@@ -1,6 +1,7 @@
 package model;
 
 
+import model.background.AbstractProjectile;
 import model.background.Asteroid;
 import model.background.Projectile;
 import model.character.Player;
@@ -32,7 +33,7 @@ public class GameModel extends Observable {
     // Projectile controllers
     private int fireDelayDefault = 10;
     private int fireDelay = 0;
-    LinkedList<Projectile> projectiles = new LinkedList<Projectile>();
+    LinkedList<AbstractProjectile> projectiles = new LinkedList<AbstractProjectile>();
 
     //object controllers
     public static final double DEFAULT_VELOCITY_FLOOR = 0.2;
@@ -151,7 +152,7 @@ public class GameModel extends Observable {
     }
 
     public void updateProjectiles(){
-        for (Projectile projectile : projectiles){
+        for (AbstractProjectile projectile : projectiles){
 
             Coordinate upperLeftToCheck, lowerRightToCheck;
 

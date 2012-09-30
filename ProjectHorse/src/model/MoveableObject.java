@@ -35,6 +35,8 @@ public abstract class MoveableObject extends WorldObject{
 
         coordinate.setX(c.getX());
         coordinate.setY(c.getY());
+
+        this.rotationAngle = this.rotationAngle + this.rotationSpeed;
     };
 
     public double getVelocityX() {
