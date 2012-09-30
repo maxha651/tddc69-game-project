@@ -91,6 +91,9 @@ public class GameFrame extends JFrame implements KeyListener, Observer {
             case KeyEvent.VK_K :
                 viewer.setPaintKeyBindings(!viewer.isPaintKeyBindings());
                 break;
+            case KeyEvent.VK_B :
+                viewer.setPaintWorldObjectBounds(!viewer.isPaintWorldObjectBounds());
+                break;
         }
     }
 

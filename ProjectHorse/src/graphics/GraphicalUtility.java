@@ -12,6 +12,8 @@ import java.awt.image.*;
  */
 public class GraphicalUtility {
 
+    // JUST IN BETA DOES NOT REALLY WORKD --- DO NOT USE!
+
     public static Image makeColorTransparent(BufferedImage im, final Color color) {
         ImageFilter filter = new RGBImageFilter() {
 
