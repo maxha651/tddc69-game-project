@@ -1,5 +1,7 @@
 package model.background;
 
+import model.MoveableObject;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Brain
@@ -7,5 +9,11 @@ package model.background;
  * Time: 21:23
  * To change this template use File | Settings | File Templates.
  */
-public abstract class AbstractProjectile {
+public abstract class AbstractProjectile extends MoveableObject {
+    int minDamage, maxDamage;
+    double boundingWidth = 10, boundingHeight = 10;
+    boolean impact;
+    public void impact(){
+        impact = true;
+    }
 }

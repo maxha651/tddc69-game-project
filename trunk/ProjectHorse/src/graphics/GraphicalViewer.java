@@ -68,12 +68,13 @@ public class GraphicalViewer extends Viewer {
     public void paintComponent(Graphics g){
         long begin = System.currentTimeMillis();
 
-        BufferedImage bufferedImage = new BufferedImage(DEFAULT_SCREEN_WIDTH_PX, DEFAULT_SCREEN_HEIGHT_PX, BufferedImage.TYPE_4BYTE_ABGR);
+        BufferedImage bufferedImage = new BufferedImage(DEFAULT_SCREEN_WIDTH_PX, DEFAULT_SCREEN_HEIGHT_PX, BufferedImage.TYPE_INT_ARGB_PRE);
         Graphics2D g2d = bufferedImage.createGraphics();
 
 
         paintBackground(g2d);
         paintBackgroundObjects(g2d);
+
         if(drawCross){
             drawCross(g2d);
         }
@@ -87,9 +88,10 @@ public class GraphicalViewer extends Viewer {
 
 
         Graphics2D g2dComponent = (Graphics2D) g;
-        g2dComponent.drawImage(bufferedImage, null, 0, 0);
 
+        g2dComponent.drawImage(bufferedImage, null, 0, 0);
         paintTime = System.currentTimeMillis() - begin;
+
     }
 
     public void paintBackground(Graphics2D g2d){
@@ -116,12 +118,14 @@ public class GraphicalViewer extends Viewer {
         for(int i = 0; i < woc.size(); i++){
             wo = woc.get(i);
 
-            //paint boundables
-            //paintWorldObjectBounds(g2d, wo, Color.RED);
-            if(paintWorldObjectBounds){
-                paintWorldObjectBounds(g2d, wo, Color.RED);
+            if(wo.isAlive()){
+                //paint boundables
+                //paintWorldObjectBounds(g2d, wo, Color.RED);
+                if(paintWorldObjectBounds){
+                    paintWorldObjectBounds(g2d, wo, Color.RED);
+                }
+                paintWorldObject(g2d, wo);
             }
-            paintWorldObject(g2d, wo);
         }
     }
 
