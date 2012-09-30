@@ -2,6 +2,7 @@ package graphics;
 
 import model.GameModel;
 import model.background.Asteroid;
+import model.background.Projectile;
 import model.character.Player;
 import model.interfaces.Boundable;
 import model.spacecraft.Cargo;
@@ -199,8 +200,8 @@ public class GraphicalViewer extends Viewer {
         int positionX =(int) (positionInZone.getX() + zoneSize*zoneCoordinate.getX());
         int positionY =(int) (positionInZone.getY() + zoneSize*zoneCoordinate.getY());
 
-        int bWidth = (int) wo.getBounds().getWidth();
-        int bHeight = (int) wo.getBounds().getHeight();
+        int bWidth = (int) wo.getWidth();
+        int bHeight = (int) wo.getHeight();
 
         int paintX;
         int paintY;
@@ -214,11 +215,8 @@ public class GraphicalViewer extends Viewer {
         paintX = (int) ((-cameraX + positionX) - bWidth / 2);
         paintY = (int) ((-cameraY + positionY) - bHeight / 2);
 
-
-
         //rotation
         double angle = wo.getRotationAngle();
-
 
         final AffineTransform saved = g2d.getTransform();
         final AffineTransform rotate = AffineTransform.getRotateInstance(angle, rotateX, rotateY);
@@ -227,8 +225,10 @@ public class GraphicalViewer extends Viewer {
         //random stuff for asteroid that can be removed but its fun
         if(wo.getClass() == Asteroid.class){
             g2d.drawImage(imageLoader.getAsteroidImage(), paintX, paintY, bWidth, bHeight, this);
-        } else {
-            //g2d.draw(new Rectangle(paintX, paintY, bWidth, bHeight));
+        } else if(wo.getClass() == Player.class) {
+            g2d.drawImage(imageLoader.getPlayerImage(gameModel.getPlayer()), paintX, paintY, bWidth, bHeight, this);
+        } else if(wo.getClass() == Projectile.class) {
+            g2d.drawImage(imageLoader.getProjectileImage((Projectile) wo), paintX, paintY, bWidth, bHeight, this);
         }
         g2d.setTransform(saved);
 

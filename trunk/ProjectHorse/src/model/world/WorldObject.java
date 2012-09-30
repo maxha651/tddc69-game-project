@@ -14,10 +14,30 @@ import model.utility.shape.ZoneCoordinate;
  */
 public abstract class WorldObject extends AbstractGameObject implements Boundable {
 
+    //uses width and height when painting actual object
+    //uses getBounds when painting bounds
+
     protected Coordinate coordinate;
     protected ZoneCoordinate zoneCoordinate;
     protected double rotationAngle;
+    protected double width = 15, height = 1;
 
+
+    public double getWidth() {
+        return width;
+    }
+
+    public void setWidth(double width) {
+        this.width = width;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
 
     public double getRotationAngle() {
         return rotationAngle;
