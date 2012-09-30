@@ -92,7 +92,7 @@ public class GameModel extends Observable {
         updateTime = System.currentTimeMillis() - start;
 
         // add new asteroids
-        if(tick % Randomizer.randomInt(100, 125) == 0){
+        if(tick % Randomizer.randomInt(1, 55) == 0){
             spawnAsteroid();
         }
 
