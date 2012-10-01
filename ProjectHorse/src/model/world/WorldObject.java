@@ -21,23 +21,17 @@ public abstract class WorldObject extends AbstractGameObject implements Boundabl
     protected ZoneCoordinate zoneCoordinate;
     protected double rotationAngle;
     protected double width = 15, height = 1;
-    protected boolean alive = true;
-    protected boolean remove = false;
 
-    public boolean isAlive() {
-        return alive;
+
+
+    protected WorldObjectState state = WorldObjectState.ALIVE;
+
+    public WorldObjectState getState() {
+        return state;
     }
 
-    public void setAlive(boolean alive) {
-        this.alive = alive;
-    }
-
-    public boolean isRemove() {
-        return remove;
-    }
-
-    public void setRemove(boolean remove) {
-        this.remove = remove;
+    public void setState(WorldObjectState state) {
+        this.state = state;
     }
 
     public double getWidth() {
@@ -78,5 +72,12 @@ public abstract class WorldObject extends AbstractGameObject implements Boundabl
 
     public void setZoneCoordinate(ZoneCoordinate zoneCoordinate) {
         this.zoneCoordinate = zoneCoordinate;
+    }
+
+    public boolean isAlive() {
+        if(this.state == WorldObjectState.ALIVE){
+            return true;
+        }
+        return false;
     }
 }

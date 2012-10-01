@@ -6,6 +6,7 @@ import model.spacecraft.Weapon;
 import model.utility.enums.ProjectileType;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
+import model.world.WorldObjectState;
 
 import java.awt.*;
 
@@ -58,8 +59,7 @@ public class Projectile extends AbstractProjectile implements Collideable, Bound
         if(tick < 125){
             this.tick++;
         } else {
-            this.setAlive(false);
-            this.setRemove(true);
+            this.setState(WorldObjectState.REMOVE);
         }
     }
 }
