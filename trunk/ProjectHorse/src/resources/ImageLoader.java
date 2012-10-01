@@ -23,6 +23,7 @@ public class ImageLoader {
     BufferedImage asteroid1;
     BufferedImage spaceship1;
     BufferedImage laserblue1;
+    BufferedImage engineparticlered;
 
     public BufferedImage getAsteroidImage(){
         asteroid1 = getImage(asteroid1, "asteroid2.png");
@@ -40,6 +41,12 @@ public class ImageLoader {
         return laserblue1;
     }
 
+    public BufferedImage getEngineParticleImage(){
+        //check what type and return for that
+        engineparticlered = getImage(engineparticlered, "engineparticlered.png");
+        return engineparticlered;
+    }
+
     private BufferedImage getImage(BufferedImage bf, String path){
         if(bf == null){
             bf = load(path, bf);
@@ -48,11 +55,7 @@ public class ImageLoader {
         return bf;
     }
 
-    public BufferedImage getEngineParticleImage(){
-        //check what type and return for that
-        laserblue1 = getImage(laserblue1, "laserblue1.png");
-        return laserblue1;
-    }
+
 
     public BufferedImage load(String path, BufferedImage bf){
         try {

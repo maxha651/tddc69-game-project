@@ -26,6 +26,9 @@ public class EngineParticle extends Particle {
         this.setRotationAngle(Randomizer.randomDouble(0,10));
 
         this.coordinate = new Coordinate(p.getCoordinate());
+
+        this.coordinate.setX(coordinate.getX() - Math.cos(p.getRotationAngle()) * p.getWidth()/2);
+        this.coordinate.setY(coordinate.getY() - Math.sin(p.getRotationAngle()) * p.getHeight()/2);
         this.zoneCoordinate = new ZoneCoordinate(p.getZoneCoordinate());
 
     }
