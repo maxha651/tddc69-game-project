@@ -133,6 +133,30 @@ public class World {
                 update(new ZoneCoordinate(x, y));
             }
         }
+        clearAdjacentZones(start, stop);
+    }
+
+    private void clearAdjacentZones(ZoneCoordinate start, ZoneCoordinate stop){
+        for (int x = start.getX() -1; x <= stop.getX() +1; x++){
+            Zone zone = getZone(new ZoneCoordinate(x, start.getY() -1));
+
+            numberOfWorldObjects -= zone.getWorldObjects().size();
+            zone.clear();
+            zone = getZone(new ZoneCoordinate(x, stop.getY() +1));
+
+            numberOfWorldObjects -= zone.getWorldObjects().size();
+            zone.clear();
+        }
+        for (int y = start.getY() -1; y <= stop.getY() +1; y++){
+            Zone zone = getZone(new ZoneCoordinate(start.getX() -1, y));
+
+            numberOfWorldObjects -= zone.getWorldObjects().size();
+            zone.clear();
+            zone = getZone(new ZoneCoordinate(stop.getX() +1, y));
+
+            numberOfWorldObjects -= zone.getWorldObjects().size();
+            zone.clear();
+        }
     }
 
     public void update(ZoneCoordinate zoneCoordinate){
@@ -148,11 +172,13 @@ public class World {
                     // change zone if needed
                     if(zone != getZone(object)){
                         zone.removeWorldObject(object);
+                        numberOfWorldObjects--;
                         addWorldObject(object);
                     }
                 }
                 else{
                     zone.removeWorldObject(object);
+                    numberOfWorldObjects--;
                 }
             }
         }

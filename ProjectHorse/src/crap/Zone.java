@@ -96,6 +96,17 @@ public class Zone {
         }
     }
 
+    public void clear(){
+        if (isLastLevel()){
+            worldObjects.clear();
+        }
+        else{
+            for(Zone zone : nextLevelZones){
+                zone.clear();
+            }
+        }
+    }
+
     private boolean withinBoundaries(Coordinate position){
         if (position.getX() < pos.getX() || position.getX() > pos.getX() + size -1){
             return false;

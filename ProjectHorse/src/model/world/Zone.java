@@ -115,6 +115,15 @@ public class Zone {
         }
     }
 
+    public void clear(){
+        if (isLastLevel()){
+            worldObjects.clear();
+        }
+        else{
+
+        }
+    }
+
     /**
      * Returns all objects within a rectangle with its upper left corner at start
      * and its lower right corner at stop
