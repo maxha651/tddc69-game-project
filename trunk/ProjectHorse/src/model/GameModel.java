@@ -100,7 +100,8 @@ public class GameModel extends Observable {
 
         // add new asteroids
         if(tick % Randomizer.randomInt(1, 2) == 0){
-            spawnAsteroid();
+            for(int i = 0; i < 100; i++)spawnAsteroid();
+
         }
 
         if(tick > 8000 && true){ //change true to false
