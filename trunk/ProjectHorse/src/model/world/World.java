@@ -165,7 +165,7 @@ public class World {
 
     private void update(Zone zone){
         for(WorldObject object : zone.getWorldObjects()){
-            if(object.getState() == WorldObjectState.REMOVE){
+            if(object.isAlive()){
                 if(MoveableObject.class.isAssignableFrom(object.getClass())){
                     ((MoveableObject) object).updatePosition(size);
 
