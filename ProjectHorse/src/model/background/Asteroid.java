@@ -18,9 +18,9 @@ import java.awt.*;
 public class Asteroid extends AbstractProjectile {
 
     public Asteroid(Coordinate c, ZoneCoordinate z){
-        this.boundingHeight = Randomizer.randomInt(20, 60);
-        this.boundingWidth = this.boundingHeight + Randomizer.randomInt(0, 17) - Randomizer.randomInt(0, 17);
-        this.rotationSpeed = (Randomizer.randomInt(0,300) - Randomizer.randomInt(0,300))/3000.0;
+        this.boundingHeight = Randomizer.randomInt(20, 80);
+        this.boundingWidth = this.boundingHeight + Randomizer.randomInt(0, 15) - Randomizer.randomInt(0, 15);
+        this.rotationSpeed = (Randomizer.randomInt(0,300) - Randomizer.randomInt(0,300))/5000.0;
         this.velocityX = Randomizer.randomDouble(0, 4) - Randomizer.randomDouble(0, 4);
         this.velocityY = Randomizer.randomDouble(0, 4) - Randomizer.randomDouble(0, 4);
         this.setRotationAngle(Randomizer.randomDouble(0,10));

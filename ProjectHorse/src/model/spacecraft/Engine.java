@@ -13,7 +13,7 @@ public class Engine extends SpacecraftPart {
 
     public static final double DEFAULT_VELOCITY_MAX = 8;
     public static final double DEFAULT_ACCELERATION = 0.5;
-    public static final double DEFAULT_ROTATION_SPEED = 5;
+    public static final double DEFAULT_ROTATION_SPEED = 4;
 
     boolean sideStep = false;
     public double acceleration = DEFAULT_ACCELERATION;

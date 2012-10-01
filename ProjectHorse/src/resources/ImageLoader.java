@@ -48,6 +48,12 @@ public class ImageLoader {
         return bf;
     }
 
+    public BufferedImage getEngineParticleImage(){
+        //check what type and return for that
+        laserblue1 = getImage(laserblue1, "laserblue1.png");
+        return laserblue1;
+    }
+
     public BufferedImage load(String path, BufferedImage bf){
         try {
             bf = ImageIO.read(this.getClass().getResource(path));
