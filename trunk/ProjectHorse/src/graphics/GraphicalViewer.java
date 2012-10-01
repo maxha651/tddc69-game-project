@@ -164,8 +164,8 @@ public class GraphicalViewer extends Viewer {
         double angle = wo.getRotationAngle();
 
         final AffineTransform saved = g2d.getTransform();
-        final AffineTransform rotate = AffineTransform.getRotateInstance(angle, rotateX, rotateY);
-        g2d.transform(rotate);
+        //final AffineTransform rotate = AffineTransform.getRotateInstance(angle, rotateX, rotateY);
+        //g2d.transform(rotate);
 
 
         g2d.draw(new Rectangle(paintX, paintY, bWidth, bHeight));
