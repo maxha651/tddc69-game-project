@@ -121,10 +121,11 @@ public class GraphicalViewer extends Viewer {
             if(wo.isAlive()){
                 //paint boundables
                 //paintWorldObjectBounds(g2d, wo, Color.RED);
+
+                paintWorldObject(g2d, wo);
                 if(paintWorldObjectBounds){
                     paintWorldObjectBounds(g2d, wo, Color.RED);
                 }
-                paintWorldObject(g2d, wo);
             }
         }
     }

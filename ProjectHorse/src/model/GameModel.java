@@ -39,6 +39,8 @@ public class GameModel extends Observable {
     public static final double DEFAULT_VELOCITY_FLOOR = 0.2;
     public static final double DEFAULT_SPACE_FRICTION = 0.95;
     public static final double ZONE_SIZE = 1000;
+    public static final int ZONE_UPDATE_SPAN = 5;
+    public static final int ASTEROID_SPAWN_RATE = 2;
 
     World world = new World(0, ZONE_SIZE);
 
@@ -89,20 +91,17 @@ public class GameModel extends Observable {
 
         // Temporary
         ZoneCoordinate startZoneToUpdate = new ZoneCoordinate(player.getZoneCoordinate());
-        startZoneToUpdate.setX(startZoneToUpdate.getX() -5);
-        startZoneToUpdate.setY(startZoneToUpdate.getY() -5);
+        startZoneToUpdate.setX(startZoneToUpdate.getX() - ZONE_UPDATE_SPAN);
+        startZoneToUpdate.setY(startZoneToUpdate.getY() - ZONE_UPDATE_SPAN);
 
         ZoneCoordinate stopZoneToUpdate = new ZoneCoordinate(player.getZoneCoordinate());
-        stopZoneToUpdate.setX(stopZoneToUpdate.getX() +5);
-        stopZoneToUpdate.setY(stopZoneToUpdate.getY() +5);
+        stopZoneToUpdate.setX(stopZoneToUpdate.getX() + ZONE_UPDATE_SPAN);
+        stopZoneToUpdate.setY(stopZoneToUpdate.getY() + ZONE_UPDATE_SPAN);
 
         world.update(startZoneToUpdate, stopZoneToUpdate);
 
         // add new asteroids
-        if(tick % Randomizer.randomInt(1, 2) == 0){
-            for(int i = 0; i < 100; i++)spawnAsteroid();
-
-        }
+        spawnAsteroids();
 
         if(tick > 8000 && true){ //change true to false
             //to make the game not fuck up the computer if memory leaks
@@ -112,6 +111,12 @@ public class GameModel extends Observable {
         }
 
         updateTime = System.currentTimeMillis() - start;
+    }
+
+    public void spawnAsteroids(){
+        for(int i = 0; i < ASTEROID_SPAWN_RATE; i++){
+            spawnAsteroid();
+        }
     }
 
     public void spawnAsteroid(){
