@@ -13,7 +13,7 @@ public class Randomizer {
     public static int randomInt(int min, int max){
         Random rm = new Random();
         if(min <= max){
-            return min  + rm.nextInt(max - min);
+            return min  + rm.nextInt(max - min + 1);
         } else {
             return max;
         }

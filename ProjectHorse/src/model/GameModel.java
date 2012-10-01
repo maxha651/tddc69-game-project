@@ -116,6 +116,13 @@ public class GameModel extends Observable {
     public void spawnAsteroid(){
         Coordinate c = new Coordinate(player.getCoordinate()); //make this some other arbitary coordinate .. now spawns on top of player
         ZoneCoordinate z = new ZoneCoordinate(player.getZoneCoordinate());
+
+        int xDifference = 1 - 2*Randomizer.randomInt(0, 1);
+        int yDifference = 1 - 2*Randomizer.randomInt(0, 1);
+
+        z.setX(player.getZoneCoordinate().getX() + xDifference*2);
+        z.setY(player.getZoneCoordinate().getY() + yDifference*2);
+
         world.addWorldObject(new Asteroid(c, z));
         projectiles.add(new Asteroid(c, z));
     }
