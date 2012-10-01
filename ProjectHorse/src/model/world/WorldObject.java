@@ -22,8 +22,6 @@ public abstract class WorldObject extends AbstractGameObject implements Boundabl
     protected double rotationAngle;
     protected double width = 15, height = 1;
 
-
-
     protected WorldObjectState state = WorldObjectState.ALIVE;
 
     public WorldObjectState getState() {

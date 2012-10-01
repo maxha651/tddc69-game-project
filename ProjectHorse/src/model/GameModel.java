@@ -89,7 +89,7 @@ public class GameModel extends Observable {
 
         // Temporary
         ZoneCoordinate startZoneToUpdate = new ZoneCoordinate(player.getZoneCoordinate());
-        startZoneToUpdate.setX(startZoneToUpdate.getX() - 5);
+        startZoneToUpdate.setX(startZoneToUpdate.getX() -5);
         startZoneToUpdate.setY(startZoneToUpdate.getY() -5);
 
         ZoneCoordinate stopZoneToUpdate = new ZoneCoordinate(player.getZoneCoordinate());
@@ -97,8 +97,6 @@ public class GameModel extends Observable {
         stopZoneToUpdate.setY(stopZoneToUpdate.getY() +5);
 
         world.update(startZoneToUpdate, stopZoneToUpdate);
-
-
 
         // add new asteroids
         if(tick % Randomizer.randomInt(1, 2) == 0){
