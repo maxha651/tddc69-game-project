@@ -2,6 +2,7 @@ package graphics;
 
 import model.GameModel;
 import model.background.Asteroid;
+import model.background.EngineParticle;
 import model.background.Projectile;
 import model.character.Player;
 import model.interfaces.Boundable;
@@ -229,6 +230,8 @@ public class GraphicalViewer extends Viewer {
             g2d.drawImage(imageLoader.getAsteroidImage(), paintX, paintY, bWidth, bHeight, this);
         } else if(wo.getClass() == Player.class) {
             g2d.drawImage(imageLoader.getPlayerImage(gameModel.getPlayer()), paintX, paintY, bWidth, bHeight, this);
+        } else if(wo.getClass() == EngineParticle.class) {
+            g2d.drawImage(imageLoader.getEngineParticleImage(), paintX, paintY, bWidth, bHeight, this);
         } else if(wo.getClass() == Projectile.class) {
             g2d.drawImage(imageLoader.getProjectileImage((Projectile) wo), paintX, paintY, bWidth, bHeight, this);
         }

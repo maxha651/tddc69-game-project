@@ -2,6 +2,7 @@ package model.character;
 
 import model.GameModel;
 import model.MoveableObject;
+import model.background.EngineParticle;
 import model.spacecraft.Engine;
 import model.spacecraft.Spacecraft;
 import model.utility.math.StandardMath;
@@ -67,6 +68,7 @@ public abstract class AbstractCharacter extends MoveableObject {
             this.velocityX *= maxAndNewVelocityRatio;
             this.velocityY *= maxAndNewVelocityRatio;
         }
+
     }
 
 

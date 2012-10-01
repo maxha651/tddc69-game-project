@@ -23,4 +23,16 @@ public class StandardMath {
     public static double yPart(double x, double angle){
         return Math.sin(angle) * x;
     }
+
+    public static int sign(double d){
+        if(d < 0){
+            return -1;
+        } else {
+            return 1;
+        }
+    }
+
+    public static int reverseSign(double d){
+        return sign(-d);
+    }
 }

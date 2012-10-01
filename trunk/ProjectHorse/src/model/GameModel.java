@@ -3,6 +3,7 @@ package model;
 
 import model.background.AbstractProjectile;
 import model.background.Asteroid;
+import model.background.EngineParticle;
 import model.background.Projectile;
 import model.character.Player;
 import model.utility.math.Randomizer;
@@ -103,6 +104,7 @@ public class GameModel extends Observable {
         // add new asteroids
 
         spawnAsteroids();
+        spawnEngineParticles();
 
         if(tick > 8000 && true){ //change true to false
             //to make the game not fuck up the computer if memory leaks
@@ -118,6 +120,17 @@ public class GameModel extends Observable {
         for(int i = 0; i < ASTEROID_SPAWN_RATE; i++){
             spawnAsteroid();
         }
+    }
+
+    public void spawnEngineParticles(){
+        if(accelerationRequest == true){
+            spawnEngineParticle();
+        }
+
+    }
+
+    public void spawnEngineParticle(){
+        world.addWorldObject(new EngineParticle(player));
     }
 
     public void spawnAsteroid(){
