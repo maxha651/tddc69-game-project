@@ -21,8 +21,8 @@ public class EngineParticle extends Particle {
         this.width = Randomizer.randomInt(1, 3);
         this.height = width;
         this.rotationSpeed = (Randomizer.randomInt(0,300) - Randomizer.randomInt(0,300))/3000.0;
-        this.velocityX = Randomizer.randomDouble(0, 4)*model.utility.math.StandardMath.reverseSign(p.getVelocityX());
-        this.velocityY = Randomizer.randomDouble(0, 4)*model.utility.math.StandardMath.reverseSign(p.getVelocityY());;
+        this.velocityX = Randomizer.randomDouble(0, 3)*model.utility.math.StandardMath.reverseSign(p.getVelocityX()) - Randomizer.randomDouble(0, 2)*model.utility.math.StandardMath.reverseSign(p.getVelocityX());
+        this.velocityY = Randomizer.randomDouble(0, 3)*model.utility.math.StandardMath.reverseSign(p.getVelocityY()) - Randomizer.randomDouble(0, 2)*model.utility.math.StandardMath.reverseSign(p.getVelocityY());
         this.setRotationAngle(Randomizer.randomDouble(0,10));
 
         this.coordinate = new Coordinate(p.getCoordinate());

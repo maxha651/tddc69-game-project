@@ -38,10 +38,10 @@ public class GameModel extends Observable {
 
     //object controllers
     public static final double DEFAULT_VELOCITY_FLOOR = 0.2;
-    public static final double DEFAULT_SPACE_FRICTION = 0.95;
+    public static final double DEFAULT_SPACE_FRICTION = 0.98;
     public static final double ZONE_SIZE = 1000;
     public static final int ZONE_UPDATE_SPAN = 5;    //the spawn of how many zones are loaded away from player
-    public static final int ASTEROID_SPAWN_RATE = 2; //how many asteroids to spawn per tick
+    public static final int asteroidSpawnRate = 2; //how many asteroids to spawn per tick
 
     World world = new World(0, ZONE_SIZE);
 
@@ -117,7 +117,7 @@ public class GameModel extends Observable {
     }
 
     public void spawnAsteroids(){
-        for(int i = 0; i < ASTEROID_SPAWN_RATE; i++){
+        for(int i = 0; i < asteroidSpawnRate; i++){
             spawnAsteroid();
         }
     }
