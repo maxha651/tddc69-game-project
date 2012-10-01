@@ -21,6 +21,7 @@ public abstract class WorldObject extends AbstractGameObject implements Boundabl
     protected ZoneCoordinate zoneCoordinate;
     protected double rotationAngle;
     protected double width = 15, height = 1;
+    protected int z = 0;
 
     protected WorldObjectState state = WorldObjectState.ALIVE;
 

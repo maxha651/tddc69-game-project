@@ -130,7 +130,9 @@ public class GameModel extends Observable {
     }
 
     public void spawnEngineParticle(){
-        world.addWorldObject(new EngineParticle(player));
+        EngineParticle ep = new EngineParticle(player);
+        ep.updateZone(ZONE_SIZE);
+        world.addWorldObject(ep);
     }
 
     public void spawnAsteroid(){
