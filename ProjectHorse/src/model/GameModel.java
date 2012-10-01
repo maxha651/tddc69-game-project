@@ -101,7 +101,7 @@ public class GameModel extends Observable {
 
 
         // add new asteroids
-        if(tick % Randomizer.randomInt(1, 55) == 0){
+        if(tick % Randomizer.randomInt(1, 2) == 0){
             spawnAsteroid();
         }
 
