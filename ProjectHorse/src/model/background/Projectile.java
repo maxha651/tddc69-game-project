@@ -36,7 +36,7 @@ public class Projectile extends AbstractProjectile implements Collideable, Bound
     }
 
     public Projectile() {
-        //ddddSystem.out.println("DO NOT USE THIS CONSTRUCTOR -- WHY ARE YOU USING ME!??? :(( (in Projectile)");
+        System.out.println("DO NOT USE THIS CONSTRUCTOR -- WHY ARE YOU USING ME!??? :(( (in Projectile)");
     }
 
     @Override
@@ -55,7 +55,6 @@ public class Projectile extends AbstractProjectile implements Collideable, Bound
     @Override
     public void updatePosition(double size){
         super.updatePosition(size);
-        this.setRotationAngle(this.getRotationSpeed() + this.getRotationAngle());
         if(tick < 125){
             this.tick++;
         } else {

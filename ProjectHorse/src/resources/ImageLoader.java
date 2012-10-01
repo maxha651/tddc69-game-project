@@ -25,7 +25,7 @@ public class ImageLoader {
     BufferedImage laserblue1;
 
     public BufferedImage getAsteroidImage(){
-        asteroid1 = getImage(asteroid1, "asteroid1.png");
+        asteroid1 = getImage(asteroid1, "asteroid2.png");
         return asteroid1;
     }
 
