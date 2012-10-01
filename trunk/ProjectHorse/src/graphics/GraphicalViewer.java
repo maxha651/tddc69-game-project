@@ -51,6 +51,7 @@ public class GraphicalViewer extends Viewer {
     boolean paintWorldObjectBounds = false;
 
     int cameraX = - DEFAULT_SCREEN_WIDTH_PX/2, cameraY = - DEFAULT_SCREEN_HEIGHT_PX/2;
+    final static int SCREEN_PADDING = 100;
 
     public GraphicalViewer(GameModel gameModel){
          this.gameModel = gameModel;
@@ -109,8 +110,8 @@ public class GraphicalViewer extends Viewer {
         Player p = gameModel.getPlayer();
         ZoneCoordinate zs = p.getZoneCoordinate();
 
-        Coordinate start = new Coordinate(p.getCoordinate().getX() - width/2, p.getCoordinate().getY() - height/2);
-        Coordinate stop = new Coordinate(p.getCoordinate().getX() + width/2, p.getCoordinate().getY() + height/2);
+        Coordinate start = new Coordinate(p.getCoordinate().getX() - width/2 - SCREEN_PADDING, p.getCoordinate().getY() - height/2 - SCREEN_PADDING);
+        Coordinate stop = new Coordinate(p.getCoordinate().getX() + width/2 + SCREEN_PADDING, p.getCoordinate().getY() + height/2 + SCREEN_PADDING);
         WorldObjectContainer woc = gameModel.getAllObjectsInArea(zs, start, stop);
         WorldObject wo;
 
