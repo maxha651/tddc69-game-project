@@ -138,22 +138,24 @@ public class World {
 
     private void clearAdjacentZones(ZoneCoordinate start, ZoneCoordinate stop){
         for (int x = start.getX() -1; x <= stop.getX() +1; x++){
-            Zone zone = getZone(new ZoneCoordinate(x, start.getY() -1));
-
+            int y = start.getY() -1;
+            Zone zone = getZone(new ZoneCoordinate(x, y));
             numberOfWorldObjects -= zone.getWorldObjects().size();
             zone.clear();
-            zone = getZone(new ZoneCoordinate(x, stop.getY() +1));
 
+            y = stop.getY(); // doesn't work with +1
+            zone = getZone(new ZoneCoordinate(x, y));
             numberOfWorldObjects -= zone.getWorldObjects().size();
             zone.clear();
         }
         for (int y = start.getY() -1; y <= stop.getY() +1; y++){
-            Zone zone = getZone(new ZoneCoordinate(start.getX() -1, y));
-
+            int x = start.getX();
+            Zone zone = getZone(new ZoneCoordinate(x, y));
             numberOfWorldObjects -= zone.getWorldObjects().size();
             zone.clear();
-            zone = getZone(new ZoneCoordinate(stop.getX() +1, y));
 
+            x = stop.getX(); // doesn't work with +1
+            zone = getZone(new ZoneCoordinate(stop.getX(), y));
             numberOfWorldObjects -= zone.getWorldObjects().size();
             zone.clear();
         }

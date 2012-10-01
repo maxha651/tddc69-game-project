@@ -25,7 +25,10 @@ public class Player extends AbstractCharacter implements Collideable, Boundable{
     }
 
     public Projectile fire(){
-        return new Projectile(spacecraft.getWeapon1(), new Coordinate(this.getCoordinate()), this.rotationAngle, new ZoneCoordinate(this.zoneCoordinate));
+        Coordinate projectileCoord = new Coordinate(this.getCoordinate());
+        projectileCoord.setX(projectileCoord.getX() + Math.cos(rotationAngle) * width/2);
+        projectileCoord.setY(projectileCoord.getY() + Math.sin(rotationAngle) * height/2);
+        return new Projectile(spacecraft.getWeapon1(), projectileCoord, this.rotationAngle, new ZoneCoordinate(this.zoneCoordinate));
     }
 
     @Override

@@ -91,16 +91,17 @@ public class GameModel extends Observable {
 
         // Temporary
         ZoneCoordinate startZoneToUpdate = new ZoneCoordinate(player.getZoneCoordinate());
-        startZoneToUpdate.setX(startZoneToUpdate.getX() - ZONE_UPDATE_SPAN);
-        startZoneToUpdate.setY(startZoneToUpdate.getY() - ZONE_UPDATE_SPAN);
+        startZoneToUpdate.setX(startZoneToUpdate.getX() -5);
+        startZoneToUpdate.setY(startZoneToUpdate.getY() -5);
 
         ZoneCoordinate stopZoneToUpdate = new ZoneCoordinate(player.getZoneCoordinate());
-        stopZoneToUpdate.setX(stopZoneToUpdate.getX() + ZONE_UPDATE_SPAN);
-        stopZoneToUpdate.setY(stopZoneToUpdate.getY() + ZONE_UPDATE_SPAN);
+        stopZoneToUpdate.setX(stopZoneToUpdate.getX() +5);
+        stopZoneToUpdate.setY(stopZoneToUpdate.getY() +5);
 
         world.update(startZoneToUpdate, stopZoneToUpdate);
 
         // add new asteroids
+
         spawnAsteroids();
 
         if(tick > 8000 && true){ //change true to false
@@ -153,7 +154,8 @@ public class GameModel extends Observable {
             if (fireDelay <= 0){
                 Projectile temp = player.fire();
 
-
+                // might have changed zones
+                temp.updateZone(ZONE_SIZE);
                 projectiles.add(temp);
 
                 world.addWorldObject(temp);
