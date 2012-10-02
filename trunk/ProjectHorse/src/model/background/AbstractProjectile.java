@@ -11,7 +11,7 @@ import model.MoveableObject;
  */
 public abstract class AbstractProjectile extends MoveableObject {
     int minDamage, maxDamage;
-    double boundingWidth = 10, boundingHeight = 10;
+    // double boundingWidth = 10, boundingHeight = 10; in Collideable instead
     boolean impact;
     public void impact(){
         impact = true;

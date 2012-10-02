@@ -22,6 +22,8 @@ public class Projectile extends AbstractProjectile implements Collideable, Bound
     ProjectileType pt;
 
     int tick = 0;
+    double boundingWidth = 15;
+    double boundingHeight = 15;
 
     public Projectile(Weapon w, Coordinate coordinate, double angle, ZoneCoordinate zoneCoordinate) {
         this.rotationAngle = angle;
@@ -40,9 +42,28 @@ public class Projectile extends AbstractProjectile implements Collideable, Bound
     }
 
     @Override
-    public boolean collidesWith(Rectangle r) {
+    public boolean collidesWith(Collideable c, double zoneSize) {
+        ZoneCoordinate tempZoneCoord = new ZoneCoordinate(c.getZoneCoordinate());
+        Coordinate tempCoord = new Coordinate(c.getCoordinate());
 
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        if(!zoneCoordinate.equals(tempZoneCoord)){
+            double yZoneDiff = (zoneCoordinate.getY() - tempZoneCoord.getY()) * zoneSize;
+            double xZoneDiff = (zoneCoordinate.getX() - tempZoneCoord.getX()) * zoneSize;
+
+            tempCoord.setY(tempCoord.getY() + yZoneDiff);
+            tempCoord.setX(tempCoord.getX() + xZoneDiff);
+        }
+
+        double xDiff = Math.abs(coordinate.getX() - tempCoord.getX());
+        double yDiff = Math.abs(coordinate.getY() - tempCoord.getY());
+
+        if( xDiff < boundingWidth/2 &&
+                yDiff < boundingHeight/2){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 
 
