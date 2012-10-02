@@ -37,7 +37,7 @@ public class Player extends AbstractCharacter implements Collideable, Boundable{
     }
 
     @Override
-    public boolean collidesWith(Rectangle r) {
+    public boolean collidesWith(Collideable c, double zoneSize) {
         return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 

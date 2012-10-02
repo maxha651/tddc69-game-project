@@ -15,7 +15,7 @@ import java.awt.*;
  * Time: 19:53
  * To change this template use File | Settings | File Templates.
  */
-public class Asteroid extends AbstractProjectile {
+public class Asteroid extends AbstractProjectile implements Collideable{
 
     public Asteroid(Coordinate c, ZoneCoordinate z){
         this.boundingHeight = Randomizer.randomInt(20, 80);
@@ -49,5 +49,10 @@ public class Asteroid extends AbstractProjectile {
     @Override
     public Rectangle getBounds() {
         return new Rectangle((int) this.coordinate.getX(), (int) this.coordinate.getY(), (int) boundingWidth, (int) boundingHeight);
+    }
+
+    @Override
+    public boolean collidesWith(Collideable c, double zoneSize) {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 }

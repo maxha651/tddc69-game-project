@@ -92,12 +92,12 @@ public class GameModel extends Observable {
 
         // Temporary
         ZoneCoordinate startZoneToUpdate = new ZoneCoordinate(player.getZoneCoordinate());
-        startZoneToUpdate.setX(startZoneToUpdate.getX() -5);
-        startZoneToUpdate.setY(startZoneToUpdate.getY() -5);
+        startZoneToUpdate.setX(startZoneToUpdate.getX() -10);
+        startZoneToUpdate.setY(startZoneToUpdate.getY() -10);
 
         ZoneCoordinate stopZoneToUpdate = new ZoneCoordinate(player.getZoneCoordinate());
-        stopZoneToUpdate.setX(stopZoneToUpdate.getX() +5);
-        stopZoneToUpdate.setY(stopZoneToUpdate.getY() +5);
+        stopZoneToUpdate.setX(stopZoneToUpdate.getX() +10);
+        stopZoneToUpdate.setY(stopZoneToUpdate.getY() +10);
 
         world.update(startZoneToUpdate, stopZoneToUpdate);
 

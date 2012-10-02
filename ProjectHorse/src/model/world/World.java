@@ -1,6 +1,7 @@
 package model.world;
 
 import model.MoveableObject;
+import model.interfaces.Collideable;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 
@@ -138,26 +139,36 @@ public class World {
 
     private void clearAdjacentZones(ZoneCoordinate start, ZoneCoordinate stop){
         for (int x = start.getX() -1; x <= stop.getX() +1; x++){
-            int y = start.getY() -1;
-            Zone zone = getZone(new ZoneCoordinate(x, y));
-            numberOfWorldObjects -= zone.getWorldObjects().size();
-            zone.clear();
+            ZoneCoordinate tempCoord = (new ZoneCoordinate(x, start.getY() -1));
 
-            y = stop.getY(); // doesn't work with +1
-            zone = getZone(new ZoneCoordinate(x, y));
-            numberOfWorldObjects -= zone.getWorldObjects().size();
-            zone.clear();
+            if(zoneExists(tempCoord)){
+                Zone zone = getZone(tempCoord);
+                numberOfWorldObjects -= zone.getWorldObjects().size();
+                zone.clear();
+            }
+
+            tempCoord.setY(stop.getY()); // doesn't work with +1
+            if(zoneExists(tempCoord)){
+                Zone zone = getZone(tempCoord);
+                numberOfWorldObjects -= zone.getWorldObjects().size();
+                zone.clear();
+            }
         }
         for (int y = start.getY() -1; y <= stop.getY() +1; y++){
-            int x = start.getX();
-            Zone zone = getZone(new ZoneCoordinate(x, y));
-            numberOfWorldObjects -= zone.getWorldObjects().size();
-            zone.clear();
+            ZoneCoordinate tempCoord = new ZoneCoordinate(start.getX(), y);// doesn't work with -1
 
-            x = stop.getX(); // doesn't work with +1
-            zone = getZone(new ZoneCoordinate(stop.getX(), y));
-            numberOfWorldObjects -= zone.getWorldObjects().size();
-            zone.clear();
+            if (zoneExists(tempCoord)){
+                Zone zone = getZone(tempCoord);
+                numberOfWorldObjects -= zone.getWorldObjects().size();
+                zone.clear();
+            }
+
+            tempCoord.setX(stop.getX()); // doesn't work with +1
+            if(zoneExists(tempCoord)){
+                Zone zone = getZone(new ZoneCoordinate(stop.getX(), y));
+                numberOfWorldObjects -= zone.getWorldObjects().size();
+                zone.clear();
+            }
         }
     }
 
@@ -178,12 +189,32 @@ public class World {
                         addWorldObject(object);
                     }
                 }
-                else{
-                    zone.removeWorldObject(object);
-                    numberOfWorldObjects--;
+                if(Collideable.class.isAssignableFrom(object.getClass())){
+                    WorldObjectContainer checkIfObjectsCollide;
+                    checkIfObjectsCollide = getAllObjectsInArea(object.getZoneCoordinate(),
+                            new Coordinate(object.getCoordinate().getX() - 50, object.getCoordinate().getY() - 50),
+                            new Coordinate(object.getCoordinate().getX() + 50, object.getCoordinate().getY() + 50));
+
+                    for(WorldObject nearbyObject : checkIfObjectsCollide){
+                        if (!object.equals(nearbyObject) &&
+                                Collideable.class.isAssignableFrom(nearbyObject.getClass()) &&
+                                ((Collideable) object).collidesWith((Collideable) nearbyObject, size)){
+                            zone.removeWorldObject(object);
+                            numberOfWorldObjects--;
+                            break;
+                        }
+                    }
                 }
             }
+            else{
+                zone.removeWorldObject(object);
+                numberOfWorldObjects--;
+            }
         }
+    }
+
+    private boolean zoneExists(ZoneCoordinate zoneCoordinate){
+        return zones.get(zoneCoordinate) != null;
     }
 
     private void createZones(){

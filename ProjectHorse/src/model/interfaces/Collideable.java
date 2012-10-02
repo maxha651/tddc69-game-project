@@ -3,6 +3,6 @@ package model.interfaces;
 
 import java.awt.*;
 
-public interface Collideable {
-    public boolean collidesWith(Rectangle r);
+public interface Collideable extends Moveable{
+    public boolean collidesWith(Collideable c, double zoneSize);
 }

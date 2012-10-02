@@ -24,6 +24,8 @@ public abstract class WorldObject extends AbstractGameObject implements Boundabl
     protected int z = 0;
 
     protected WorldObjectState state = WorldObjectState.ALIVE;
+    public int boundingHeight;
+    public int boundingWidth;
 
     public WorldObjectState getState() {
         return state;
