@@ -12,4 +12,6 @@ import java.awt.*;
 public interface Boundable {
 
     Rectangle getBounds();
+    public double getBoundingWidth();
+    public double getBoundingHeight();
 }

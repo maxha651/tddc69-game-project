@@ -1,7 +1,6 @@
 package model.world;
 
 import model.utility.shape.Coordinate;
-
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class WorldObjectContainer extends CopyOnWriteArrayList<WorldObject> {

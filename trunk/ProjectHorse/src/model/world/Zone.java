@@ -11,6 +11,7 @@ import model.utility.shape.Coordinate;
  * Time: 12:31
  * To change this template use File | Settings | File Templates.
  */
+// Implement Zone as synchronized WorldObjectContainer (?)
 public class Zone {
 
     private Zone center;
