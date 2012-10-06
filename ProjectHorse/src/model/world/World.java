@@ -176,42 +176,52 @@ public class World {
         update(getZone(zoneCoordinate));
     }
 
-    private void update(Zone zone){
+    private boolean isNotYetCollidedCollideable(WorldObject o){
+        return Collideable.class.isAssignableFrom(o.getClass()) &&
+                !((Collideable) o).hasCollided();
+    }
+
+    private boolean isMoveable(WorldObject o){
+        return MoveableObject.class.isAssignableFrom(o.getClass());
+    }
+
+    private void update(Zone zone){ // Make better code
         for(WorldObject object : zone.getWorldObjects()){
-            if(object.isAlive()){
-                if(MoveableObject.class.isAssignableFrom(object.getClass())){
-                    ((MoveableObject) object).updatePosition(size);
-
-                    // change zone if needed
-                    if(zone != getZone(object)){
-                        zone.removeWorldObject(object);
-                        numberOfWorldObjects--;
-                        addWorldObject(object);
-                    }
-                }
-                if(Collideable.class.isAssignableFrom(object.getClass())){
-                    WorldObjectContainer checkIfObjectsCollide;
-                    checkIfObjectsCollide = getAllObjectsInArea(object.getZoneCoordinate(),
-                            new Coordinate(object.getCoordinate().getX() - 50, object.getCoordinate().getY() - 50),
-                            new Coordinate(object.getCoordinate().getX() + 50, object.getCoordinate().getY() + 50));
-
-                    for(WorldObject nearbyObject : checkIfObjectsCollide){
-                        if (!object.equals(nearbyObject) &&
-                                Collideable.class.isAssignableFrom(nearbyObject.getClass()) &&
-                                ((Collideable) object).collidesWith((Collideable) nearbyObject, size)){
-                            zone.removeWorldObject(object);
-                            numberOfWorldObjects--;
-                            break;
-                        }
-                    }
-                }
-            }
-            else{
+            if(!object.isAlive()){
                 zone.removeWorldObject(object);
                 numberOfWorldObjects--;
+                continue;
+            }
+            if(isMoveable(object)){
+                ((MoveableObject) object).updatePosition(size);
+
+                // change zone if needed
+                if(zone.getCoordinate() != object.getCoordinate()){
+                    zone.removeWorldObject(object);
+                    numberOfWorldObjects--;
+                    addWorldObject(object);
+                }
+            }
+            if(isNotYetCollidedCollideable(object)){
+                double boundingHeight = object.getBoundingHeight();
+                double boundingWidth  = object.getBoundingWidth();
+                Coordinate objCoord = object.getCoordinate();
+
+                WorldObjectContainer nearbyObjects;
+                nearbyObjects = getAllObjectsInArea(object.getZoneCoordinate(),
+                        new Coordinate(objCoord.getX() - boundingWidth, objCoord.getY() - boundingHeight),
+                        new Coordinate(objCoord.getX() + boundingWidth, objCoord.getY() + boundingHeight));
+
+                for(WorldObject nearbyObject : nearbyObjects){
+                    if (nearbyObject != object && isNotYetCollidedCollideable(nearbyObject)){
+                        // checks if colliding and acts accordingly
+                        ((Collideable) object).collidesWith((Collideable) nearbyObject, size);
+                    }
+                }
             }
         }
     }
+
 
     private boolean zoneExists(ZoneCoordinate zoneCoordinate){
         return zones.get(zoneCoordinate) != null;

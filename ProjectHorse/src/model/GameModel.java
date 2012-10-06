@@ -39,7 +39,7 @@ public class GameModel extends Observable {
     //object controllers
     public static final double DEFAULT_VELOCITY_FLOOR = 0.2;
     public static final double DEFAULT_SPACE_FRICTION = 0.98;
-    public static final double ZONE_SIZE = 1000;
+    public static final double ZONE_SIZE = 300;
     public static final int ZONE_UPDATE_SPAN = 5;    //the spawn of how many zones are loaded away from player
     public static final int asteroidSpawnRate = 2; //how many asteroids to spawn per tick
 
@@ -92,12 +92,12 @@ public class GameModel extends Observable {
 
         // Temporary
         ZoneCoordinate startZoneToUpdate = new ZoneCoordinate(player.getZoneCoordinate());
-        startZoneToUpdate.setX(startZoneToUpdate.getX() -10);
-        startZoneToUpdate.setY(startZoneToUpdate.getY() -10);
+        startZoneToUpdate.setX(startZoneToUpdate.getX() -15);
+        startZoneToUpdate.setY(startZoneToUpdate.getY() -15);
 
         ZoneCoordinate stopZoneToUpdate = new ZoneCoordinate(player.getZoneCoordinate());
-        stopZoneToUpdate.setX(stopZoneToUpdate.getX() +10);
-        stopZoneToUpdate.setY(stopZoneToUpdate.getY() +10);
+        stopZoneToUpdate.setX(stopZoneToUpdate.getX() +15);
+        stopZoneToUpdate.setY(stopZoneToUpdate.getY() +15);
 
         world.update(startZoneToUpdate, stopZoneToUpdate);
 

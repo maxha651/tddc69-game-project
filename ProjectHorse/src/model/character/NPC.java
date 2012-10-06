@@ -4,7 +4,6 @@ package model.character;
 import model.background.Projectile;
 import model.interfaces.Boundable;
 import model.interfaces.Collideable;
-import model.interfaces.Moveable;
 import model.spacecraft.Spacecraft;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
@@ -30,8 +29,28 @@ public class NPC extends AbstractCharacter implements Collideable, Boundable {
     }
 
     @Override
-    public boolean collidesWith(Collideable c, double zoneSize) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    public void collidesWith(Collideable c, double zoneSize) {
+        return;
+    }
+
+    @Override
+    public void setToCollide(Collideable c) {
+        //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public boolean hasCollided() {
+        return false;
+    }
+
+    @Override
+    public double getBoundingWidth() {
+        return boundingWidth;
+    }
+
+    @Override
+    public double getBoundingHeight() {
+        return boundingHeight;
     }
 
     public void updateAI(){

@@ -56,9 +56,9 @@ public abstract class MoveableObject extends WorldObject{
         coordinate.setX(c.getX());
         coordinate.setY(c.getY());
         
-        updateZone(zoneSize);
-        
         this.rotationAngle = this.rotationAngle + this.rotationSpeed;
+
+        updateZone(zoneSize);
     };
 
     public double getVelocityX() {

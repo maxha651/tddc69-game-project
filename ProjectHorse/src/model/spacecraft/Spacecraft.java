@@ -35,6 +35,16 @@ public class Spacecraft extends Item implements Boundable {
 
     }
 
+    @Override
+    public double getBoundingWidth() {
+        return hull.getWidth();
+    }
+
+    @Override
+    public double getBoundingHeight() {
+        return hull.getHeight();
+    }
+
     public double getWidth(){
         return this.hull.getWidth();
     }

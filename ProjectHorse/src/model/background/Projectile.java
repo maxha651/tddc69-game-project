@@ -22,8 +22,9 @@ public class Projectile extends AbstractProjectile implements Collideable, Bound
     ProjectileType pt;
 
     int tick = 0;
-    double boundingWidth = 15;
-    double boundingHeight = 15;
+    double boundingWidth = 10;
+    double boundingHeight = 10;
+    boolean hasCollided = false;
 
     public Projectile(Weapon w, Coordinate coordinate, double angle, ZoneCoordinate zoneCoordinate) {
         this.rotationAngle = angle;
@@ -42,7 +43,7 @@ public class Projectile extends AbstractProjectile implements Collideable, Bound
     }
 
     @Override
-    public boolean collidesWith(Collideable c, double zoneSize) {
+    public void collidesWith(Collideable c, double zoneSize) {
         ZoneCoordinate tempZoneCoord = new ZoneCoordinate(c.getZoneCoordinate());
         Coordinate tempCoord = new Coordinate(c.getCoordinate());
 
@@ -57,15 +58,31 @@ public class Projectile extends AbstractProjectile implements Collideable, Bound
         double xDiff = Math.abs(coordinate.getX() - tempCoord.getX());
         double yDiff = Math.abs(coordinate.getY() - tempCoord.getY());
 
-        if( xDiff < boundingWidth/2 &&
-                yDiff < boundingHeight/2){
-            return true;
-        }
-        else{
-            return false;
+        // collides
+        if( xDiff < (boundingWidth/2 + c.getBoundingWidth()/2) &&
+                yDiff < (boundingHeight/2 + c.getBoundingHeight()/2)){
+            c.setToCollide(this);
+            this.setToCollide(c);
         }
     }
 
+    @Override
+    public void setToCollide(Collideable c) {
+        // add damage if able to c
+
+        hasCollided = true;
+        this.state = WorldObjectState.DEAD;
+    }
+
+    @Override
+    public double getBoundingWidth() {
+        return boundingWidth;
+    }
+
+    @Override
+    public double getBoundingHeight() {
+        return boundingHeight;
+    }
 
 
     @Override
@@ -81,5 +98,10 @@ public class Projectile extends AbstractProjectile implements Collideable, Bound
         } else {
             this.setState(WorldObjectState.REMOVE);
         }
+    }
+
+    @Override
+    public boolean hasCollided() {
+        return hasCollided;
     }
 }
