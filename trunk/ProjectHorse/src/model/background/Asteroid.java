@@ -4,6 +4,7 @@ import model.interfaces.Collideable;
 import model.utility.math.Randomizer;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
+import model.world.WorldObjectState;
 
 import java.awt.*;
 
@@ -17,6 +18,8 @@ import java.awt.*;
 public class Asteroid extends AbstractProjectile implements Collideable{
 
     boolean hasCollided = false;
+    double tempVelocityX = 0;
+    double tempVelocityY = 0;
 
     public Asteroid(Coordinate c, ZoneCoordinate z){
         this.boundingHeight = Randomizer.randomInt(20, 80);
@@ -31,11 +34,21 @@ public class Asteroid extends AbstractProjectile implements Collideable{
 
     }
 
+    private void collidedCheck(){
+        if(hasCollided){
+            velocityX = tempVelocityX;
+            velocityY = tempVelocityY;
+            tempVelocityX = 0;
+            tempVelocityY = 0;
+            hasCollided = false;
+        }
+    }
+
     @Override
     public void updatePosition(double size){
+        collidedCheck();
         super.updatePosition(size);
         this.setRotationAngle(this.getRotationSpeed() + this.getRotationAngle());
-        hasCollided = false;
     }
 
     @Override
@@ -55,37 +68,14 @@ public class Asteroid extends AbstractProjectile implements Collideable{
 
     @Override
     public void collidesWith(Collideable c, double zoneSize) {
-        ZoneCoordinate tempZoneCoord = new ZoneCoordinate(c.getZoneCoordinate());
-        Coordinate tempCoord = new Coordinate(c.getCoordinate());
-
-        if(!zoneCoordinate.equals(tempZoneCoord)){
-            double yZoneDiff = (zoneCoordinate.getY() - tempZoneCoord.getY()) * zoneSize;
-            double xZoneDiff = (zoneCoordinate.getX() - tempZoneCoord.getX()) * zoneSize;
-
-            tempCoord.setY(tempCoord.getY() + yZoneDiff);
-            tempCoord.setX(tempCoord.getX() + xZoneDiff);
-        }
-
-        double xDiff = Math.abs(coordinate.getX() - tempCoord.getX());
-        double yDiff = Math.abs(coordinate.getY() - tempCoord.getY());
-
-        if( xDiff < (boundingWidth/2 + c.getBoundingWidth()/2) &&
-                yDiff < (boundingHeight/2 + c.getBoundingHeight()/2)){
-            double tempvelocityX = c.getVelocityX();
-            double tempvelocityY = c.getVelocityY();
-            c.setToCollide(this);
-
-            this.velocityX = tempvelocityX;
-            this.velocityY = tempvelocityY;
-            hasCollided = true;
-        }
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
     public void setToCollide(Collideable c) {
         hasCollided = true;
-        this.velocityX = c.getVelocityX();
-        this.velocityY = c.getVelocityY();
+        tempVelocityX = c.getVelocityX();
+        tempVelocityY = c.getVelocityY();
     }
 
     @Override

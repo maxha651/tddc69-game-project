@@ -1,5 +1,6 @@
 package model.world;
 
+import model.CollideCheck;
 import model.MoveableObject;
 import model.interfaces.Collideable;
 import model.utility.shape.Coordinate;
@@ -141,7 +142,7 @@ public class World {
         for (int x = start.getX() -1; x <= stop.getX() +1; x++){
             ZoneCoordinate tempCoord = (new ZoneCoordinate(x, start.getY() -1));
 
-            if(zoneExists(tempCoord)){
+            if(zoneExists(tempCoord)){ // create function
                 Zone zone = getZone(tempCoord);
                 numberOfWorldObjects -= zone.getWorldObjects().size();
                 zone.clear();
@@ -177,8 +178,7 @@ public class World {
     }
 
     private boolean isNotYetCollidedCollideable(WorldObject o){
-        return Collideable.class.isAssignableFrom(o.getClass()) &&
-                !((Collideable) o).hasCollided();
+        return Collideable.class.isAssignableFrom(o.getClass());
     }
 
     private boolean isMoveable(WorldObject o){
@@ -195,27 +195,31 @@ public class World {
             if(isMoveable(object)){
                 ((MoveableObject) object).updatePosition(size);
 
-                // change zone if needed
-                if(zone.getCoordinate() != object.getCoordinate()){
+                if(!zone.isWithinBoundaries(object)){
                     zone.removeWorldObject(object);
                     numberOfWorldObjects--;
+                    ((MoveableObject) object).updateZone(size);
                     addWorldObject(object);
                 }
             }
+        }
+        for(WorldObject object : zone.getWorldObjects()){
             if(isNotYetCollidedCollideable(object)){
-                double boundingHeight = object.getBoundingHeight();
-                double boundingWidth  = object.getBoundingWidth();
+                //double boundingHeight = object.getBoundingHeight();
+                //double boundingWidth  = object.getBoundingWidth();
                 Coordinate objCoord = object.getCoordinate();
 
                 WorldObjectContainer nearbyObjects;
                 nearbyObjects = getAllObjectsInArea(object.getZoneCoordinate(),
-                        new Coordinate(objCoord.getX() - boundingWidth, objCoord.getY() - boundingHeight),
-                        new Coordinate(objCoord.getX() + boundingWidth, objCoord.getY() + boundingHeight));
+                        new Coordinate(objCoord.getX() - 50, objCoord.getY() - 50),
+                        new Coordinate(objCoord.getX() + 50, objCoord.getY() + 50));
 
                 for(WorldObject nearbyObject : nearbyObjects){
-                    if (nearbyObject != object && isNotYetCollidedCollideable(nearbyObject)){
+                    if (isNotYetCollidedCollideable(nearbyObject) && nearbyObject != object){ // doesn't check hasCollided atm
                         // checks if colliding and acts accordingly
-                        ((Collideable) object).collidesWith((Collideable) nearbyObject, size);
+                        if(CollideCheck.isColliding((Collideable) object, (Collideable) nearbyObject, size)){
+                            ((Collideable) object).setToCollide((Collideable) nearbyObject);
+                        }
                     }
                 }
             }
