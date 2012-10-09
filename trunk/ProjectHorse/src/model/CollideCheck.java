@@ -29,12 +29,28 @@ public class CollideCheck {
 
         double xDiff = Math.abs(c2Coord.getX() - c1Coord.getX());
         double yDiff = Math.abs(c2Coord.getY() - c1Coord.getY());
+        double allowedXDiff = (c1.getBoundingWidth() + c2.getBoundingWidth())/2;
+        double allowedYDiff = (c1.getBoundingHeight() + c2.getBoundingHeight())/2;
 
-        if( xDiff <= ((c1.getBoundingWidth() + c2.getBoundingWidth())/2) &&
-                yDiff <= ((c1.getBoundingHeight() + c2.getBoundingHeight())/2)){
+        if( xDiff <= allowedXDiff && yDiff <= allowedYDiff){
+            unCollide(c1, c2, allowedXDiff - xDiff, allowedYDiff - yDiff);
             return true;
         }
 
         return false;
+    }
+
+    private static void unCollide(Collideable c1, Collideable c2, double xIntersect, double yIntersect){
+        Coordinate c1Coord = c1.getCoordinate();
+        Coordinate c2Coord = c2.getCoordinate();
+
+        if(xIntersect < yIntersect){
+            c1Coord.setX(c1Coord.getX() - xIntersect/2);
+            c2Coord.setX(c2Coord.getX() + xIntersect/2);
+        }
+        else{
+            c1Coord.setY(c1Coord.getY() - yIntersect/2);
+            c2Coord.setY(c2Coord.getY() + yIntersect/2);
+        }
     }
 }

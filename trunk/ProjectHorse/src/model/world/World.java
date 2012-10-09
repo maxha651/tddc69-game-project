@@ -186,23 +186,7 @@ public class World {
     }
 
     private void update(Zone zone){ // Make better code
-        for(WorldObject object : zone.getWorldObjects()){
-            if(!object.isAlive()){
-                zone.removeWorldObject(object);
-                numberOfWorldObjects--;
-                continue;
-            }
-            if(isMoveable(object)){
-                ((MoveableObject) object).updatePosition(size);
 
-                if(!zone.isWithinBoundaries(object)){
-                    zone.removeWorldObject(object);
-                    numberOfWorldObjects--;
-                    ((MoveableObject) object).updateZone(size);
-                    addWorldObject(object);
-                }
-            }
-        }
         for(WorldObject object : zone.getWorldObjects()){
             if(isNotYetCollidedCollideable(object)){
                 //double boundingHeight = object.getBoundingHeight();
@@ -221,6 +205,23 @@ public class World {
                             ((Collideable) object).setToCollide((Collideable) nearbyObject);
                         }
                     }
+                }
+            }
+        }
+        for(WorldObject object : zone.getWorldObjects()){
+            if(!object.isAlive()){
+                zone.removeWorldObject(object);
+                numberOfWorldObjects--;
+                continue;
+            }
+            if(isMoveable(object)){
+                ((MoveableObject) object).updatePosition(size);
+
+                if(!zone.isWithinBoundaries(object)){
+                    zone.removeWorldObject(object);
+                    numberOfWorldObjects--;
+                    ((MoveableObject) object).updateZone(size);
+                    addWorldObject(object);
                 }
             }
         }
