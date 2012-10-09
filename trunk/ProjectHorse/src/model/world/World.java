@@ -203,6 +203,7 @@ public class World {
                         // checks if colliding and acts accordingly
                         if(CollideCheck.isColliding((Collideable) object, (Collideable) nearbyObject, size)){
                             ((Collideable) object).setToCollide((Collideable) nearbyObject);
+                            ((Collideable) nearbyObject).setToCollide((Collideable) object);
                         }
                     }
                 }
