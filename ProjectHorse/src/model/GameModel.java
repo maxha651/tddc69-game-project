@@ -102,8 +102,9 @@ public class GameModel extends Observable {
         world.update(startZoneToUpdate, stopZoneToUpdate);
 
         // add new asteroids
-
-        spawnAsteroids();
+        if(tick % 20 == 0){
+            spawnAsteroids();
+        }
         spawnEngineParticles();
 
         if(tick > 8000 && true){ //change true to false

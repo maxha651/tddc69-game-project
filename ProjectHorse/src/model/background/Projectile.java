@@ -44,26 +44,7 @@ public class Projectile extends AbstractProjectile implements Collideable, Bound
 
     @Override
     public void collidesWith(Collideable c, double zoneSize) {
-        ZoneCoordinate tempZoneCoord = new ZoneCoordinate(c.getZoneCoordinate());
-        Coordinate tempCoord = new Coordinate(c.getCoordinate());
-
-        if(!zoneCoordinate.equals(tempZoneCoord)){
-            double yZoneDiff = (zoneCoordinate.getY() - tempZoneCoord.getY()) * zoneSize;
-            double xZoneDiff = (zoneCoordinate.getX() - tempZoneCoord.getX()) * zoneSize;
-
-            tempCoord.setY(tempCoord.getY() + yZoneDiff);
-            tempCoord.setX(tempCoord.getX() + xZoneDiff);
-        }
-
-        double xDiff = Math.abs(coordinate.getX() - tempCoord.getX());
-        double yDiff = Math.abs(coordinate.getY() - tempCoord.getY());
-
-        // collides
-        if( xDiff < (boundingWidth/2 + c.getBoundingWidth()/2) &&
-                yDiff < (boundingHeight/2 + c.getBoundingHeight()/2)){
-            c.setToCollide(this);
-            this.setToCollide(c);
-        }
+        return;
     }
 
     @Override
