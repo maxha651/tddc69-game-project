@@ -38,8 +38,6 @@ public class Asteroid extends AbstractProjectile implements Collideable{
         if(hasCollided){
             velocityX = tempVelocityX;
             velocityY = tempVelocityY;
-            tempVelocityX = 0;
-            tempVelocityY = 0;
             hasCollided = false;
         }
     }
