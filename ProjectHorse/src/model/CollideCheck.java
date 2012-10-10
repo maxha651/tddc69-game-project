@@ -32,7 +32,7 @@ public class CollideCheck {
         double allowedXDiff = (c1.getBoundingWidth() + c2.getBoundingWidth())/2;
         double allowedYDiff = (c1.getBoundingHeight() + c2.getBoundingHeight())/2;
 
-        if( xDiff <= allowedXDiff && yDiff <= allowedYDiff){
+        if( xDiff < allowedXDiff && yDiff < allowedYDiff){
             unCollide(c1, c2, allowedXDiff - xDiff, allowedYDiff - yDiff);
             return true;
         }

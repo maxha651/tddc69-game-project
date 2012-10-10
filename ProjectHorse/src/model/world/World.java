@@ -204,6 +204,7 @@ public class World {
                         if(CollideCheck.isColliding((Collideable) object, (Collideable) nearbyObject, size)){
                             ((Collideable) object).setToCollide((Collideable) nearbyObject);
                             ((Collideable) nearbyObject).setToCollide((Collideable) object);
+                            break;
                         }
                     }
                 }
