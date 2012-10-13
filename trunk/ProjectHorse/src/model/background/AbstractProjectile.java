@@ -10,7 +10,6 @@ import model.MoveableObject;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class AbstractProjectile extends MoveableObject {
-    int minDamage, maxDamage;
     // double boundingWidth = 10, boundingHeight = 10; in Collideable instead
     boolean impact;
     public void impact(){

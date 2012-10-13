@@ -5,21 +5,15 @@ import model.background.Asteroid;
 import model.background.EngineParticle;
 import model.background.Projectile;
 import model.character.Player;
-import model.interfaces.Boundable;
-import model.spacecraft.Cargo;
-import model.spacecraft.Engine;
-import model.spacecraft.Spacecraft;
+import model.spacecraft.parts.Engine;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 import model.world.WorldObject;
 import model.world.WorldObjectContainer;
 import resources.ImageLoader;
 
-import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferStrategy;
 import java.awt.*;
-import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 /**
@@ -114,11 +108,8 @@ public class GraphicalViewer extends Viewer {
         Coordinate start = new Coordinate(p.getCoordinate().getX() - width/2 - SCREEN_PADDING, p.getCoordinate().getY() - height/2 - SCREEN_PADDING);
         Coordinate stop = new Coordinate(p.getCoordinate().getX() + width/2 + SCREEN_PADDING, p.getCoordinate().getY() + height/2 + SCREEN_PADDING);
         WorldObjectContainer woc = gameModel.getAllObjectsInArea(zs, start, stop);
-        WorldObject wo;
 
-        for(int i = 0; i < woc.size(); i++){
-            wo = woc.get(i);
-
+        for(WorldObject wo : woc){
             if(wo.isAlive()){
                 //paint boundables
                 //paintWorldObjectBounds(g2d, wo, Color.RED);
@@ -146,8 +137,8 @@ public class GraphicalViewer extends Viewer {
         int positionX =(int) (positionInZone.getX() + zoneSize*zoneCoordinate.getX());
         int positionY =(int) (positionInZone.getY() + zoneSize*zoneCoordinate.getY());
 
-        int bWidth = (int) wo.getBounds().getWidth();
-        int bHeight = (int) wo.getBounds().getHeight();
+        int bWidth = (int) wo.getBoundingWidth();
+        int bHeight = (int) wo.getBoundingHeight();
 
         int paintX;
         int paintY;

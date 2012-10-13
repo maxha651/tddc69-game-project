@@ -1,6 +1,4 @@
-package model.interfaces;
-
-import java.awt.*;
+package model.properties;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,8 +8,6 @@ import java.awt.*;
  * To change this template use File | Settings | File Templates.
  */
 public interface Boundable {
-
-    Rectangle getBounds();
     public double getBoundingWidth();
     public double getBoundingHeight();
 }

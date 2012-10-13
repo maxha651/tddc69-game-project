@@ -13,9 +13,4 @@ import java.awt.*;
  * To change this template use File | Settings | File Templates.
  */
 public class PinnedBackgroundObject extends PinnedObject {
-
-    @Override
-    public Rectangle getBounds() {
-        return new Rectangle();
-    }
 }

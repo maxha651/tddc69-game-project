@@ -1,4 +1,4 @@
-package model.spacecraft;
+package model.spacecraft.parts;
 
 /**
  * Created with IntelliJ IDEA.

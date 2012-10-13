@@ -2,8 +2,7 @@ package model.character;
 
 import model.GameModel;
 import model.MoveableObject;
-import model.background.EngineParticle;
-import model.spacecraft.Engine;
+import model.spacecraft.parts.Engine;
 import model.spacecraft.Spacecraft;
 import model.utility.math.StandardMath;
 

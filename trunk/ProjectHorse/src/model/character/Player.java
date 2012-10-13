@@ -2,15 +2,15 @@ package model.character;
 
 
 import model.background.Projectile;
-import model.interfaces.Boundable;
-import model.interfaces.Collideable;
+import model.properties.Boundable;
+import model.properties.Collideable;
 import model.spacecraft.Spacecraft;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 
-import java.awt.*;
-
 public class Player extends AbstractCharacter implements Collideable, Boundable{
+
+    int mass;
 
     public Player(){
         this.setSpacecraft(new Spacecraft());
@@ -18,6 +18,7 @@ public class Player extends AbstractCharacter implements Collideable, Boundable{
         this.zoneCoordinate = new ZoneCoordinate(0,0);
         this.width = spacecraft.getBounds().getWidth();
         this.height = spacecraft.getBounds().getHeight();
+        this.mass = 400;
     }
 
     public Projectile fire(){
@@ -28,16 +29,6 @@ public class Player extends AbstractCharacter implements Collideable, Boundable{
     }
 
     @Override
-    public Rectangle getBounds() {
-        return getSpacecraft().getBounds();
-    }
-
-    @Override
-    public void collidesWith(Collideable c, double zoneSize) {
-        return;
-    }
-
-    @Override
     public void setToCollide(Collideable c) {
         return;
     }
@@ -45,6 +36,11 @@ public class Player extends AbstractCharacter implements Collideable, Boundable{
     @Override
     public boolean hasCollided() {
         return false;
+    }
+
+    @Override
+    public int getMass() {
+        return mass;
     }
 
     @Override

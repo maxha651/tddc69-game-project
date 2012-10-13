@@ -1,6 +1,5 @@
-package model.spacecraft;
+package model.spacecraft.parts;
 
-import model.interfaces.Collideable;
 import model.items.Item;
 
 /**
@@ -11,6 +10,9 @@ import model.items.Item;
  * To change this template use File | Settings | File Templates.
  */
 public abstract class SpacecraftPart extends Item {
+
+    double height, width;
+
     public double getHeight() {
         return height;
     }
@@ -26,6 +28,4 @@ public abstract class SpacecraftPart extends Item {
     public void setWidth(int width) {
         this.width = width;
     }
-
-    double height, width;
 }
