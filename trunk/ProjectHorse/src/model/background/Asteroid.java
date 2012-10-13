@@ -1,10 +1,12 @@
 package model.background;
 
+import model.GameModel;
 import model.properties.Collideable;
 import model.properties.Damageable;
 import model.utility.math.Randomizer;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
+import model.world.World;
 import model.world.WorldObjectState;
 
 /**
@@ -16,14 +18,16 @@ import model.world.WorldObjectState;
  */
 public class Asteroid extends AbstractProjectile implements Collideable, Damageable{
 
-    int health = 50;
+    int health = 1;
     boolean hasCollided = false;
     double tempVelocityX;
     double tempVelocityY;
-
     int mass;
+    World w;
+    public static int deathParticleAmount = 100;
 
-    public Asteroid(Coordinate c, ZoneCoordinate z){
+    public Asteroid(World w, Coordinate c, ZoneCoordinate z){
+        this.w = w;
         this.boundingHeight = Randomizer.randomInt(20, 80);
         this.boundingWidth = this.boundingHeight + Randomizer.randomInt(0, 15) - Randomizer.randomInt(0, 15);
         this.mass = (int) Math.sqrt(boundingHeight*boundingWidth);
@@ -94,13 +98,20 @@ public class Asteroid extends AbstractProjectile implements Collideable, Damagea
         return mass;
     }
 
-
-
     @Override
     public void doDamage(int amount) {
         health -= amount;
         if(health <= 0){
-            this.state = WorldObjectState.DEAD;
+            this.kill();
+        }
+    }
+
+    @Override
+    public void kill(){
+        super.kill();
+
+        for(int i = 0; i < deathParticleAmount; i++){
+            this.w.addWorldObject(new AsteroidParticle(this));
         }
     }
 }

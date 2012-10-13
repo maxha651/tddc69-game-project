@@ -1,12 +1,11 @@
-package model.world;
+package model.properties;
 
 /**
  * Created with IntelliJ IDEA.
  * User: Brain
- * Date: 2012-10-01
- * Time: 16:46
+ * Date: 2012-10-13
+ * Time: 16:39
  * To change this template use File | Settings | File Templates.
  */
-public enum WorldObjectState {
-    ALIVE, DEAD;
+public interface Damagedealer {
 }

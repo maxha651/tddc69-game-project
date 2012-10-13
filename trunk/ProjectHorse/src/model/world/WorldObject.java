@@ -1,6 +1,7 @@
 package model.world;
 
 import model.AbstractGameObject;
+import model.GameModel;
 import model.properties.Boundable;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
@@ -109,5 +110,9 @@ public abstract class WorldObject extends AbstractGameObject implements Boundabl
     @Override
     public double getBoundingHeight() {
         return boundingHeight;
+    }
+
+    public void kill(){
+        this.state = WorldObjectState.DEAD;
     }
 }

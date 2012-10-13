@@ -17,7 +17,9 @@ import model.world.WorldObjectState;
 public class EngineParticle extends Particle {
     int tick = 0;
     public EngineParticle(AbstractCharacter p){
+
         super(p.getCoordinate(), p.getZoneCoordinate());
+        this.tickToKill = 25;
         this.width = Randomizer.randomInt(1, 3);
         this.height = width;
         this.rotationSpeed = (Randomizer.randomInt(0,300) - Randomizer.randomInt(0,300))/3000.0;
@@ -30,16 +32,5 @@ public class EngineParticle extends Particle {
         this.coordinate.setX(coordinate.getX() - Math.cos(p.getRotationAngle()) * p.getWidth()/2);
         this.coordinate.setY(coordinate.getY() - Math.sin(p.getRotationAngle()) * p.getHeight()/2);
         this.zoneCoordinate = new ZoneCoordinate(p.getZoneCoordinate());
-
-    }
-
-    @Override
-    public void updatePosition(double size){
-        super.updatePosition(size);
-        if(tick < 25){
-            this.tick++;
-        } else {
-            this.setState(WorldObjectState.REMOVE);
-        }
     }
 }

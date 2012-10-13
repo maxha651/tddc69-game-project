@@ -2,10 +2,11 @@ package graphics;
 
 import model.GameModel;
 import model.background.Asteroid;
+import model.background.AsteroidParticle;
 import model.background.EngineParticle;
 import model.background.Projectile;
 import model.character.Player;
-import model.spacecraft.Spacecraft;
+import model.properties.Boundable;
 import model.spacecraft.parts.Engine;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
@@ -13,11 +14,8 @@ import model.world.WorldObject;
 import model.world.WorldObjectContainer;
 import resources.ImageLoader;
 
-import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferStrategy;
 import java.awt.*;
-import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 /**
@@ -58,11 +56,6 @@ public class GraphicalViewer extends Viewer {
     //other controllers
     private long paintTime = 0;                    //for measuring elapsed time for 1 paint
     public int width;
-
-
-
-
-
     public int height;                      //graphical viewer width and height
 
     //camera position in the current zone
@@ -138,18 +131,15 @@ public class GraphicalViewer extends Viewer {
         for(WorldObject wo : woc){
             paintWorldObject(g2d, wo);
             if(paintWorldObjectBounds){
-                paintWorldObjectBounds(g2d, wo, Color.RED);
+                if(wo.getClass().isAssignableFrom(Boundable.class)){
+                    paintWorldObjectBounds(g2d, wo, Color.RED);
+                }
             }
         }
     }
 
     public void paintWorldObjectBounds(Graphics2D g2d, WorldObject wo, Color c){
-        if(wo.getClass() == Player.class){
-            g2d.setColor(Color.WHITE);
-        }
-        else{
-            g2d.setColor(c);
-        }
+        g2d.setColor(c);
 
         Coordinate positionInZone = wo.getCoordinate();
         ZoneCoordinate zoneCoordinate = wo.getZoneCoordinate();
@@ -164,45 +154,10 @@ public class GraphicalViewer extends Viewer {
         int paintX;
         int paintY;
 
-        int rotateX;
-        int rotateY;
-
-        rotateX = (int) ((-cameraX + positionX));
-        rotateY = (int) ((-cameraY + positionY));
-
         paintX = (int) ((-cameraX + positionX) - bWidth / 2);
         paintY = (int) ((-cameraY + positionY) - bHeight / 2);
 
-
-
-        //rotation
-        double angle = wo.getRotationAngle();
-
-        final AffineTransform saved = g2d.getTransform();
-        //final AffineTransform rotate = AffineTransform.getRotateInstance(angle, rotateX, rotateY);
-        //g2d.transform(rotate);
-
-
-        g2d.draw(new Rectangle(paintX, paintY, bWidth, bHeight));
-
-        g2d.setTransform(saved);
-        //random stuff for asteroid that can be removed but its fun
-
-        /*
-        if(wo.getClass() == Asteroid.class){
-            g2d.setColor(Color.WHITE);
-            g2d.translate(paintX, paintY);
-            Font f = getFont().deriveFont(Font.TRUETYPE_FONT, 12);
-
-            GlyphVector v = f.createGlyphVector(getFontMetrics(f).getFontRenderContext(), "I am an asteroid");
-            g2d.draw(v.getOutline());
-
-
-        } g2d.setTransform(saved);
-        */
-
-
-
+        g2d.drawRect(paintX, paintY, bWidth, bHeight);
     }
 
     public void paintWorldObject(Graphics2D g2d, WorldObject wo){
@@ -246,6 +201,9 @@ public class GraphicalViewer extends Viewer {
             g2d.drawImage(imageLoader.getEngineParticleImage(), paintX, paintY, bWidth, bHeight, this);
         } else if(wo.getClass() == Projectile.class) {
             g2d.drawImage(imageLoader.getProjectileImage((Projectile) wo), paintX, paintY, bWidth, bHeight, this);
+        } else if(wo.getClass() == AsteroidParticle.class) {
+            g2d.drawImage(imageLoader.getEngineParticleImage(), paintX, paintY, bWidth, bHeight, this);
+            g2d.drawImage(imageLoader.getAsteroidParticleImage(), paintX, paintY, bWidth, bHeight, this);
         }
         g2d.setTransform(saved);
 

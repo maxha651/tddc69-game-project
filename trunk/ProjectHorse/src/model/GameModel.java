@@ -10,6 +10,7 @@ import model.utility.math.Randomizer;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 import model.world.World;
+import model.world.WorldObject;
 import model.world.WorldObjectContainer;
 
 import java.util.LinkedList;
@@ -18,7 +19,7 @@ import java.util.Observable;
 public class GameModel extends Observable {
 
     //game controllers
-    boolean isAlive = true;
+    boolean alive = true;
     int seed;
     public long tick = 0;
 
@@ -34,7 +35,6 @@ public class GameModel extends Observable {
     // Projectile controllers
     private int fireDelayDefault = 10;
     private int fireDelay = 0;
-    LinkedList<AbstractProjectile> projectiles = new LinkedList<AbstractProjectile>();
 
     //object controllers
     public static final double DEFAULT_VELOCITY_FLOOR = 0.2;
@@ -147,15 +147,12 @@ public class GameModel extends Observable {
         z.setX(player.getZoneCoordinate().getX() + xDifference*2);
         z.setY(player.getZoneCoordinate().getY() + yDifference*2);
 
-        Asteroid a = new Asteroid(c, z);
+        Asteroid a = new Asteroid(this.world, c, z);
         a.updateZone(ZONE_SIZE);
         world.addWorldObject(a);
-        projectiles.add(new Asteroid(c, z));
     }
 
     public void updatePlayer(){
-
-
         if(turnLeftRequest){
             player.rotateLeft(Math.toRadians(player.getSpacecraft().getEngine().getRotationSpeed()));
         } else if (turnRightRequest) {
@@ -194,32 +191,15 @@ public class GameModel extends Observable {
 
     }
 
-    public void updateProjectiles(){
-        for (AbstractProjectile projectile : projectiles){
-
-            Coordinate upperLeftToCheck, lowerRightToCheck;
-
-            projectile.updatePosition(ZONE_SIZE);
-
-            lowerRightToCheck = projectile.getCoordinate();
-            upperLeftToCheck = new Coordinate(lowerRightToCheck.getX() - 10.0, lowerRightToCheck.getY() - 10.0);
-
-
-            WorldObjectContainer worldObjects = world.getAllObjectsInArea(projectile.getZoneCoordinate(), upperLeftToCheck, lowerRightToCheck);
-
-            if(worldObjects.size() > 1){
-                projectile.impact();
-                //worldObjects.remove(projectile);
-                //System.out.println("impact");
-            }
-        }
-    }
-
     public WorldObjectContainer getAllObjectsInArea(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
         return world.getAllObjectsInArea(zoneCoordinate, start, stop);
     }
 
     public boolean isGameAlive() {
-        return isAlive;
+        return alive;
+    }
+
+    public void addWorldObject(WorldObject wo){
+        this.world.addWorldObject(wo);
     }
 }
