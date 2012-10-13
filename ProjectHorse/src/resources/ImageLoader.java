@@ -55,8 +55,6 @@ public class ImageLoader {
         return bf;
     }
 
-
-
     public BufferedImage load(String path, BufferedImage bf){
         try {
             bf = ImageIO.read(this.getClass().getResource(path));
