@@ -38,7 +38,7 @@ public class GraphicalViewer extends Viewer {
     ImageLoader imageLoader;
 
     //default values / constants
-    final static int DEFAULT_SCREEN_WIDTH_PX = 1366, DEFAULT_SCREEN_HEIGHT_PX = 768;
+    final static int DEFAULT_SCREEN_WIDTH_PX = 1366/2, DEFAULT_SCREEN_HEIGHT_PX = 768;
     final static int DEFAULT_STRING_SIZE = 14;
     final static Color DEFAULT_PAINT_COLOR = Color.WHITE;
     final static Color DEFAULT_BACKGROUND_COLOR = Color.BLACK;
@@ -134,7 +134,6 @@ public class GraphicalViewer extends Viewer {
         WorldObjectContainer woc = gameModel.getAllObjectsInArea(zs, start, stop);
 
         for(WorldObject wo : woc){
-
             paintWorldObject(g2d, wo);
             g2d.setTransform(saved);
             if(paintWorldObjectBounds){
@@ -145,6 +144,9 @@ public class GraphicalViewer extends Viewer {
         }
     }
 
+    /**
+     * Paints all the bounds of the objects.
+     */
     public void paintWorldObjectBounds(Graphics2D g2d, WorldObject wo, Color c){
         g2d.setColor(c);
 
