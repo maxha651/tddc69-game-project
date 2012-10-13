@@ -4,12 +4,11 @@ package game;
  * Created with IntelliJ IDEA.
  * User: Max
  * Date: 2012-10-13
- * Time: 15:17
+ * Time: 17:49
  * To change this template use File | Settings | File Templates.
  */
-public class MenuTest {
-
+public class Main {
     public static void main(String[] args) {
-        StartMenu startMenu = new StartMenu();
+        StartMenu menu = new StartMenu();
     }
 }
