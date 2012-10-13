@@ -23,8 +23,9 @@ public class Asteroid extends AbstractProjectile implements Collideable, Damagea
     double tempVelocityX;
     double tempVelocityY;
     int mass;
-    World w;
+    public static World w;
     public static int deathParticleAmount = 45;
+    public static int redParticleAmount = 5;
 
     public Asteroid(World w, Coordinate c, ZoneCoordinate z){
         this.w = w;
@@ -112,6 +113,10 @@ public class Asteroid extends AbstractProjectile implements Collideable, Damagea
 
         for(int i = 0; i < deathParticleAmount; i++){
             this.w.addWorldObject(new AsteroidParticle(this));
+        }
+
+        for(int i = 0; i < redParticleAmount; i++){
+            this.w.addWorldObject(new RedAsteroidParticle(this));
         }
     }
 }

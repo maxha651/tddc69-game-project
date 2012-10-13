@@ -45,7 +45,6 @@ public class GameFrame extends JFrame implements KeyListener{
         this.pack();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
-
     }
 
 
