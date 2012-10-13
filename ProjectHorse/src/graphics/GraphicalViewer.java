@@ -7,6 +7,7 @@ import model.background.EngineParticle;
 import model.background.Projectile;
 import model.character.Player;
 import model.properties.Boundable;
+import model.properties.Collideable;
 import model.spacecraft.parts.Engine;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
@@ -35,7 +36,7 @@ public class GraphicalViewer extends Viewer {
     ImageLoader imageLoader;
 
     //default values / constants
-    final static int DEFAULT_SCREEN_WIDTH_PX = 1366, DEFAULT_SCREEN_HEIGHT_PX = 768;
+    final static int DEFAULT_SCREEN_WIDTH_PX = 1500, DEFAULT_SCREEN_HEIGHT_PX = 1500;
     final static int DEFAULT_STRING_SIZE = 14;
     final static Color DEFAULT_PAINT_COLOR = Color.WHITE;
     final static Color DEFAULT_BACKGROUND_COLOR = Color.BLACK;
@@ -85,7 +86,7 @@ public class GraphicalViewer extends Viewer {
         }
 
         //initialize the double buffer
-        BufferedImage bufferedImage = new BufferedImage(DEFAULT_SCREEN_WIDTH_PX, DEFAULT_SCREEN_HEIGHT_PX, BufferedImage.TYPE_INT_ARGB_PRE);
+        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB_PRE);
         Graphics2D g2d = bufferedImage.createGraphics();
 
         //start painting in correct order
@@ -131,7 +132,7 @@ public class GraphicalViewer extends Viewer {
         for(WorldObject wo : woc){
             paintWorldObject(g2d, wo);
             if(paintWorldObjectBounds){
-                if(wo.getClass().isAssignableFrom(Boundable.class)){
+                if(Collideable.class.isAssignableFrom(wo.getClass())){
                     paintWorldObjectBounds(g2d, wo, Color.RED);
                 }
             }
@@ -160,8 +161,10 @@ public class GraphicalViewer extends Viewer {
         g2d.drawRect(paintX, paintY, bWidth, bHeight);
     }
 
+    /**
+     * Paints a single world object upon the g2d object
+     */
     public void paintWorldObject(Graphics2D g2d, WorldObject wo){
-
 
         Coordinate positionInZone = wo.getCoordinate();
         ZoneCoordinate zoneCoordinate = wo.getZoneCoordinate();
@@ -202,15 +205,15 @@ public class GraphicalViewer extends Viewer {
         } else if(wo.getClass() == Projectile.class) {
             g2d.drawImage(imageLoader.getProjectileImage((Projectile) wo), paintX, paintY, bWidth, bHeight, this);
         } else if(wo.getClass() == AsteroidParticle.class) {
-            g2d.drawImage(imageLoader.getEngineParticleImage(), paintX, paintY, bWidth, bHeight, this);
             g2d.drawImage(imageLoader.getAsteroidParticleImage(), paintX, paintY, bWidth, bHeight, this);
         }
         g2d.setTransform(saved);
 
     }
 
-
-
+    /**
+     * Draws a cross in middle of screen.
+     */
     public void drawCross(Graphics2D g2d){
         g2d.setColor(Color.GREEN);
         //draw vertical lines
@@ -218,11 +221,16 @@ public class GraphicalViewer extends Viewer {
         g2d.drawLine(0, height/2, width, height/2);
     }
 
+    /**
+     * Paints extra information about the GameModel and the GraphicalViewer on the screen
+     */
     public void paintExtraInformation(Graphics2D g2d){
 
-        setFontToMonospace(g2d);
         Player p = gameModel.getPlayer();
         Engine e = p.getSpacecraft().getEngine();
+
+        //initialize font and information container
+        setFontToMonospace(g2d);
         InformationContainer ic = new InformationContainer(20, 20);
 
         //the strings to draw
@@ -243,6 +251,7 @@ public class GraphicalViewer extends Viewer {
         ic.add("Paint Time  (ms) : " + this.paintTime);
         ic.add("Tick#(upd. done) : " + gameModel.tick);
 
+        //draw key bindings
         if(paintKeyBindings){
             ic.add("         ");
             ic.add("SPACECRAFT CONTROLS");
@@ -259,11 +268,14 @@ public class GraphicalViewer extends Viewer {
             ic.add("B     : Toggle bounds");
 
         }
-        //draw the strings
+
         g2d.setColor(informationFontColor);
         ic.paint(g2d);
     }
 
+    /**
+     * Calculates the camera position from player coordinates.
+     */
     public void lockCameraOnPlayer(){
         Coordinate positionInZone = gameModel.getPlayer().getCoordinate();
         ZoneCoordinate zoneCoordinate = gameModel.getPlayer().getZoneCoordinate();
@@ -276,17 +288,23 @@ public class GraphicalViewer extends Viewer {
         cameraY = (int) (positionY - height / 2);
     }
 
+    /**
+     * Truncates a double to a number of decimals.
+     * @param d
+     * @param decimals
+     * @return a truncated String with [decimals] decimals out of the double d.
+     */
     static public String toTruncatedStr(double d, int decimals){
         return model.utility.strings.StringManipulator.toString(d, decimals);
     }
 
+    //getters and setters
     static public void setFontToMonospace(Graphics2D g2d){
         Font f = new Font("MONOSPACED", Font.BOLD, DEFAULT_STRING_SIZE);
         g2d.setFont(f);
 
     }
 
-    //getters and setters
     public boolean isLockOnPlayer() {
         return lockOnPlayer;
     }
@@ -335,8 +353,6 @@ public class GraphicalViewer extends Viewer {
     public int getHeight() {
         return height;
     }
-
-
 
     public int getWidth() {
         return width;

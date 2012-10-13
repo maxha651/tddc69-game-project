@@ -29,7 +29,7 @@ public class ImageLoader {
     BufferedImage asteroidparticle1;
 
     public BufferedImage getAsteroidImage(){
-           return asteroid1 = getImage(asteroid1, "asteroid1.png");
+        return asteroid1 = getImage(asteroid1, "asteroid1.png");
     }
 
     public BufferedImage getPlayerImage(Player p){
@@ -50,7 +50,7 @@ public class ImageLoader {
     }
 
     public BufferedImage getAsteroidParticleImage(){
-        asteroidparticle1 = getImage(asteroid1, "asteroidparticle.png");
+        asteroidparticle1 = getImage(asteroidparticle1, "asteroidparticle.png");
         return asteroidparticle1;
     }
 
