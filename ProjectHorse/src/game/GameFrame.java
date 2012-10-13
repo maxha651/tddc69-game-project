@@ -2,9 +2,9 @@ package game;
 
 import graphics.GraphicalViewer;
 import model.GameModel;
-import model.character.Player;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Observable;
@@ -17,13 +17,14 @@ import java.util.Observer;
  * Time: 21:56
  * To change this template use File | Settings | File Templates.
  */
-public class GameFrame extends JFrame implements KeyListener, Observer {
+public class GameFrame extends JFrame implements KeyListener{
 
     JMenuBar menuBar;
     JMenu fileMenu, settingsMenu, viewMenu;
     static final String FRAME_TITLE = "Space Explorer";
     GameModel gameModel;
-    GraphicalViewer viewer;
+    GraphicalViewer viewer1;
+    GraphicalViewer viewer2;
 
     public GameFrame(GameModel gameModel) {
 
@@ -32,31 +33,22 @@ public class GameFrame extends JFrame implements KeyListener, Observer {
         this.gameModel = gameModel;
         this.addKeyListener(this);
 
-        fileMenu = new JMenu("File");
-        settingsMenu = new JMenu("Settings");
-        viewMenu = new JMenu("View");
+        viewer1 = new GraphicalViewer(gameModel);
+        viewer2 = new GraphicalViewer(gameModel);
 
-        fileMenu.add(new JMenuItem("New"));
-        settingsMenu.add(new JMenuItem("New"));
-        viewMenu.add(new JMenuItem("New"));
-        menuBar = new JMenuBar();
-        menuBar.add(fileMenu);
-        menuBar.add(settingsMenu);
-        menuBar.add(viewMenu);
-        this.add(menuBar);
+        this.setLayout(new FlowLayout());
 
-        viewer = new GraphicalViewer(gameModel);
-        this.add(viewer);
+        this.add(viewer1);
+        this.add(viewer2);
+
+
         this.pack();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
 
     }
 
-    @Override
-    public void update(Observable observable, Object o) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
+
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -78,22 +70,22 @@ public class GameFrame extends JFrame implements KeyListener, Observer {
                 gameModel.turnRightRequest = true;
                 break;
             case KeyEvent.VK_F:
-                viewer.setLockOnPlayer(!viewer.isLockOnPlayer());
+                viewer1.setLockOnPlayer(!viewer1.isLockOnPlayer());
                 break;
             case KeyEvent.VK_SPACE:
                 gameModel.fireRequest = true;
                 break;
             case KeyEvent.VK_I :
-                viewer.setPaintExtraInformation(!viewer.isPaintExtraInformation());
+                viewer1.setPaintExtraInformation(!viewer1.isPaintExtraInformation());
                 break;
             case KeyEvent.VK_C :
-                viewer.setDrawCross(!viewer.isDrawCross());
+                viewer1.setDrawCross(!viewer1.isDrawCross());
                 break;
             case KeyEvent.VK_K :
-                viewer.setPaintKeyBindings(!viewer.isPaintKeyBindings());
+                viewer1.setPaintKeyBindings(!viewer1.isPaintKeyBindings());
                 break;
             case KeyEvent.VK_B :
-                viewer.setPaintWorldObjectBounds(!viewer.isPaintWorldObjectBounds());
+                viewer1.setPaintWorldObjectBounds(!viewer1.isPaintWorldObjectBounds());
                 break;
         }
     }

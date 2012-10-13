@@ -22,7 +22,6 @@ import java.util.LinkedList;
 public class ImageLoader {
 
     BufferedImage asteroid1;
-    BufferedImage asteroid2;
     BufferedImage spaceship1;
     BufferedImage laserblue1;
     BufferedImage engineparticlered;
