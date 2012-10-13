@@ -5,6 +5,10 @@ import model.background.Asteroid;
 import model.background.EngineParticle;
 import model.background.Projectile;
 import model.character.Player;
+import model.interfaces.Boundable;
+import model.spacecraft.Cargo;
+import model.spacecraft.Engine;
+import model.spacecraft.Spacecraft;
 import model.spacecraft.parts.Engine;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
@@ -12,42 +16,67 @@ import model.world.WorldObject;
 import model.world.WorldObjectContainer;
 import resources.ImageLoader;
 
+import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
+import java.awt.image.BufferStrategy;
 import java.awt.*;
+import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Brain
- * Date: 2012-09-21
- * Time: 01:12
- * To change this template use File | Settings | File Templates.
+ * The graphical viewer is a standard 2D game viewer that paints a GameModel object.
+ * Uses double buffering.
+ * @author      Fredrik Max
+ * @version     1.0
+ * @since       2012-10-13
  */
+
 public class GraphicalViewer extends Viewer {
+
+    //model used in painting
     GameModel gameModel;
+
+    //reference/pointer to the image loader used
     ImageLoader imageLoader;
 
+    //default values / constants
     final static int DEFAULT_SCREEN_WIDTH_PX = 1366, DEFAULT_SCREEN_HEIGHT_PX = 768;
     final static int DEFAULT_STRING_SIZE = 14;
     final static Color DEFAULT_PAINT_COLOR = Color.WHITE;
     final static Color DEFAULT_BACKGROUND_COLOR = Color.BLACK;
     final static Color DEFAULT_FONT_COLOR = Color.WHITE;
 
-    Color backgroundColor = DEFAULT_BACKGROUND_COLOR;
-    Color informationFontColor = DEFAULT_FONT_COLOR;
-    Color paintColor = DEFAULT_PAINT_COLOR;
+    //colors used for painting
+    public Color backgroundColor = DEFAULT_BACKGROUND_COLOR;
+    public Color informationFontColor = DEFAULT_FONT_COLOR;
+    private Color paintColor = DEFAULT_PAINT_COLOR; //used for painting anything else
 
-    int width, height;
-    boolean lockOnPlayer = true;
-    boolean drawCross = false;
-    boolean paintExtraInformation = true;
-    long paintTime = 0;
-    boolean paintKeyBindings = true;
-    boolean paintWorldObjectBounds = false;
+    //controllers for painting
+    public boolean lockOnPlayer = true;            //make camera move with player
+    public boolean drawCross = false;              //draw a cross in middle of screen
+    public boolean paintExtraInformation = true;   //paint extra information suchs as paint time, update time etc
+    public boolean paintKeyBindings = true;        //make key bindings visible for the player
+    public boolean paintWorldObjectBounds = false; //paint bounds on the screen
 
-    int cameraX = - DEFAULT_SCREEN_WIDTH_PX/2, cameraY = - DEFAULT_SCREEN_HEIGHT_PX/2;
-    final static int SCREEN_PADDING = 100;
+    //other controllers
+    private long paintTime = 0;                    //for measuring elapsed time for 1 paint
+    public int width;
 
+
+
+
+
+    public int height;                      //graphical viewer width and height
+
+    //camera position in the current zone
+    private int cameraX = - DEFAULT_SCREEN_WIDTH_PX/2, cameraY = - DEFAULT_SCREEN_HEIGHT_PX/2;
+
+    //how many pixels outside of screen width and height we should paint
+    private final static int SCREEN_PADDING = 100;
+
+    /**
+     * Standard constructor that takes a gameModel and initializes the image loading
+     */
     public GraphicalViewer(GameModel gameModel){
          this.gameModel = gameModel;
          this.imageLoader = new ImageLoader();
@@ -55,69 +84,65 @@ public class GraphicalViewer extends Viewer {
          this.height = DEFAULT_SCREEN_HEIGHT_PX;
     }
 
-    @Override
-    public Dimension getPreferredSize(){
-        return new Dimension(width, height);
-    }
-
+    /**
+     *  Main paint method that paints the whole game.
+     */
     @Override
     public void paintComponent(Graphics g){
-        long begin = System.currentTimeMillis();
-
-        BufferedImage bufferedImage = new BufferedImage(DEFAULT_SCREEN_WIDTH_PX, DEFAULT_SCREEN_HEIGHT_PX, BufferedImage.TYPE_INT_ARGB_PRE);
-        Graphics2D g2d = bufferedImage.createGraphics();
-
-
-        paintBackground(g2d);
-        paintBackgroundObjects(g2d);
-
-        if(drawCross){
-            drawCross(g2d);
-        }
+        long begin = System.currentTimeMillis(); //time stamp for start of painting
         if(lockOnPlayer){
             lockCameraOnPlayer();
         }
+
+        //initialize the double buffer
+        BufferedImage bufferedImage = new BufferedImage(DEFAULT_SCREEN_WIDTH_PX, DEFAULT_SCREEN_HEIGHT_PX, BufferedImage.TYPE_INT_ARGB_PRE);
+        Graphics2D g2d = bufferedImage.createGraphics();
+
+        //start painting in correct order
+        paintBackground(g2d);
         paintWorldObjects(g2d);
         if(paintExtraInformation){
             paintExtraInformation(g2d);
         }
+        if(drawCross){
+            drawCross(g2d);
+        }
 
+        //paint on the actual graphics object -- cast to Graphics2D so we can use built in drawImage method
         Graphics2D g2dComponent = (Graphics2D) g;
-
         g2dComponent.drawImage(bufferedImage, null, 0, 0);
-        paintTime = System.currentTimeMillis() - begin;
 
+        paintTime = System.currentTimeMillis() - begin; //calculate time taken after painting finished
     }
 
+    /**
+     * Fills a rectangle over the whole canvas (color specified by backgroundColor variable)
+     */
     public void paintBackground(Graphics2D g2d){
         g2d.setColor(backgroundColor);
         g2d.fillRect(0, 0, width, height);
     }
 
-    public void paintBackgroundObjects(Graphics2D g2d){
-
-    }
-
-
-
-
+    /**
+     * Paints all the world objects in proximity to the camera position. The world objects are
+     * retrieved from the game model.
+     */
     public void paintWorldObjects(Graphics2D g2d){
         Player p = gameModel.getPlayer();
         ZoneCoordinate zs = p.getZoneCoordinate();
 
-        Coordinate start = new Coordinate(p.getCoordinate().getX() - width/2 - SCREEN_PADDING, p.getCoordinate().getY() - height/2 - SCREEN_PADDING);
-        Coordinate stop = new Coordinate(p.getCoordinate().getX() + width/2 + SCREEN_PADDING, p.getCoordinate().getY() + height/2 + SCREEN_PADDING);
+        // calculate start painting coordinate and end painting coordinate
+        Coordinate start = new Coordinate(cameraX - width/2 - SCREEN_PADDING, cameraY - height/2 - SCREEN_PADDING);
+        Coordinate stop = new Coordinate(cameraX + width/2 + SCREEN_PADDING, cameraY + height/2 + SCREEN_PADDING);
+
+        // get all world objects close to the start and stop positions.
         WorldObjectContainer woc = gameModel.getAllObjectsInArea(zs, start, stop);
+        WorldObject wo;
 
-        for(WorldObject wo : woc){
-            if(wo.isAlive()){
-                //paint boundables
-                //paintWorldObjectBounds(g2d, wo, Color.RED);
-
-                paintWorldObject(g2d, wo);
-                if(paintWorldObjectBounds){
-                    paintWorldObjectBounds(g2d, wo, Color.RED);
-                }
+        for(wo : woc){
+            paintWorldObject(g2d, wo);
+            if(paintWorldObjectBounds){
+                paintWorldObjectBounds(g2d, wo, Color.RED);
             }
         }
     }
@@ -307,7 +332,7 @@ public class GraphicalViewer extends Viewer {
 
     }
 
-
+    //getters and setters
     public boolean isLockOnPlayer() {
         return lockOnPlayer;
     }
@@ -346,6 +371,21 @@ public class GraphicalViewer extends Viewer {
 
     public void setPaintWorldObjectBounds(boolean paintWorldObjectBounds) {
         this.paintWorldObjectBounds = paintWorldObjectBounds;
+    }
+
+    @Override
+    public Dimension getPreferredSize(){
+        return new Dimension(width, height);
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+
+
+    public int getWidth() {
+        return width;
     }
 }
 
