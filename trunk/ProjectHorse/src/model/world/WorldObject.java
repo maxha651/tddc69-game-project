@@ -31,6 +31,25 @@ public abstract class WorldObject extends AbstractGameObject implements Boundabl
         return state;
     }
 
+    public void updateZone(double zoneSize){
+        while (coordinate.getX() > zoneSize){
+            zoneCoordinate.setX(zoneCoordinate.getX() +1);
+            coordinate.setX(coordinate.getX() % zoneSize);
+        }
+        while (coordinate.getX() < 0.0){
+            zoneCoordinate.setX(zoneCoordinate.getX() -1);
+            coordinate.setX(zoneSize + coordinate.getX());
+        }
+        while (coordinate.getY() > zoneSize){
+            zoneCoordinate.setY(zoneCoordinate.getY() +1);
+            coordinate.setY(coordinate.getY() % zoneSize);
+        }
+        while (coordinate.getY() < 0.0){
+            zoneCoordinate.setY(zoneCoordinate.getY() -1);
+            coordinate.setY(zoneSize + coordinate.getY());
+        }
+    }
+
     public void setState(WorldObjectState state) {
         this.state = state;
     }

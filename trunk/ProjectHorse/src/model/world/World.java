@@ -1,6 +1,7 @@
 package model.world;
 
 import model.CollideCheck;
+import model.GameModel;
 import model.MoveableObject;
 import model.properties.Collideable;
 import model.utility.shape.Coordinate;
@@ -16,10 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * To change this template use File | Settings | File Templates.
  */
 public class World {
-    Coordinate zonesRelativeOrigo = new Coordinate(0.0, 0.0);
-
-    int numberOfLevels;
-    double size;
+    double zoneSize;
     ConcurrentHashMap<ZoneCoordinate, Zone> zones;
 
     public int getNumberOfWorldObjects() {
@@ -28,23 +26,18 @@ public class World {
 
     int numberOfWorldObjects = 0;
 
-    public World(int numberOfLevels, double size){
-        this.numberOfLevels = numberOfLevels;
-        this.size = size;
+    public World(double zoneSize){
+        this.zoneSize = zoneSize;
         this.zones = new ConcurrentHashMap<ZoneCoordinate, Zone>();
-        // creates 9 zones around origo to start with
+        // creates 9 zones around origo (not needed?)
         createZones();
-    }
-
-    private Zone getZone(WorldObject worldObject){
-        return getZone(worldObject.getZoneCoordinate());
     }
 
     private Zone getZone(ZoneCoordinate coordinate){
         Zone zone = zones.get(coordinate);
 
         if (zone == null){
-            zones.put(coordinate, new Zone(zonesRelativeOrigo, size, numberOfLevels));
+            zones.put(coordinate, new Zone(zoneSize));
         }
         return zones.get(coordinate);
     }
@@ -52,31 +45,34 @@ public class World {
     public void addWorldObject(WorldObject worldObject){
         ZoneCoordinate zoneCoord = worldObject.getZoneCoordinate();
         Zone zone = getZone(zoneCoord);
+        if (!zone.isWithinBoundaries(worldObject)){
+            worldObject.updateZone(zoneSize);
+        }
         zone.add(worldObject);
         numberOfWorldObjects++;
     }
 
     private void moveOneZoneUp(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
-        start.setY(start.getY() + size);
-        stop.setY(stop.getY() + size);
+        start.setY(start.getY() + zoneSize);
+        stop.setY(stop.getY() + zoneSize);
         zoneCoordinate.setY(zoneCoordinate.getY() - 1);
     }
 
     private void moveOneZoneDown(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
-        start.setY(start.getY() - size);
-        stop.setY(stop.getY() - size);
+        start.setY(start.getY() - zoneSize);
+        stop.setY(stop.getY() - zoneSize);
         zoneCoordinate.setY(zoneCoordinate.getY() + 1);
     }
 
     private void moveOneZoneLeft(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
-        start.setX(start.getX() + size);
-        stop.setX(stop.getX() + size);
+        start.setX(start.getX() + zoneSize);
+        stop.setX(stop.getX() + zoneSize);
         zoneCoordinate.setX(zoneCoordinate.getX() - 1);
     }
 
     private void moveOneZoneRight(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
-        start.setX(start.getX() - size);
-        stop.setX(stop.getX() - size);
+        start.setX(start.getX() - zoneSize);
+        stop.setX(stop.getX() - zoneSize);
         zoneCoordinate.setX(zoneCoordinate.getX() + 1);
     }
 
@@ -84,13 +80,13 @@ public class World {
         while (start.getY() < 0){
             moveOneZoneUp(zoneCoordinate, start, stop);
         }
-        while (start.getY() > size){
+        while (start.getY() > zoneSize){
             moveOneZoneDown(zoneCoordinate, start, stop);
         }
         while (start.getX() < 0){
             moveOneZoneLeft(zoneCoordinate, start, stop);
         }
-        while (start.getX() > size){
+        while (start.getX() > zoneSize){
             moveOneZoneRight(zoneCoordinate, start, stop);
         }
     }
@@ -136,38 +132,26 @@ public class World {
         clearAdjacentZones(start, stop);
     }
 
-    private void clearAdjacentZones(ZoneCoordinate start, ZoneCoordinate stop){
-        for (int x = start.getX() -1; x <= stop.getX() +1; x++){
-            ZoneCoordinate tempCoord = (new ZoneCoordinate(x, start.getY() -1));
-
-            if(zoneExists(tempCoord)){ // create function
-                Zone zone = getZone(tempCoord);
-                numberOfWorldObjects -= zone.getWorldObjects().size();
-                zone.clear();
-            }
-
-            tempCoord.setY(stop.getY()); // doesn't work with +1
-            if(zoneExists(tempCoord)){
-                Zone zone = getZone(tempCoord);
-                numberOfWorldObjects -= zone.getWorldObjects().size();
-                zone.clear();
-            }
+    private void clearZone(ZoneCoordinate zoneCoordinate){
+        if(zoneExists(zoneCoordinate)){ // create function
+            Zone zone = getZone(zoneCoordinate);
+            numberOfWorldObjects -= zone.getWorldObjects().size();
+            zone.clear();
         }
-        for (int y = start.getY() -1; y <= stop.getY() +1; y++){
-            ZoneCoordinate tempCoord = new ZoneCoordinate(start.getX(), y);// doesn't work with -1
+    }
 
-            if (zoneExists(tempCoord)){
-                Zone zone = getZone(tempCoord);
-                numberOfWorldObjects -= zone.getWorldObjects().size();
-                zone.clear();
-            }
-
+    private void clearAdjacentZones(ZoneCoordinate start, ZoneCoordinate stop){
+        for (int x = start.getX(); x <= stop.getX(); x++){
+            ZoneCoordinate tempCoord = new ZoneCoordinate(x, start.getY());
+            clearZone(tempCoord);
+            tempCoord.setY(stop.getY()); // doesn't work with +1
+            clearZone(tempCoord);
+        }
+        for (int y = start.getY(); y <= stop.getY(); y++){
+            ZoneCoordinate tempCoord = new ZoneCoordinate(start.getX(), y);
+            clearZone(tempCoord);
             tempCoord.setX(stop.getX()); // doesn't work with +1
-            if(zoneExists(tempCoord)){
-                Zone zone = getZone(new ZoneCoordinate(stop.getX(), y));
-                numberOfWorldObjects -= zone.getWorldObjects().size();
-                zone.clear();
-            }
+            clearZone(tempCoord);
         }
     }
 
@@ -186,13 +170,14 @@ public class World {
     private void updateCollideable(Collideable object){
         Coordinate objCoord = object.getCoordinate();
         WorldObjectContainer nearbyObjects;
+        int checkDistance = GameModel.COLLIDING_CHECK_DISTANCE;
         nearbyObjects = getAllObjectsInArea(object.getZoneCoordinate(),
-                new Coordinate(objCoord.getX() - 50, objCoord.getY() - 50),
-                new Coordinate(objCoord.getX() + 50, objCoord.getY() + 50));
+                new Coordinate(objCoord.getX() - checkDistance, objCoord.getY() - checkDistance),
+                new Coordinate(objCoord.getX() + checkDistance, objCoord.getY() + checkDistance));
 
         for(WorldObject nearbyObject : nearbyObjects){
             if (isCollideable(nearbyObject) && nearbyObject != object){
-                if(CollideCheck.isColliding(object, (Collideable) nearbyObject, size)){
+                if(CollideCheck.isColliding(object, (Collideable) nearbyObject, zoneSize)){
                     object.setToCollide((Collideable) nearbyObject);
                     ((Collideable) nearbyObject).setToCollide(object);
                 }
@@ -201,12 +186,12 @@ public class World {
     }
 
     private void updateMoveable(MoveableObject object, Zone zone){
-        (object).updatePosition(size);
+        (object).updatePosition(zoneSize);
 
         if(!zone.isWithinBoundaries(object)){
             zone.removeWorldObject(object);
             numberOfWorldObjects--;
-            object.updateZone(size);
+            object.updateZone(zoneSize);
             addWorldObject(object);
         }
     }
@@ -233,15 +218,15 @@ public class World {
     }
 
     private void createZones(){
-        zones.put(new ZoneCoordinate(-1, -1), new Zone(zonesRelativeOrigo, size, numberOfLevels));
-        zones.put(new ZoneCoordinate(0,-1), new Zone(zonesRelativeOrigo, size, numberOfLevels));
-        zones.put(new ZoneCoordinate(1,-1), new Zone(zonesRelativeOrigo, size, numberOfLevels));
-        zones.put(new ZoneCoordinate(-1,0), new Zone(zonesRelativeOrigo, size, numberOfLevels));
-        zones.put(new ZoneCoordinate(0,0), new Zone(zonesRelativeOrigo, size, numberOfLevels));
-        zones.put(new ZoneCoordinate(1, 0), new Zone(zonesRelativeOrigo, size, numberOfLevels));
-        zones.put(new ZoneCoordinate(-1,1), new Zone(zonesRelativeOrigo, size, numberOfLevels));
-        zones.put(new ZoneCoordinate(0,1), new Zone(zonesRelativeOrigo, size, numberOfLevels));
-        zones.put(new ZoneCoordinate(1,1), new Zone(zonesRelativeOrigo, size, numberOfLevels));
+        zones.put(new ZoneCoordinate(-1, -1), new Zone(zoneSize));
+        zones.put(new ZoneCoordinate(0,-1), new Zone(zoneSize));
+        zones.put(new ZoneCoordinate(1,-1), new Zone(zoneSize));
+        zones.put(new ZoneCoordinate(-1,0), new Zone(zoneSize));
+        zones.put(new ZoneCoordinate(0,0), new Zone(zoneSize));
+        zones.put(new ZoneCoordinate(1, 0), new Zone(zoneSize));
+        zones.put(new ZoneCoordinate(-1,1), new Zone(zoneSize));
+        zones.put(new ZoneCoordinate(0,1), new Zone(zoneSize));
+        zones.put(new ZoneCoordinate(1,1), new Zone(zoneSize));
 
     }
 }

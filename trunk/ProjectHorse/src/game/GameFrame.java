@@ -48,6 +48,7 @@ public class GameFrame extends JFrame implements KeyListener, Observer {
         viewer = new GraphicalViewer(gameModel);
         this.add(viewer);
         this.pack();
+        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
 
     }
