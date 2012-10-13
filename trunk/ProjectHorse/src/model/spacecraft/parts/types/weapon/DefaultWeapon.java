@@ -9,7 +9,7 @@ package model.spacecraft.parts.types.weapon;
  */
 public class DefaultWeapon implements WeaponType {
 
-    double absVelocity = 10;
+    double absVelocity = 20;
     int fireDelay = 5;
 
     @Override

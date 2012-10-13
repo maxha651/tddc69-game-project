@@ -45,12 +45,12 @@ public class Player extends AbstractCharacter implements Collideable, Boundable{
 
     @Override
     public double getBoundingWidth() {
-        return boundingWidth;
+        return width/4;
     }
 
     @Override
     public double getBoundingHeight() {
-        return boundingHeight;
+        return height/4;
     }
 
 
