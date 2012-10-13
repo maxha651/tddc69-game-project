@@ -23,6 +23,6 @@ public class StartMenu extends JFrame{
 
         startButton = new JButton("Start");
         exitButton  = new JButton("Exit");
-        this.add();
+        //this.add();
     }
 }
