@@ -147,8 +147,8 @@ public class GameModel extends Observable {
         z.setY(player.getZoneCoordinate().getY() + yDifference*2);
 
         Asteroid a = new Asteroid(c, z);
-        world.addWorldObject(a);
         a.updateZone(ZONE_SIZE);
+        world.addWorldObject(a);
         projectiles.add(new Asteroid(c, z));
     }
 

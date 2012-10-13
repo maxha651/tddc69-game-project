@@ -94,6 +94,8 @@ public class Asteroid extends AbstractProjectile implements Collideable, Damagea
         return mass;
     }
 
+
+
     @Override
     public void doDamage(int amount) {
         health -= amount;
