@@ -24,12 +24,8 @@ public class GameModel extends Observable {
     public long tick = 0;
 
     //player controllers
-    Player player;
-    public boolean accelerationRequest = false;
-    public boolean turnLeftRequest = false;
-    public boolean turnRightRequest = false;
-    public boolean fireRequest = false;
-
+    Player player1;
+    Player player2;
     //AI controllers
 
     // Projectile controllers
@@ -59,16 +55,18 @@ public class GameModel extends Observable {
 
     public GameModel(int seed){
         this.seed = seed;
-        player = new Player();
-        world.addWorldObject(player);
+        player1 = new Player();
+        player2 = new Player();
+        world.addWorldObject(player1);
+        world.addWorldObject(player2);
     }
 
     public Player getPlayer() {
-        return player;
+        return player1;
     }
 
     public void setPlayer(Player player) {
-        this.player = player;
+        this.player1 = player;
     }
 
     public int getSeed() {
@@ -87,16 +85,16 @@ public class GameModel extends Observable {
         tick++;
 
         //add collision checks and method for returning all moveable objects
-        updatePlayer();
+        updatePlayers();
         //updateProjectiles();
         updateEnemies();
 
         // Temporary
-        ZoneCoordinate startZoneToUpdate = new ZoneCoordinate(player.getZoneCoordinate());
+        ZoneCoordinate startZoneToUpdate = new ZoneCoordinate(player1.getZoneCoordinate());
         startZoneToUpdate.setX(startZoneToUpdate.getX() -ZONE_UPDATE_SPAN);
         startZoneToUpdate.setY(startZoneToUpdate.getY() -ZONE_UPDATE_SPAN);
 
-        ZoneCoordinate stopZoneToUpdate = new ZoneCoordinate(player.getZoneCoordinate());
+        ZoneCoordinate stopZoneToUpdate = new ZoneCoordinate(player1.getZoneCoordinate());
         stopZoneToUpdate.setX(stopZoneToUpdate.getX() +ZONE_UPDATE_SPAN);
         stopZoneToUpdate.setY(stopZoneToUpdate.getY() +ZONE_UPDATE_SPAN);
 
@@ -108,7 +106,7 @@ public class GameModel extends Observable {
         }
         spawnEngineParticles();
 
-        if(tick > 8000 && true){ //change true to false
+        if(tick > 8000 && true){ //change true to false if you want to remove automatic quitting
             //to make the game not fuck up the computer if memory leaks
             System.out.println("Exited game to prevent fucked up memory leaks");
             System.out.println("Check in Game Model in tick() to remove");
@@ -125,50 +123,52 @@ public class GameModel extends Observable {
     }
 
     public void spawnEngineParticles(){
-        if(accelerationRequest == true){
+        if(player1.accelerationRequest == true){
             spawnEngineParticle();
         }
 
     }
 
     public void spawnEngineParticle(){
-        EngineParticle ep = new EngineParticle(player);
+        EngineParticle ep = new EngineParticle(player1);
         ep.updateZone(ZONE_SIZE);
         world.addWorldObject(ep);
     }
 
     public void spawnAsteroid(){
-        Coordinate c = new Coordinate(player.getCoordinate()); //make this some other arbitary coordinate .. now spawns on top of player
-        ZoneCoordinate z = new ZoneCoordinate(player.getZoneCoordinate());
+        Coordinate c = new Coordinate(player1.getCoordinate()); //make this some other arbitary coordinate .. now spawns on top of player
+        ZoneCoordinate z = new ZoneCoordinate(player1.getZoneCoordinate());
 
         int xDifference = 1 - 2*Randomizer.randomInt(0, 1);
         int yDifference = 1 - 2*Randomizer.randomInt(0, 1);
 
-        z.setX(player.getZoneCoordinate().getX() + xDifference*2);
-        z.setY(player.getZoneCoordinate().getY() + yDifference*2);
+        z.setX(player1.getZoneCoordinate().getX() + xDifference*2);
+        z.setY(player1.getZoneCoordinate().getY() + yDifference*2);
 
         Asteroid a = new Asteroid(this.world, c, z);
         a.updateZone(ZONE_SIZE);
         world.addWorldObject(a);
     }
 
-    public void updatePlayer(){
-        if(turnLeftRequest){
-            player.rotateLeft(Math.toRadians(player.getSpacecraft().getEngine().getRotationSpeed()));
-        } else if (turnRightRequest) {
-            player.rotateRight(Math.toRadians(player.getSpacecraft().getEngine().getRotationSpeed()));
+    public void updatePlayer(int i){
+        Player p = getPlayer(i);
+
+        if(p.turnLeftRequest){
+            p.rotateLeft(Math.toRadians(p.getSpacecraft().getEngine().getRotationSpeed()));
+        } else if (p.turnRightRequest) {
+            p.rotateRight(Math.toRadians(p.getSpacecraft().getEngine().getRotationSpeed()));
         }
-        if (accelerationRequest){
-            player.accelerate();
+        if (p.accelerationRequest){
+            p.accelerate();
         }
         else{
-            player.deaccelerate();
+            p.deaccelerate();
         }
 
         //player.updatePosition(accelerationRequest, ZONE_SIZE);
-        if(fireRequest){
+        if(p.fireRequest){
             if (fireDelay <= 0){
-                Projectile temp = player.fire();
+                Projectile temp = p.fire();
 
                 // might have changed zones
                 temp.updateZone(ZONE_SIZE);
@@ -181,6 +181,11 @@ public class GameModel extends Observable {
                 fireDelay--;
             }
         }
+    }
+
+    public void updatePlayers(){
+        updatePlayer(1);
+        updatePlayer(2);
     }
 
     public double getZoneSize(){
@@ -201,5 +206,13 @@ public class GameModel extends Observable {
 
     public void addWorldObject(WorldObject wo){
         this.world.addWorldObject(wo);
+    }
+
+    public Player getPlayer(int i){
+        if(i == 1){
+            return player1;
+        } else {
+            return player2;
+        }
     }
 }
