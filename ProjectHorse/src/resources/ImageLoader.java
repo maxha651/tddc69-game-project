@@ -2,6 +2,7 @@ package resources;
 
 import model.background.Projectile;
 import model.character.Player;
+import model.utility.math.Randomizer;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -21,13 +22,14 @@ import java.util.LinkedList;
 public class ImageLoader {
 
     BufferedImage asteroid1;
+    BufferedImage asteroid2;
     BufferedImage spaceship1;
     BufferedImage laserblue1;
     BufferedImage engineparticlered;
+    BufferedImage asteroidparticle1;
 
     public BufferedImage getAsteroidImage(){
-        asteroid1 = getImage(asteroid1, "asteroid2.png");
-        return asteroid1;
+           return asteroid1 = getImage(asteroid1, "asteroid1.png");
     }
 
     public BufferedImage getPlayerImage(Player p){
@@ -45,6 +47,11 @@ public class ImageLoader {
         //check what type and return for that
         engineparticlered = getImage(engineparticlered, "engineparticlered.png");
         return engineparticlered;
+    }
+
+    public BufferedImage getAsteroidParticleImage(){
+        asteroidparticle1 = getImage(asteroid1, "asteroidparticle.png");
+        return asteroidparticle1;
     }
 
     private BufferedImage getImage(BufferedImage bf, String path){

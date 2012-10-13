@@ -227,6 +227,5 @@ public class World {
         zones.put(new ZoneCoordinate(-1,1), new Zone(zoneSize));
         zones.put(new ZoneCoordinate(0,1), new Zone(zoneSize));
         zones.put(new ZoneCoordinate(1,1), new Zone(zoneSize));
-
     }
 }

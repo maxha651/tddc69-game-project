@@ -35,7 +35,6 @@ public class Projectile extends MoveableObject implements Collideable{
         this.zoneCoordinate = zoneCoordinate;
         this.boundingHeight = pt.getBoundingHeight();
         this.boundingWidth = pt.getBoundingWidth();
-
     }
 
     public Projectile() {
@@ -58,7 +57,7 @@ public class Projectile extends MoveableObject implements Collideable{
         if(tick < 125){
             this.tick++;
         } else {
-            this.setState(WorldObjectState.REMOVE);
+            this.setState(WorldObjectState.DEAD);
         }
     }
 
