@@ -1,10 +1,7 @@
 package graphics;
 
 import model.GameModel;
-import model.background.Asteroid;
-import model.background.AsteroidParticle;
-import model.background.EngineParticle;
-import model.background.Projectile;
+import model.background.*;
 import model.character.Player;
 import model.properties.Boundable;
 import model.properties.Collideable;
@@ -213,6 +210,8 @@ public class GraphicalViewer extends Viewer {
             g2d.drawImage(imageLoader.getProjectileImage((Projectile) wo), paintX, paintY, bWidth, bHeight, this);
         } else if(wo.getClass() == AsteroidParticle.class) {
             g2d.drawImage(imageLoader.getAsteroidParticleImage(), paintX, paintY, bWidth, bHeight, this);
+        } else if(wo.getClass() == RedAsteroidParticle.class) {
+            g2d.drawImage(imageLoader.getRedAsteroidParticleImage(), paintX, paintY, bWidth, bHeight, this);
         }
     }
 

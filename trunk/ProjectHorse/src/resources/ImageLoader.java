@@ -53,6 +53,11 @@ public class ImageLoader {
         return asteroidparticle1;
     }
 
+    public BufferedImage getRedAsteroidParticleImage(){
+        engineparticlered = getImage(engineparticlered, "engineparticlered.png");
+        return engineparticlered;
+    }
+
     private BufferedImage getImage(BufferedImage bf, String path){
         if(bf == null){
             bf = load(path, bf);
