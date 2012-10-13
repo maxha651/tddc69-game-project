@@ -12,6 +12,7 @@ public class Game {
         final GameModel gameModel = new GameModel();
         final GameFrame gameFrame = new GameFrame(gameModel);
 
+
         final Action doOneStep = new AbstractAction() {
             public void actionPerformed(ActionEvent e) {
 

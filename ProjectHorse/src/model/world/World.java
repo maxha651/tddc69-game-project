@@ -2,12 +2,10 @@ package model.world;
 
 import model.CollideCheck;
 import model.MoveableObject;
-import model.interfaces.Collideable;
+import model.properties.Collideable;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -177,7 +175,7 @@ public class World {
         update(getZone(zoneCoordinate));
     }
 
-    private boolean isNotYetCollidedCollideable(WorldObject o){
+    private boolean isCollideable(WorldObject o){
         return Collideable.class.isAssignableFrom(o.getClass());
     }
 
@@ -185,31 +183,35 @@ public class World {
         return MoveableObject.class.isAssignableFrom(o.getClass());
     }
 
-    private void update(Zone zone){ // Make better code
+    private void updateCollideable(Collideable object){
+        Coordinate objCoord = object.getCoordinate();
+        WorldObjectContainer nearbyObjects;
+        nearbyObjects = getAllObjectsInArea(object.getZoneCoordinate(),
+                new Coordinate(objCoord.getX() - 50, objCoord.getY() - 50),
+                new Coordinate(objCoord.getX() + 50, objCoord.getY() + 50));
 
-        for(WorldObject object : zone.getWorldObjects()){
-            if(isNotYetCollidedCollideable(object)){
-                //double boundingHeight = object.getBoundingHeight();
-                //double boundingWidth  = object.getBoundingWidth();
-                Coordinate objCoord = object.getCoordinate();
-
-                WorldObjectContainer nearbyObjects;
-                nearbyObjects = getAllObjectsInArea(object.getZoneCoordinate(),
-                        new Coordinate(objCoord.getX() - 50, objCoord.getY() - 50),
-                        new Coordinate(objCoord.getX() + 50, objCoord.getY() + 50));
-
-                for(WorldObject nearbyObject : nearbyObjects){
-                    if (isNotYetCollidedCollideable(nearbyObject) && nearbyObject != object){ // doesn't check hasCollided atm
-                        // checks if colliding and acts accordingly
-                        if(CollideCheck.isColliding((Collideable) object, (Collideable) nearbyObject, size)){
-                            ((Collideable) object).setToCollide((Collideable) nearbyObject);
-                            ((Collideable) nearbyObject).setToCollide((Collideable) object);
-                            break;
-                        }
-                    }
+        for(WorldObject nearbyObject : nearbyObjects){
+            if (isCollideable(nearbyObject) && nearbyObject != object){
+                if(CollideCheck.isColliding(object, (Collideable) nearbyObject, size)){
+                    object.setToCollide((Collideable) nearbyObject);
+                    ((Collideable) nearbyObject).setToCollide(object);
                 }
             }
         }
+    }
+
+    private void updateMoveable(MoveableObject object, Zone zone){
+        (object).updatePosition(size);
+
+        if(!zone.isWithinBoundaries(object)){
+            zone.removeWorldObject(object);
+            numberOfWorldObjects--;
+            object.updateZone(size);
+            addWorldObject(object);
+        }
+    }
+
+    private void update(Zone zone){
         for(WorldObject object : zone.getWorldObjects()){
             if(!object.isAlive()){
                 zone.removeWorldObject(object);
@@ -217,14 +219,10 @@ public class World {
                 continue;
             }
             if(isMoveable(object)){
-                ((MoveableObject) object).updatePosition(size);
-
-                if(!zone.isWithinBoundaries(object)){
-                    zone.removeWorldObject(object);
-                    numberOfWorldObjects--;
-                    ((MoveableObject) object).updateZone(size);
-                    addWorldObject(object);
-                }
+                updateMoveable((MoveableObject) object, zone);
+            }
+            if(isCollideable(object)){
+                updateCollideable((Collideable) object);
             }
         }
     }

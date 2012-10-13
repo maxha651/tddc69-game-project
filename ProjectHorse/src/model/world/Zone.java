@@ -1,8 +1,10 @@
 package model.world;
 
-import model.background.Asteroid;
 import model.utility.enums.CardinalDirection;
 import model.utility.shape.Coordinate;
+
+import java.util.Collections;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,7 +30,7 @@ public class Zone {
     private double size;
     private int numberOfLevels;
 
-    private WorldObjectContainer worldObjects = new WorldObjectContainer();
+    private WorldObjectContainer worldObjects;
 
     public Zone(Coordinate position, double size, int numberOfLevels) {
         this.pos = position;
@@ -101,7 +103,7 @@ public class Zone {
             return temp.removeWorldObject(object);
         }
     }
-
+    /*
     public WorldObjectContainer get(Coordinate position){
         if (!isWithinBoundaries(position)){
             throw new IndexOutOfBoundsException();
@@ -114,7 +116,7 @@ public class Zone {
             Zone temp = getZone(position);
             return temp.get(position);
         }
-    }
+    }*/
 
     public void clear(){
         if (isLastLevel()){

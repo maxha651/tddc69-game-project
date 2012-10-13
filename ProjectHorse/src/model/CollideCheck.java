@@ -1,6 +1,6 @@
 package model;
 
-import model.interfaces.Collideable;
+import model.properties.Collideable;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 

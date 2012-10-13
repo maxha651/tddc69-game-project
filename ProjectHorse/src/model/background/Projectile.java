@@ -1,14 +1,14 @@
 package model.background;
 
-import model.interfaces.Boundable;
-import model.interfaces.Collideable;
-import model.spacecraft.Weapon;
-import model.utility.enums.ProjectileType;
+import model.MoveableObject;
+import model.properties.Collideable;
+import model.properties.Damageable;
+import model.spacecraft.parts.Weapon;
+import model.spacecraft.parts.types.projectile.ProjectileType;
+import model.spacecraft.parts.types.weapon.WeaponType;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 import model.world.WorldObjectState;
-
-import java.awt.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,25 +17,25 @@ import java.awt.*;
  * Time: 23:53
  * To change this template use File | Settings | File Templates.
  */
-public class Projectile extends AbstractProjectile implements Collideable, Boundable{
+public class Projectile extends MoveableObject implements Collideable{
 
     ProjectileType pt;
 
     int tick = 0;
-    double boundingWidth = 10;
-    double boundingHeight = 10;
     boolean hasCollided = false;
 
-    public Projectile(Weapon w, Coordinate coordinate, double angle, ZoneCoordinate zoneCoordinate) {
+    public Projectile(Weapon weapon, Coordinate coordinate, double angle, ZoneCoordinate zoneCoordinate) {
+        WeaponType wt = weapon.getWeaponType();
+        this.velocityX = Math.cos(angle) * wt.getAbsVelocity();
+        this.velocityY = Math.sin(angle) * wt.getAbsVelocity();
+        this.pt = weapon.getProjectileType();
+        state = WorldObjectState.ALIVE;
         this.rotationAngle = angle;
-        this.pt = w.getProjectileType();
-        this.minDamage = w.getMinDamage();
-        this.maxDamage = w.getMaxDamage();
-        this.impact = false;
-        this.velocityX = model.utility.math.StandardMath.xPart(w.getAbsVelocity(), this.rotationAngle);
-        this.velocityY = model.utility.math.StandardMath.yPart(w.getAbsVelocity(), this.rotationAngle);
         this.coordinate = coordinate;
         this.zoneCoordinate = zoneCoordinate;
+        this.boundingHeight = pt.getBoundingHeight();
+        this.boundingWidth = pt.getBoundingWidth();
+
     }
 
     public Projectile() {
@@ -43,32 +43,13 @@ public class Projectile extends AbstractProjectile implements Collideable, Bound
     }
 
     @Override
-    public void collidesWith(Collideable c, double zoneSize) {
-        return;
-    }
-
-    @Override
     public void setToCollide(Collideable c) {
-        // add damage if able to c
+        if(Damageable.class.isAssignableFrom(c.getClass())){
+            ((Damageable) c).doDamage(pt.getDamage());
+        }
 
         hasCollided = true;
         this.state = WorldObjectState.DEAD;
-    }
-
-    @Override
-    public double getBoundingWidth() {
-        return boundingWidth;
-    }
-
-    @Override
-    public double getBoundingHeight() {
-        return boundingHeight;
-    }
-
-
-    @Override
-    public Rectangle getBounds() {
-        return new Rectangle((int) this.coordinate.getX(), (int) this.coordinate.getY(), (int) boundingWidth, (int) boundingHeight);
     }
 
     @Override
@@ -84,5 +65,10 @@ public class Projectile extends AbstractProjectile implements Collideable, Bound
     @Override
     public boolean hasCollided() {
         return hasCollided;
+    }
+
+    @Override
+    public int getMass() {
+        return 0; // massless
     }
 }

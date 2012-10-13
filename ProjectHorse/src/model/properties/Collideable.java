@@ -1,10 +1,8 @@
-package model.interfaces;
+package model.properties;
 
-
-import java.awt.*;
 
 public interface Collideable extends Moveable, Boundable{
-    public void collidesWith(Collideable c, double zoneSize);
     public void setToCollide(Collideable c);
     public boolean hasCollided();
+    public int getMass();
 }

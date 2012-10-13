@@ -1,7 +1,6 @@
 package model.background;
 
 import model.MoveableObject;
-import model.interfaces.Moveable;
 
 import java.awt.*;
 
@@ -13,11 +12,4 @@ import java.awt.*;
  * To change this template use File | Settings | File Templates.
  */
 public class MoveableBackgroundObject extends MoveableObject {
-
-
-
-    @Override
-    public Rectangle getBounds() {
-        return new Rectangle();
-    }
 }
