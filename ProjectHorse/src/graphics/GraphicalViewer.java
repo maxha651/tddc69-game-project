@@ -31,12 +31,14 @@ public class GraphicalViewer extends Viewer {
 
     //model used in painting
     GameModel gameModel;
+    BufferedImage bufferedImage;
+    AffineTransform saved;
 
     //reference/pointer to the image loader used
     ImageLoader imageLoader;
 
     //default values / constants
-    final static int DEFAULT_SCREEN_WIDTH_PX = 1500, DEFAULT_SCREEN_HEIGHT_PX = 1500;
+    final static int DEFAULT_SCREEN_WIDTH_PX = 1366, DEFAULT_SCREEN_HEIGHT_PX = 768;
     final static int DEFAULT_STRING_SIZE = 14;
     final static Color DEFAULT_PAINT_COLOR = Color.WHITE;
     final static Color DEFAULT_BACKGROUND_COLOR = Color.BLACK;
@@ -73,6 +75,7 @@ public class GraphicalViewer extends Viewer {
          this.imageLoader = new ImageLoader();
          this.width = DEFAULT_SCREEN_WIDTH_PX;
          this.height = DEFAULT_SCREEN_HEIGHT_PX;
+         bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB_PRE);
     }
 
     /**
@@ -86,7 +89,6 @@ public class GraphicalViewer extends Viewer {
         }
 
         //initialize the double buffer
-        BufferedImage bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB_PRE);
         Graphics2D g2d = bufferedImage.createGraphics();
 
         //start painting in correct order
@@ -119,6 +121,7 @@ public class GraphicalViewer extends Viewer {
      * retrieved from the game model.
      */
     public void paintWorldObjects(Graphics2D g2d){
+        final AffineTransform saved = g2d.getTransform();
         Player p = gameModel.getPlayer();
         ZoneCoordinate zs = p.getZoneCoordinate();
 
@@ -130,7 +133,9 @@ public class GraphicalViewer extends Viewer {
         WorldObjectContainer woc = gameModel.getAllObjectsInArea(zs, start, stop);
 
         for(WorldObject wo : woc){
+
             paintWorldObject(g2d, wo);
+            g2d.setTransform(saved);
             if(paintWorldObjectBounds){
                 if(Collideable.class.isAssignableFrom(wo.getClass())){
                     paintWorldObjectBounds(g2d, wo, Color.RED);
@@ -191,7 +196,7 @@ public class GraphicalViewer extends Viewer {
         //rotation
         double angle = wo.getRotationAngle();
 
-        final AffineTransform saved = g2d.getTransform();
+
         final AffineTransform rotate = AffineTransform.getRotateInstance(angle, rotateX, rotateY);
         g2d.transform(rotate);
 
@@ -207,7 +212,7 @@ public class GraphicalViewer extends Viewer {
         } else if(wo.getClass() == AsteroidParticle.class) {
             g2d.drawImage(imageLoader.getAsteroidParticleImage(), paintX, paintY, bWidth, bHeight, this);
         }
-        g2d.setTransform(saved);
+
 
     }
 
