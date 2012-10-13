@@ -40,10 +40,11 @@ public class GameModel extends Observable {
     public static final double DEFAULT_VELOCITY_FLOOR = 0.2;
     public static final double DEFAULT_SPACE_FRICTION = 0.98;
     public static final double ZONE_SIZE = 300;
-    public static final int ZONE_UPDATE_SPAN = 5;    //the spawn of how many zones are loaded away from player
+    public static final int COLLIDING_CHECK_DISTANCE = 50; // determines how faraway objects to check for collision
+    public static final int ZONE_UPDATE_SPAN = 15;    //the spawn of how many zones are loaded away from player
     public static final int asteroidSpawnRate = 2; //how many asteroids to spawn per tick
 
-    World world = new World(0, ZONE_SIZE);
+    World world = new World(ZONE_SIZE);
 
     //graphics controllers
 
@@ -92,12 +93,12 @@ public class GameModel extends Observable {
 
         // Temporary
         ZoneCoordinate startZoneToUpdate = new ZoneCoordinate(player.getZoneCoordinate());
-        startZoneToUpdate.setX(startZoneToUpdate.getX() -15);
-        startZoneToUpdate.setY(startZoneToUpdate.getY() -15);
+        startZoneToUpdate.setX(startZoneToUpdate.getX() -ZONE_UPDATE_SPAN);
+        startZoneToUpdate.setY(startZoneToUpdate.getY() -ZONE_UPDATE_SPAN);
 
         ZoneCoordinate stopZoneToUpdate = new ZoneCoordinate(player.getZoneCoordinate());
-        stopZoneToUpdate.setX(stopZoneToUpdate.getX() +15);
-        stopZoneToUpdate.setY(stopZoneToUpdate.getY() +15);
+        stopZoneToUpdate.setX(stopZoneToUpdate.getX() +ZONE_UPDATE_SPAN);
+        stopZoneToUpdate.setY(stopZoneToUpdate.getY() +ZONE_UPDATE_SPAN);
 
         world.update(startZoneToUpdate, stopZoneToUpdate);
 
