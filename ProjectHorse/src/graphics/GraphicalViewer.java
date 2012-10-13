@@ -123,6 +123,7 @@ public class GraphicalViewer extends Viewer {
     public void paintWorldObjects(Graphics2D g2d){
         final AffineTransform saved = g2d.getTransform();
         Player p = gameModel.getPlayer();
+
         ZoneCoordinate zs = p.getZoneCoordinate();
 
         // calculate start painting coordinate and end painting coordinate
@@ -196,7 +197,6 @@ public class GraphicalViewer extends Viewer {
         //rotation
         double angle = wo.getRotationAngle();
 
-
         final AffineTransform rotate = AffineTransform.getRotateInstance(angle, rotateX, rotateY);
         g2d.transform(rotate);
 
@@ -212,8 +212,6 @@ public class GraphicalViewer extends Viewer {
         } else if(wo.getClass() == AsteroidParticle.class) {
             g2d.drawImage(imageLoader.getAsteroidParticleImage(), paintX, paintY, bWidth, bHeight, this);
         }
-
-
     }
 
     /**
