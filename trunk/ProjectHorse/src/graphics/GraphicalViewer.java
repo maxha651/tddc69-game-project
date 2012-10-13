@@ -5,9 +5,6 @@ import model.background.Asteroid;
 import model.background.EngineParticle;
 import model.background.Projectile;
 import model.character.Player;
-import model.interfaces.Boundable;
-import model.spacecraft.Cargo;
-import model.spacecraft.Engine;
 import model.spacecraft.Spacecraft;
 import model.spacecraft.parts.Engine;
 import model.utility.shape.Coordinate;
@@ -132,14 +129,13 @@ public class GraphicalViewer extends Viewer {
         ZoneCoordinate zs = p.getZoneCoordinate();
 
         // calculate start painting coordinate and end painting coordinate
-        Coordinate start = new Coordinate(cameraX - width/2 - SCREEN_PADDING, cameraY - height/2 - SCREEN_PADDING);
-        Coordinate stop = new Coordinate(cameraX + width/2 + SCREEN_PADDING, cameraY + height/2 + SCREEN_PADDING);
+        Coordinate start = new Coordinate(p.getCoordinate().getX() - width/2 - SCREEN_PADDING, p.getCoordinate().getY() - height/2 - SCREEN_PADDING);
+        Coordinate stop = new Coordinate(p.getCoordinate().getX() + width/2 + SCREEN_PADDING, p.getCoordinate().getY() + height/2 + SCREEN_PADDING);
 
         // get all world objects close to the start and stop positions.
         WorldObjectContainer woc = gameModel.getAllObjectsInArea(zs, start, stop);
-        WorldObject wo;
 
-        for(wo : woc){
+        for(WorldObject wo : woc){
             paintWorldObject(g2d, wo);
             if(paintWorldObjectBounds){
                 paintWorldObjectBounds(g2d, wo, Color.RED);
