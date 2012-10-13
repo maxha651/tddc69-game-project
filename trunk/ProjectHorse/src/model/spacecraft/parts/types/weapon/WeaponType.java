@@ -1,5 +1,9 @@
 package model.spacecraft.parts.types.weapon;
 
+import model.GameModel;
+import model.character.AbstractCharacter;
+import model.character.Player;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Max

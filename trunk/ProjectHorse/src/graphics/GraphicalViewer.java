@@ -28,6 +28,7 @@ public class GraphicalViewer extends Viewer {
 
     //model used in painting
     GameModel gameModel;
+    Player p;
     BufferedImage bufferedImage;
     AffineTransform saved;
 
@@ -59,7 +60,7 @@ public class GraphicalViewer extends Viewer {
     public int height;                      //graphical viewer width and height
 
     //camera position in the current zone
-    private int cameraX = - DEFAULT_SCREEN_WIDTH_PX/2, cameraY = - DEFAULT_SCREEN_HEIGHT_PX/2;
+    private int cameraX, cameraY;
 
     //how many pixels outside of screen width and height we should paint
     private final static int SCREEN_PADDING = 100;
@@ -67,9 +68,10 @@ public class GraphicalViewer extends Viewer {
     /**
      * Standard constructor that takes a gameModel and initializes the image loading
      */
-    public GraphicalViewer(GameModel gameModel){
+    public GraphicalViewer(GameModel gameModel, Player p, ImageLoader imageLoader){
+         this.p = p;
          this.gameModel = gameModel;
-         this.imageLoader = new ImageLoader();
+         this.imageLoader = imageLoader;
          this.width = DEFAULT_SCREEN_WIDTH_PX;
          this.height = DEFAULT_SCREEN_HEIGHT_PX;
          bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB_PRE);
@@ -119,7 +121,6 @@ public class GraphicalViewer extends Viewer {
      */
     public void paintWorldObjects(Graphics2D g2d){
         final AffineTransform saved = g2d.getTransform();
-        Player p = gameModel.getPlayer();
 
         ZoneCoordinate zs = p.getZoneCoordinate();
 
@@ -230,7 +231,6 @@ public class GraphicalViewer extends Viewer {
      */
     public void paintExtraInformation(Graphics2D g2d){
 
-        Player p = gameModel.getPlayer();
         Engine e = p.getSpacecraft().getEngine();
 
         //initialize font and information container
@@ -281,8 +281,8 @@ public class GraphicalViewer extends Viewer {
      * Calculates the camera position from player coordinates.
      */
     public void lockCameraOnPlayer(){
-        Coordinate positionInZone = gameModel.getPlayer().getCoordinate();
-        ZoneCoordinate zoneCoordinate = gameModel.getPlayer().getZoneCoordinate();
+        Coordinate positionInZone = p.getCoordinate();
+        ZoneCoordinate zoneCoordinate = p.getZoneCoordinate();
         double zoneSize = gameModel.getZoneSize();
 
         int positionX =(int) (positionInZone.getX() + zoneSize*zoneCoordinate.getX());

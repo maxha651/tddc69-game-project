@@ -2,6 +2,7 @@ package game;
 
 import graphics.GraphicalViewer;
 import model.GameModel;
+import resources.ImageLoader;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,14 +34,14 @@ public class GameFrame extends JFrame implements KeyListener{
         this.gameModel = gameModel;
         this.addKeyListener(this);
 
-        viewer1 = new GraphicalViewer(gameModel);
-        viewer2 = new GraphicalViewer(gameModel);
+        ImageLoader img = new ImageLoader();
+        viewer1 = new GraphicalViewer(gameModel, gameModel.getPlayer(1), img);
+        viewer2 = new GraphicalViewer(gameModel, gameModel.getPlayer(2), img);
 
         this.setLayout(new FlowLayout());
 
         this.add(viewer1);
         this.add(viewer2);
-
 
         this.pack();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -60,19 +61,31 @@ public class GameFrame extends JFrame implements KeyListener{
         // Player p = gameModel.getPlayer();
         switch(keyCode){
             case KeyEvent.VK_W:
-                gameModel.accelerationRequest = true;
+                gameModel.getPlayer(1).accelerationRequest = true;
                 break;
             case KeyEvent.VK_A:
-                gameModel.turnLeftRequest = true;
+                gameModel.getPlayer(1).turnLeftRequest = true;
                 break;
             case KeyEvent.VK_D:
-                gameModel.turnRightRequest = true;
+                gameModel.getPlayer(1).turnRightRequest = true;
+                break;
+            case KeyEvent.VK_UP:
+                gameModel.getPlayer(2).accelerationRequest = true;
+                break;
+            case KeyEvent.VK_LEFT:
+                gameModel.getPlayer(2).turnLeftRequest = true;
+                break;
+            case KeyEvent.VK_RIGHT:
+                gameModel.getPlayer(2).turnRightRequest = true;
+                break;
+            case KeyEvent.VK_CONTROL:
+                gameModel.getPlayer(2).fireRequest = true;
                 break;
             case KeyEvent.VK_F:
                 viewer1.setLockOnPlayer(!viewer1.isLockOnPlayer());
                 break;
             case KeyEvent.VK_SPACE:
-                gameModel.fireRequest = true;
+                gameModel.getPlayer(1).fireRequest = true;
                 break;
             case KeyEvent.VK_I :
                 viewer1.setPaintExtraInformation(!viewer1.isPaintExtraInformation());
@@ -95,16 +108,28 @@ public class GameFrame extends JFrame implements KeyListener{
 
         switch(keyCode){
             case KeyEvent.VK_W:
-                gameModel.accelerationRequest = false;
+                gameModel.getPlayer(1).accelerationRequest = false;
                 break;
             case KeyEvent.VK_A:
-                gameModel.turnLeftRequest = false;
+                gameModel.getPlayer(1).turnLeftRequest = false;
                 break;
             case KeyEvent.VK_D:
-                gameModel.turnRightRequest = false;
+                gameModel.getPlayer(1).turnRightRequest = false;
+                break;
+            case KeyEvent.VK_UP:
+                gameModel.getPlayer(2).accelerationRequest = false;
+                break;
+            case KeyEvent.VK_LEFT:
+                gameModel.getPlayer(2).turnLeftRequest = false;
+                break;
+            case KeyEvent.VK_RIGHT:
+                gameModel.getPlayer(2).turnRightRequest = false;
                 break;
             case KeyEvent.VK_SPACE:
-                gameModel.fireRequest = false;
+                gameModel.getPlayer(1).fireRequest = false;
+                break;
+            case KeyEvent.VK_CONTROL:
+                gameModel.getPlayer(2).fireRequest = false;
                 break;
         }
 

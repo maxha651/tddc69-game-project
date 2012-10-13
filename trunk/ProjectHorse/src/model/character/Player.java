@@ -11,6 +11,10 @@ import model.utility.shape.ZoneCoordinate;
 public class Player extends AbstractCharacter implements Collideable, Boundable{
 
     int mass;
+    public boolean accelerationRequest = false;
+    public boolean turnLeftRequest = false;
+    public boolean turnRightRequest = false;
+    public boolean fireRequest = false;
 
     public Player(){
         this.setSpacecraft(new Spacecraft());

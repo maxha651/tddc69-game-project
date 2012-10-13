@@ -15,6 +15,8 @@ import model.spacecraft.parts.types.weapon.WeaponType;
 public class Weapon extends SpacecraftPart {
     ProjectileType pt;
     WeaponType wt;
+    int fireDelay = 0;
+    int fireDelayTop = 10;
 
     public Weapon(){
         this.wt = new DefaultWeapon();
