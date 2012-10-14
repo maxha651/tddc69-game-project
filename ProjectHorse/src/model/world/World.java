@@ -60,9 +60,12 @@ public class World {
         Zone zone = getZone(zoneCoord);
         if (!zone.isWithinBoundaries(worldObject)){
             worldObject.updateZone(zoneSize);
+            addWorldObject(worldObject);
         }
-        zone.add(worldObject);
-        numberOfWorldObjects++;
+        else{
+            zone.add(worldObject);
+            numberOfWorldObjects++;
+        }
     }
 
     public void removeWorldObject(WorldObject worldObject){
