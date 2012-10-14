@@ -1,6 +1,7 @@
-package model.world;
+package model.world.spawners;
 
 import model.utility.shape.ZoneCoordinate;
+import model.world.World;
 
 /**
  * Created with IntelliJ IDEA.

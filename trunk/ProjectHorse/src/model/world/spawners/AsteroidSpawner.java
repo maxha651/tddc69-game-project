@@ -1,9 +1,9 @@
-package model.world;
+package model.world.spawners;
 
 import model.background.Asteroid;
-import model.utility.math.Randomizer;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
+import model.world.World;
 
 /**
  * Created with IntelliJ IDEA.

@@ -22,7 +22,7 @@ public class CollideableObject extends MoveableObject {
 
     protected void setToCollide(CollideableObject object){
         return;
-    }
+     }
 
     protected boolean isColliding(CollideableObject collideable, double zoneSize){
         ZoneCoordinate thisZoneCoord = new ZoneCoordinate(zoneCoordinate);
@@ -32,11 +32,11 @@ public class CollideableObject extends MoveableObject {
         Coordinate thatCoord = new Coordinate(collideable.getCoordinate());
 
         if(!thatZoneCoord.equals(thisZoneCoord)){
-            double yZoneDiff = (thatZoneCoord.getY() - thisZoneCoord.getY()) * zoneSize;
-            double xZoneDiff = (thatZoneCoord.getX() - thisZoneCoord.getX()) * zoneSize;
+            double yZoneDiff = (double) (thatZoneCoord.getY() - thisZoneCoord.getY()) * zoneSize;
+            double xZoneDiff = (double) (thatZoneCoord.getX() - thisZoneCoord.getX()) * zoneSize;
 
-            thisCoord.setY(thisCoord.getY() + yZoneDiff);
-            thisCoord.setX(thisCoord.getX() + xZoneDiff);
+            thatCoord.setY(thatCoord.getY() + yZoneDiff);
+            thatCoord.setX(thatCoord.getX() + xZoneDiff);
         }
 
         double xDiff = Math.abs(thatCoord.getX() - thisCoord.getX());
@@ -45,7 +45,6 @@ public class CollideableObject extends MoveableObject {
         double allowedYDiff = Math.abs(this.getBoundingHeight() - collideable.getBoundingHeight());
 
         if( xDiff < allowedXDiff && yDiff < allowedYDiff){
-            //unCollide(this, collideable, allowedXDiff - xDiff, allowedYDiff - yDiff);
             return true;
         }
 
@@ -79,7 +78,6 @@ public class CollideableObject extends MoveableObject {
             if (isCollideable(nearbyObject) && nearbyObject != this){
                 if(isColliding((CollideableObject) nearbyObject, world.getZoneSize())){
                     setToCollide((CollideableObject) nearbyObject);
-                    ((CollideableObject) nearbyObject).setToCollide(this);
                 }
             }
         }

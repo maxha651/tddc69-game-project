@@ -1,9 +1,8 @@
 package model.world;
 
-import model.MoveableObject;
-import model.properties.Collideable;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
+import model.world.spawners.WorldObjectSpawner;
 
 import java.util.LinkedList;
 import java.util.concurrent.ConcurrentSkipListMap;
