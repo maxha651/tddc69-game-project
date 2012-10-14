@@ -102,6 +102,10 @@ public abstract class WorldObject extends AbstractGameObject implements Boundabl
         return false;
     }
 
+    public void destroy(World world){
+        world.removeWorldObject(this);
+    }
+
     @Override
     public double getBoundingWidth() {
         return boundingWidth;
@@ -110,9 +114,5 @@ public abstract class WorldObject extends AbstractGameObject implements Boundabl
     @Override
     public double getBoundingHeight() {
         return boundingHeight;
-    }
-
-    public void kill(){
-        this.state = WorldObjectState.DEAD;
     }
 }

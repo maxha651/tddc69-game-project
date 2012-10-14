@@ -1,6 +1,7 @@
 package model.world;
 
 import model.utility.shape.Coordinate;
+import model.utility.shape.ZoneCoordinate;
 
 /**
  * Created with IntelliJ IDEA.
@@ -35,6 +36,10 @@ public class Zone {
 
     public void clear(){
         worldObjects.clear();
+    }
+
+    public double getSize(){
+        return size;
     }
 
     /**

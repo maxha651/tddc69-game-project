@@ -7,7 +7,9 @@ import model.utility.math.Randomizer;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 import model.world.World;
+import model.world.WorldObjectSpawner;
 import model.world.WorldObjectState;
+import model.world.Zone;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,12 +25,10 @@ public class Asteroid extends AbstractProjectile implements Collideable, Damagea
     double tempVelocityX;
     double tempVelocityY;
     int mass;
-    public static World w;
     public static int deathParticleAmount = 45;
     public static int redParticleAmount = 5;
 
-    public Asteroid(World w, Coordinate c, ZoneCoordinate z){
-        this.w = w;
+    public Asteroid(Coordinate c, ZoneCoordinate z){
         this.boundingHeight = Randomizer.randomInt(20, 80);
         this.boundingWidth = this.boundingHeight + Randomizer.randomInt(0, 15) - Randomizer.randomInt(0, 15);
         this.mass = (int) Math.sqrt(boundingHeight*boundingWidth);
@@ -103,20 +103,20 @@ public class Asteroid extends AbstractProjectile implements Collideable, Damagea
     public void doDamage(int amount) {
         health -= amount;
         if(health <= 0){
-            this.kill();
+            this.state = WorldObjectState.DEAD;
         }
     }
 
     @Override
-    public void kill(){
-        super.kill();
+    public void destroy(World world){
+        super.destroy(world);
 
         for(int i = 0; i < deathParticleAmount; i++){
-            this.w.addWorldObject(new AsteroidParticle(this));
+            world.addWorldObject(new AsteroidParticle(this));
         }
 
         for(int i = 0; i < redParticleAmount; i++){
-            this.w.addWorldObject(new RedAsteroidParticle(this));
+            world.addWorldObject(new RedAsteroidParticle(this));
         }
     }
 }

@@ -7,7 +7,9 @@ import model.properties.Collideable;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 
+import java.util.LinkedList;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,7 +20,8 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class World {
     double zoneSize;
-    ConcurrentHashMap<ZoneCoordinate, Zone> zones;
+    ConcurrentSkipListMap<ZoneCoordinate, Zone> zones;
+    LinkedList<WorldObjectSpawner> spawners;
 
     public int getNumberOfWorldObjects() {
         return numberOfWorldObjects;
@@ -28,16 +31,26 @@ public class World {
 
     public World(double zoneSize){
         this.zoneSize = zoneSize;
-        this.zones = new ConcurrentHashMap<ZoneCoordinate, Zone>();
-        // creates 9 zones around origo (not needed?)
-        createZones();
+        this.zones = new ConcurrentSkipListMap<ZoneCoordinate, Zone>();
+        this.spawners = new LinkedList<WorldObjectSpawner>();
+    }
+
+    public void addWorldObjectSpawner(WorldObjectSpawner spawner){
+        spawners.add(spawner);
+    }
+
+    private void spawnWorldObjects(ZoneCoordinate zoneCoordinate){
+        for (WorldObjectSpawner spawner : spawners){
+            spawner.spawnWorldObjects(this, zoneCoordinate);
+        }
     }
 
     private Zone getZone(ZoneCoordinate coordinate){
         Zone zone = zones.get(coordinate);
 
         if (zone == null){
-            zones.put(coordinate, new Zone(zoneSize));
+            zones.put(new ZoneCoordinate(coordinate), new Zone(zoneSize));
+            spawnWorldObjects(coordinate);
         }
         return zones.get(coordinate);
     }
@@ -52,24 +65,32 @@ public class World {
         numberOfWorldObjects++;
     }
 
+    public void removeWorldObject(WorldObject worldObject){
+        ZoneCoordinate zoneCoordinate = worldObject.getZoneCoordinate();
+        if (zoneExists(zoneCoordinate)){
+            getZone(worldObject.getZoneCoordinate()).removeWorldObject(worldObject);
+        }
+    }
+
+    public double getZoneSize(){
+        return zoneSize;
+    }
+
     private void moveOneZoneUp(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
         start.setY(start.getY() + zoneSize);
         stop.setY(stop.getY() + zoneSize);
         zoneCoordinate.setY(zoneCoordinate.getY() - 1);
     }
-
     private void moveOneZoneDown(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
         start.setY(start.getY() - zoneSize);
         stop.setY(stop.getY() - zoneSize);
         zoneCoordinate.setY(zoneCoordinate.getY() + 1);
     }
-
     private void moveOneZoneLeft(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
         start.setX(start.getX() + zoneSize);
         stop.setX(stop.getX() + zoneSize);
         zoneCoordinate.setX(zoneCoordinate.getX() - 1);
     }
-
     private void moveOneZoneRight(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
         start.setX(start.getX() - zoneSize);
         stop.setX(stop.getX() - zoneSize);
@@ -108,7 +129,9 @@ public class World {
             tempZoneCoordinate.setY(tempZoneY);
 
             while (tempStop.getY() > 0){
+                if (zoneExists(tempZoneCoordinate)){
                 resObjects.addAll(getZone(tempZoneCoordinate).getAllObjectsInArea(tempStart, tempStop));
+                }
                 moveOneZoneDown(tempZoneCoordinate, tempStart, tempStop);
             }
             moveOneZoneRight(tempZoneCoordinate, tempStart, tempStop);
@@ -133,24 +156,22 @@ public class World {
     }
 
     private void clearZone(ZoneCoordinate zoneCoordinate){
-        if(zoneExists(zoneCoordinate)){ // create function
-            Zone zone = getZone(zoneCoordinate);
-            numberOfWorldObjects -= zone.getWorldObjects().size();
-            zone.clear();
+        if (zoneExists(zoneCoordinate)){
+            numberOfWorldObjects -= zones.remove(zoneCoordinate).getWorldObjects().size();
         }
     }
 
     private void clearAdjacentZones(ZoneCoordinate start, ZoneCoordinate stop){
-        for (int x = start.getX(); x <= stop.getX(); x++){
-            ZoneCoordinate tempCoord = new ZoneCoordinate(x, start.getY());
+        for (int x = start.getX() -2; x <= stop.getX() +2; x++){
+            ZoneCoordinate tempCoord = new ZoneCoordinate(x, start.getY() -2);
             clearZone(tempCoord);
-            tempCoord.setY(stop.getY()); // doesn't work with +1
+            tempCoord.setY(stop.getY() +1); // doesn't work with +1
             clearZone(tempCoord);
         }
-        for (int y = start.getY(); y <= stop.getY(); y++){
-            ZoneCoordinate tempCoord = new ZoneCoordinate(start.getX(), y);
+        for (int y = start.getY() -2; y <= stop.getY() +2; y++){
+            ZoneCoordinate tempCoord = new ZoneCoordinate(start.getX() -2, y);
             clearZone(tempCoord);
-            tempCoord.setX(stop.getX()); // doesn't work with +1
+            tempCoord.setX(stop.getX() +2); // doesn't work with +1
             clearZone(tempCoord);
         }
     }
@@ -199,7 +220,7 @@ public class World {
     private void update(Zone zone){
         for(WorldObject object : zone.getWorldObjects()){
             if(!object.isAlive()){
-                zone.removeWorldObject(object);
+                object.destroy(this);
                 numberOfWorldObjects--;
                 continue;
             }
@@ -212,6 +233,9 @@ public class World {
         }
     }
 
+    public int getNumOfZones(){
+        return zones.size();
+    }
 
     private boolean zoneExists(ZoneCoordinate zoneCoordinate){
         return zones.get(zoneCoordinate) != null;
