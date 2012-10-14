@@ -131,6 +131,7 @@ public class World {
             tempStop.setY(tempStopY);
             tempZoneCoordinate.setY(tempZoneY);
 
+            
             while (tempStop.getY() > 0){
                 if (zoneExists(tempZoneCoordinate)){
                 resObjects.addAll(getZone(tempZoneCoordinate).getAllObjectsInArea(tempStart, tempStop));

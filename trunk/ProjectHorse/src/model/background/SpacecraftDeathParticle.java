@@ -1,6 +1,7 @@
 package model.background;
 
 import model.character.AbstractCharacter;
+import model.character.Player;
 import model.utility.math.Randomizer;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
@@ -13,17 +14,17 @@ import model.world.WorldObjectState;
  * Time: 15:52
  * To change this template use File | Settings | File Templates.
  */
-public class AsteroidParticle extends Particle {
+public class SpacecraftDeathParticle extends Particle {
 	static final int M_V = 3; //max velocity
 	
-    public AsteroidParticle(Asteroid a){
-        super(new Coordinate(a.getCoordinate()), new ZoneCoordinate(a.getZoneCoordinate()));
+    public SpacecraftDeathParticle(Player player){
+        super(new Coordinate(player.getCoordinate()), new ZoneCoordinate(player.getZoneCoordinate()));
         tickToKill = 50 + Randomizer.randomInt(1, 40);
         this.width = Randomizer.randomInt(1, 5);
         this.height = width;
         this.rotationSpeed = (Randomizer.randomInt(0,300) - Randomizer.randomInt(0,300))/3000.0;
-        this.velocityX = Randomizer.randomDouble(0, M_V)*model.utility.math.StandardMath.reverseSign(a.getVelocityX()) - Randomizer.randomDouble(0, M_V)*model.utility.math.StandardMath.reverseSign(a.getVelocityX());
-        this.velocityY = Randomizer.randomDouble(0, M_V)*model.utility.math.StandardMath.reverseSign(a.getVelocityY()) - Randomizer.randomDouble(0, M_V)*model.utility.math.StandardMath.reverseSign(a.getVelocityY());
+        this.velocityX = Randomizer.randomDouble(0, M_V)*model.utility.math.StandardMath.reverseSign(player.getVelocityX()) - Randomizer.randomDouble(0, M_V)*model.utility.math.StandardMath.reverseSign(player.getVelocityX());
+        this.velocityY = Randomizer.randomDouble(0, M_V)*model.utility.math.StandardMath.reverseSign(player.getVelocityY()) - Randomizer.randomDouble(0, M_V)*model.utility.math.StandardMath.reverseSign(player.getVelocityY());
         this.setRotationAngle(Randomizer.randomDouble(0,10));
     }
 }

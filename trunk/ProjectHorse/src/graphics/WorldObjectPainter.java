@@ -5,6 +5,9 @@ import model.background.Asteroid;
 import model.background.AsteroidParticle;
 import model.background.EngineParticle;
 import model.background.Projectile;
+import model.background.RedAsteroidParticle;
+import model.background.RedProjectileDeathParticle;
+import model.background.SpacecraftDeathParticle;
 import model.character.Player;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
@@ -21,19 +24,22 @@ import java.util.Observer;
  */
 public class WorldObjectPainter {
 
-    GameModel gameModel;
     ImageLoader imageLoader;
+    GameModel gm;
 
-    public WorldObjectPainter(GameModel gm){
-        gameModel = gm;
-        imageLoader = new ImageLoader();
+    /**
+     * Basic constructor. Uses ImageLoader interface for obvious reasons. gm is only used to get its zone size at the moment.
+     */
+    public WorldObjectPainter(ImageLoader img, GameModel gm){
+    	this.gm = gm;
+    	this.imageLoader = img;
     }
 
-    public void paint(WorldObject wo, Graphics2D g2d, int cameraX, int cameraY, ImageObserver obs){
+    public void paintWorldObject(WorldObject wo, Graphics2D g2d, int cameraX, int cameraY, ImageObserver obs){
 
         Coordinate positionInZone = wo.getCoordinate();
         ZoneCoordinate zoneCoordinate = wo.getZoneCoordinate();
-        double zoneSize = gameModel.getZoneSize();
+        double zoneSize = gm.getZoneSize();
 
         int positionX =(int) (positionInZone.getX() + zoneSize*zoneCoordinate.getX());
         int positionY =(int) (positionInZone.getY() + zoneSize*zoneCoordinate.getY());
@@ -56,24 +62,28 @@ public class WorldObjectPainter {
         //rotation
         double angle = wo.getRotationAngle();
 
-        final AffineTransform saved = g2d.getTransform();
         final AffineTransform rotate = AffineTransform.getRotateInstance(angle, rotateX, rotateY);
         g2d.transform(rotate);
 
-        //random stuff for asteroid that can be removed but its fun
+        /**
+         * Draw the image needed.
+         */
         if(wo.getClass() == Asteroid.class){
             g2d.drawImage(imageLoader.getAsteroidImage(), paintX, paintY, bWidth, bHeight, obs);
         } else if(wo.getClass() == Player.class) {
-            g2d.drawImage(imageLoader.getPlayerImage(gameModel.getPlayer()), paintX, paintY, bWidth, bHeight, obs);
+            g2d.drawImage(imageLoader.getPlayerImage((Player) wo), paintX, paintY, bWidth, bHeight, obs);
         } else if(wo.getClass() == EngineParticle.class) {
             g2d.drawImage(imageLoader.getEngineParticleImage(), paintX, paintY, bWidth, bHeight, obs);
         } else if(wo.getClass() == Projectile.class) {
             g2d.drawImage(imageLoader.getProjectileImage((Projectile) wo), paintX, paintY, bWidth, bHeight, obs);
         } else if(wo.getClass() == AsteroidParticle.class) {
             g2d.drawImage(imageLoader.getAsteroidParticleImage(), paintX, paintY, bWidth, bHeight, obs);
+        } else if(wo.getClass() == RedAsteroidParticle.class) {
+            g2d.drawImage(imageLoader.getRedAsteroidParticleImage(), paintX, paintY, bWidth, bHeight, obs);
+        } else if(wo.getClass() == RedProjectileDeathParticle.class) {
+        	g2d.drawImage(imageLoader.getRedDeathParticleImage(), paintX, paintY, bWidth, bHeight, obs);
+        } else if(wo.getClass() == SpacecraftDeathParticle.class){
+        	g2d.drawImage(imageLoader.getRedDeathParticleImage(), paintX, paintY, bWidth, bHeight, obs);
         }
-        g2d.setTransform(saved);
-
-
     }
 }
