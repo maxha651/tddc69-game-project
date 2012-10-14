@@ -6,6 +6,11 @@ import model.spacecraft.parts.Engine;
 import model.spacecraft.Spacecraft;
 import model.utility.math.StandardMath;
 
+/**
+ * AbstractCharacter contains basic functionality for noncombatant characters.
+ * Combatant functionality is added in subclasses if needed.
+ */
+
 public abstract class AbstractCharacter extends MoveableObject {
     public Spacecraft getSpacecraft() {
         return spacecraft;

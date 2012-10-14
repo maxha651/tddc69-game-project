@@ -27,8 +27,7 @@ public class GameModel extends Observable {
     //player controllers
     Player player1;
     Player player2;
-    //AI controllers
-
+    
     // Projectile controllers
     private int fireDelayDefault = 10;
     private int fireDelay = 0;
@@ -41,7 +40,7 @@ public class GameModel extends Observable {
     public static final int ZONE_UPDATE_SPAN = 5;    //the spawn of how many zones are loaded away from player
     public static final int asteroidSpawnRate = 2; //how many asteroids to spawn per tick
 
-    World world = new World(ZONE_SIZE);
+    World world;
 
     //graphics controllers
 
@@ -56,11 +55,7 @@ public class GameModel extends Observable {
 
     public GameModel(int seed){
         this.seed = seed;
-        player1 = new Player();
-        player2 = new Player();
-        world.addWorldObject(player1);
-        world.addWorldObject(player2);
-        world.addWorldObjectSpawner(new AsteroidSpawner());
+        this.initialize();
     }
 
     public int numberOfZones(){
@@ -81,6 +76,42 @@ public class GameModel extends Observable {
 
     public void setSeed(int seed) {
         this.seed = seed;
+    }
+    
+    /**
+     * Restarts the game model.
+     */
+    public void reset(){
+    	world = new World(ZONE_SIZE);
+    	if(player1 == null){
+            player1 = new Player();
+    	} else {
+    		player1.reset();
+    	}
+    	
+    	if(player2 == null){
+            player2 = new Player();
+    	} else {
+    		player2.reset();
+    	}
+        world.addWorldObject(player1);
+        world.addWorldObject(player2);
+        world.addWorldObjectSpawner(new AsteroidSpawner());
+        numberOfWorldObjects = 0;
+        tick = 0;
+    }
+    
+    public void initialize(){
+    	world = new World(ZONE_SIZE);
+
+    	player1 = new Player();
+    	player2 = new Player();
+
+    	world.addWorldObject(player1);
+    	world.addWorldObject(player2);
+    	world.addWorldObjectSpawner(new AsteroidSpawner());
+    	numberOfWorldObjects = 0;
+    	tick = 0;
     }
 
     public void tick(){

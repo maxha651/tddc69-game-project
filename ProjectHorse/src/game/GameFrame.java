@@ -23,6 +23,7 @@ public class GameFrame extends JFrame implements KeyListener, MouseListener{
     JMenu fileMenu, settingsMenu, viewMenu;
     static final String FRAME_TITLE = "Space Explorer";
     GameModel gameModel;
+    Game game; //used for pausing/unpausing/destroying game
     GraphicalViewer viewer1;
     GraphicalViewer viewer2;
 
@@ -46,43 +47,39 @@ public class GameFrame extends JFrame implements KeyListener, MouseListener{
     final static int DRAW_BOUNDS = KeyEvent.VK_B;
     final static int SHOW_KEY_CODING = KeyEvent.VK_K;
     final static int DRAW_CROSS = KeyEvent.VK_C;
-
+    final static int PAUSE = KeyEvent.VK_P;
+    final static int QUIT = KeyEvent.VK_Q;
+    final static int RESTART = KeyEvent.VK_R;
+    
     /**
      * The default constructor that creates 2 graphical viewers (one for each player).
      */
-    public GameFrame(GameModel gameModel) {
+    public GameFrame(GameModel gameModel, Game game) {
         super(FRAME_TITLE);
         this.gameModel = gameModel;
+        this.game = game;
         
         //key and mouse listeners
         this.addKeyListener(this);
         this.addMouseListener(this);
 
         //graphical initialization
-        ImageLoader img = new ImageLoader();
-        viewer1 = new GraphicalViewer(gameModel, gameModel.getPlayer(1), img);
-        viewer2 = new GraphicalViewer(gameModel, gameModel.getPlayer(2), img);
-
-        GridLayout gl = new GridLayout(0, 2);
-        gl.setHgap(5);
-        this.setLayout(gl);
-
-        //add components to the frame
-        this.add(viewer1);
-        this.add(viewer2);
-
+        addAllComponents();
+        
+        //---
         this.pack();
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
     }
-
-
 
     @Override
     public void keyTyped(KeyEvent e) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
+    /**
+     * Decides what key is pressed and acts accordingly
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
@@ -127,13 +124,25 @@ public class GameFrame extends JFrame implements KeyListener, MouseListener{
             case DRAW_BOUNDS :
                 viewer1.setPaintWorldObjectBounds(!viewer1.isPaintWorldObjectBounds());
                 break;
+            case PAUSE :
+            	game.setPause(!game.isPause());
+                break;
+            case RESTART :
+            	reset();
+                break;
+            case QUIT :
+            	System.exit(0);
+                break;
         }
     }
 
+    
+    /**
+     * Decides what key is released and acts accordingly.
+     */
     @Override
     public void keyReleased(KeyEvent e) {
         int keyCode = e.getKeyCode();
-
         switch(keyCode){
             case PLAYER_1_THROTTLE:
                 gameModel.getPlayer(1).accelerationRequest = false;
@@ -160,9 +169,11 @@ public class GameFrame extends JFrame implements KeyListener, MouseListener{
                 gameModel.getPlayer(2).fireRequest = false;
                 break;*/
         }
-
     }
 
+    /**
+     * Decides what mouse button is pressed and acts accordingly.
+     */
 	@Override
 	public void mousePressed(MouseEvent arg0) {
 		int mouseCode = arg0.getButton();
@@ -176,8 +187,9 @@ public class GameFrame extends JFrame implements KeyListener, MouseListener{
 		}
 	}
 
-
-
+	/**
+     * Decides what mouse button is released and acts accordingly.
+     */
 	@Override
 	public void mouseReleased(MouseEvent arg0) {
 		// TODO Auto-generated method stub
@@ -188,21 +200,15 @@ public class GameFrame extends JFrame implements KeyListener, MouseListener{
 			break;
 		case PLAYER_2_THROTTLE_MOUSE:
 			gameModel.getPlayer(2).accelerationRequest = false;
-			break;
-			
+			break;		
 		}
-		
 	}
-
-
-
+	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
-
-
 
 	@Override
 	public void mouseEntered(MouseEvent arg0) {
@@ -210,11 +216,33 @@ public class GameFrame extends JFrame implements KeyListener, MouseListener{
 		
 	}
 
-
-
 	@Override
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void reset(){
+		gameModel.reset();
+		viewer1.lockCameraOnPlayer();
+	}
+	
+	public void addAllComponents(){
+		    ImageLoader img = new ImageLoader();
+	        viewer1 = new GraphicalViewer(gameModel, gameModel.getPlayer(1), img);
+	        viewer2 = new GraphicalViewer(gameModel, gameModel.getPlayer(2), img);
+	        
+	        viewer1.paintExtraInformation = true;
+	        viewer1.paintKeyBindings = true;
+
+	        GridLayout gl = new GridLayout(0, 2);
+	        gl.setHgap(5);
+	        this.setLayout(gl);
+
+	        //add components to the frame
+	        this.add(viewer1);
+	        this.add(viewer2);
+	        
+	        this.pack();
 	}
 }
