@@ -15,5 +15,4 @@ public class RedProjectileDeathParticle extends Particle {
 		this.velocityY = Randomizer.randomDouble(0, 2)*model.utility.math.StandardMath.reverseSign(p.getVelocityY()) - Randomizer.randomDouble(0, 2)*model.utility.math.StandardMath.reverseSign(p.getVelocityY());
 		this.setRotationAngle(Randomizer.randomDouble(0,10));
 	}
-
 }

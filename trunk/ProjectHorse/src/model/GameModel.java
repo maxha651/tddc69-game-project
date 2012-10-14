@@ -34,7 +34,7 @@ public class GameModel extends Observable {
     //object controllers
     public static final double DEFAULT_VELOCITY_FLOOR = 0.2;
     public static final double DEFAULT_SPACE_FRICTION = 0.98;
-    public static final double ZONE_SIZE = 200;
+    public static final double ZONE_SIZE = 500;
     public static final int COLLIDING_CHECK_DISTANCE = 50; // determines how faraway objects to check for collision
     public static final int ZONE_UPDATE_SPAN = 5;    //the spawn of how many zones are loaded away from player
     public static final int asteroidSpawnRate = 2; //how many asteroids to spawn per tick
