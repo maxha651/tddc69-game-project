@@ -3,6 +3,7 @@ package model.background;
 import model.character.Player;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
+import model.world.World;
 import model.world.WorldObjectState;
 
 import java.awt.*;
@@ -23,8 +24,8 @@ public class Particle extends Effect {
     }
 
     @Override
-    public void updatePosition(double size){
-        super.updatePosition(size);
+    public void update(World world){
+        super.update(world);
         if(tick < tickToKill){
             this.tick++;
         } else {

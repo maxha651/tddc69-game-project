@@ -19,7 +19,6 @@ public abstract class Effect extends MoveableBackgroundObject {
     @Override
     public void updatePosition(double size){
         super.updatePosition(size);
-        this.setRotationAngle(this.getRotationSpeed() + this.getRotationAngle());
     }
 
 }

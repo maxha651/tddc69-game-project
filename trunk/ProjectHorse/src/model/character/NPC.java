@@ -1,6 +1,7 @@
 package model.character;
 
 
+import model.CollideableObject;
 import model.background.Projectile;
 import model.properties.Boundable;
 import model.properties.Collideable;
@@ -25,7 +26,7 @@ public class NPC extends AbstractCharacter implements Collideable, Boundable {
     }
 
     @Override
-    public void setToCollide(Collideable c) {
+    public void setToCollide(CollideableObject c) {
         //To change body of implemented methods use File | Settings | File Templates.
     }
 

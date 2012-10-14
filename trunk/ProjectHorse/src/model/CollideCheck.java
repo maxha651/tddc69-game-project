@@ -4,6 +4,8 @@ import model.properties.Collideable;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 
+import java.awt.*;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Max
@@ -26,11 +28,15 @@ public class CollideCheck {
             c1Coord.setY(c1Coord.getY() + yZoneDiff);
             c1Coord.setX(c1Coord.getX() + xZoneDiff);
         }
+        /*
+        Rectangle r1 = new Rectangle(c1Coord.getPoint(), new Dimension((int) c1.getBoundingWidth(), (int) c1.getBoundingHeight()));
+        Rectangle r2 = new Rectangle(c2Coord.getPoint(), new Dimension((int) c2.getBoundingWidth(), (int) c2.getBoundingHeight()));
+        */
 
         double xDiff = Math.abs(c2Coord.getX() - c1Coord.getX());
         double yDiff = Math.abs(c2Coord.getY() - c1Coord.getY());
-        double allowedXDiff = (c1.getBoundingWidth() + c2.getBoundingWidth())/2;
-        double allowedYDiff = (c1.getBoundingHeight() + c2.getBoundingHeight())/2;
+        double allowedXDiff = (c1.getBoundingWidth() + c2.getBoundingWidth());
+        double allowedYDiff = (c1.getBoundingHeight() + c2.getBoundingHeight());
 
         if( xDiff < allowedXDiff && yDiff < allowedYDiff){
             //unCollide(c1, c2, allowedXDiff - xDiff, allowedYDiff - yDiff);

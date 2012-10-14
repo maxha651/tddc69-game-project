@@ -1,15 +1,15 @@
 package model.background;
 
+import model.CollideCheck;
+import model.CollideableObject;
 import model.GameModel;
+import model.MoveableObject;
 import model.properties.Collideable;
 import model.properties.Damageable;
 import model.utility.math.Randomizer;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
-import model.world.World;
-import model.world.WorldObjectSpawner;
-import model.world.WorldObjectState;
-import model.world.Zone;
+import model.world.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,7 +18,7 @@ import model.world.Zone;
  * Time: 19:53
  * To change this template use File | Settings | File Templates.
  */
-public class Asteroid extends AbstractProjectile implements Collideable, Damageable{
+public class Asteroid extends CollideableObject implements Collideable, Damageable{
 
     int health = 1;
     boolean hasCollided = false;
@@ -44,6 +44,13 @@ public class Asteroid extends AbstractProjectile implements Collideable, Damagea
 
     }
 
+    @Override
+    public void update(World world) {
+        super.update(world);
+
+        collisionCheck(world);
+    }
+
     private void collidedCheck(){
         if(hasCollided){
             velocityX = tempVelocityX;
@@ -56,7 +63,6 @@ public class Asteroid extends AbstractProjectile implements Collideable, Damagea
     public void updatePosition(double size){
         collidedCheck();
         super.updatePosition(size);
-        this.setRotationAngle(this.getRotationSpeed() + this.getRotationAngle());
     }
 
     @Override
@@ -70,7 +76,7 @@ public class Asteroid extends AbstractProjectile implements Collideable, Damagea
     }
 
     @Override
-    public void setToCollide(Collideable c) {
+    public void setToCollide(CollideableObject c) {
         hasCollided = true;
 
         //double massRatio =(double) mass / (double) c.getMass() ; // divides by zero

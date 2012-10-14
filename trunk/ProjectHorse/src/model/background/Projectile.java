@@ -1,5 +1,6 @@
 package model.background;
 
+import model.CollideableObject;
 import model.MoveableObject;
 import model.character.AbstractCharacter;
 import model.character.Player;
@@ -10,6 +11,7 @@ import model.spacecraft.parts.types.projectile.ProjectileType;
 import model.spacecraft.parts.types.weapon.WeaponType;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
+import model.world.World;
 import model.world.WorldObjectState;
 
 /**
@@ -19,7 +21,7 @@ import model.world.WorldObjectState;
  * Time: 23:53
  * To change this template use File | Settings | File Templates.
  */
-public class Projectile extends MoveableObject implements Collideable{
+public class Projectile extends CollideableObject implements Collideable{
 
     ProjectileType pt;
     AbstractCharacter owner;
@@ -46,7 +48,7 @@ public class Projectile extends MoveableObject implements Collideable{
     }
 
     @Override
-    public void setToCollide(Collideable c) {
+    public void setToCollide(CollideableObject c) {
     	if(c == owner){
     		return;
     	}
@@ -60,8 +62,11 @@ public class Projectile extends MoveableObject implements Collideable{
     }
 
     @Override
-    public void updatePosition(double size){
-        super.updatePosition(size);
+    public void update(World world){
+        super.update(world);
+
+        collisionCheck(world);
+
         if(tick < 125){
             this.tick++;
         } else {

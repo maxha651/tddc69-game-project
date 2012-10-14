@@ -11,4 +11,6 @@ public class RedAsteroidParticle extends AsteroidParticle {
     public RedAsteroidParticle(Asteroid a) {
         super(a);
     }
+
+
 }
