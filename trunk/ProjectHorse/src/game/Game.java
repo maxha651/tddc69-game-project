@@ -11,7 +11,7 @@ public class Game {
 
     GameModel gameModel;
     final static int paintRateGoal = 30; 
-    final static int updateRateGoal = 100;
+    final static int updateRateGoal = 70;
     boolean pause = false;
     
 	/**

@@ -114,6 +114,11 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
     }
 
     @Override
+    public int scoreYield() {
+        return 10;
+    }
+
+    @Override
     public void destroy(World world){
         super.destroy(world);
         calculateDeathParticleAmount();
@@ -127,7 +132,7 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
     }
     
     public void calculateDeathParticleAmount(){
-    	deathParticleAmount = (int) (width/2);
-    	redParticleAmount = (int) width/12;
+    	deathParticleAmount = (int) ((width*height/180));
+    	redParticleAmount = (int) ((width*height/320));
     }
 }

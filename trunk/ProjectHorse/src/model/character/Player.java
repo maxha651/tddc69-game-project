@@ -2,10 +2,7 @@ package model.character;
 
 
 import model.CollideableObject;
-import model.background.AsteroidParticle;
-import model.background.Projectile;
-import model.background.RedAsteroidParticle;
-import model.background.SpacecraftDeathParticle;
+import model.background.*;
 import model.properties.Boundable;
 import model.properties.Collideable;
 import model.properties.Damageable;
@@ -21,10 +18,10 @@ import model.world.WorldObjectState;
  */
 public class Player extends AbstractCharacter implements Collideable, Boundable, Damageable{
 
-	int score;
+	int score = 0;
     int mass;
     int fireDelay = 0;
-    int health = 100;
+    int health = 160;
     public boolean accelerationRequest = false;
     public boolean turnLeftRequest = false;
     public boolean turnRightRequest = false;
@@ -61,10 +58,17 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
 
         if(accelerationRequest){
             accelerate();
+            spawnEngineParticle(world);
         }
         else{
             deaccelerate();
         }
+
+    }
+
+    public void spawnEngineParticle(World world){
+        EngineParticle ep = new EngineParticle(this);
+        world.addWorldObject(ep);
     }
 
     public int getFireDelay(){
@@ -94,7 +98,7 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
         this.width = spacecraft.getBounds().getWidth();
         this.height = spacecraft.getBounds().getHeight();
         this.mass = 400;
-        this.score = 0;
+        this.health = 100;
     }
     
     
@@ -134,6 +138,11 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
     }
 
     @Override
+    public int scoreYield() {
+        return 10000;
+    }
+
+    @Override
     public void destroy(World world){
         super.destroy(world);
         
@@ -141,5 +150,14 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
             world.addWorldObject(new SpacecraftDeathParticle(this));
         }
 
+    }
+
+    public void addScore(int i) {
+        this.score += i;
+        System.out.println(score);
+    }
+
+    public int getScore(){
+        return score;
     }
 }

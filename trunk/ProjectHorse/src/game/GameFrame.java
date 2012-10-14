@@ -232,10 +232,7 @@ public class GameFrame extends JFrame implements KeyListener, MouseListener{
 		    BasicImageLoader img = new BasicImageLoader();
 	        viewer1 = new GraphicalViewer(gameModel, gameModel.getPlayer(1), img);
 	        viewer2 = new GraphicalViewer(gameModel, gameModel.getPlayer(2), img);
-	        
-	        viewer1.paintExtraInformation = true;
-	        viewer1.paintKeyBindings = true;
-	        viewer2.paintExtraInformation = true;
+
 	        GridLayout gl = new GridLayout(0, 2);
 	        gl.setHgap(5);
 	        this.setLayout(gl);
