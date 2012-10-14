@@ -2,7 +2,6 @@ package model;
 
 
 import model.background.Asteroid;
-import model.background.EngineParticle;
 import model.character.Player;
 import model.utility.math.Randomizer;
 import model.utility.shape.Coordinate;
@@ -22,6 +21,8 @@ public class GameModel extends Observable {
     boolean alive = true;
     int seed;
     public long tick = 0;
+    private final int RESET_DELAY = 100;
+    private int resetTick;
 
     //player controllers
     Player player1;
@@ -104,6 +105,7 @@ public class GameModel extends Observable {
         world.addWorldObject(player2);
         world.addWorldObjectSpawner(new AsteroidSpawner());
         numberOfWorldObjects = 0;
+        resetTick = RESET_DELAY;
         tick = 0;
     }
     
@@ -119,6 +121,7 @@ public class GameModel extends Observable {
     	world.addWorldObject(player2);
     	world.addWorldObjectSpawner(new AsteroidSpawner());
     	numberOfWorldObjects = 0;
+        resetTick = RESET_DELAY;
     	tick = 0;
     }
 
@@ -128,11 +131,6 @@ public class GameModel extends Observable {
 
         numberOfWorldObjects = world.getNumberOfWorldObjects();
         tick++;
-
-        //add collision checks and method for returning all moveable objects
-       // updatePlayers();
-        //updateProjectiles();
-        updateEnemies();
 
         ZoneCoordinate p1Coord = player1.getZoneCoordinate();
         ZoneCoordinate p2Coord = player2.getZoneCoordinate();
@@ -157,6 +155,12 @@ public class GameModel extends Observable {
         }
 
         world.update(startZoneToUpdate, stopZoneToUpdate);
+
+        if(!player1.isAlive() || !player2.isAlive()){
+            if (resetTick-- == 0){
+                reset();
+            }
+        }
 
         if(tick > 8000 && true){ //change true to false if you want to remove automatic quitting
             //to make the game not fuck up the computer if memory leaks
@@ -185,7 +189,6 @@ public class GameModel extends Observable {
         z.setY(player1.getZoneCoordinate().getY() + yDifference*2);
 
         Asteroid a = new Asteroid(c, z);
-        a.updateZone(ZONE_SIZE);
         world.addWorldObject(a);
     }
 
