@@ -1,6 +1,8 @@
 package model.background;
 
 import model.MoveableObject;
+import model.character.AbstractCharacter;
+import model.character.Player;
 import model.properties.Collideable;
 import model.properties.Damageable;
 import model.spacecraft.parts.Weapon;
@@ -20,12 +22,14 @@ import model.world.WorldObjectState;
 public class Projectile extends MoveableObject implements Collideable{
 
     ProjectileType pt;
-
+    AbstractCharacter owner;
+    
     int tick = 0;
     boolean hasCollided = false;
 
-    public Projectile(Weapon weapon, Coordinate coordinate, double angle, ZoneCoordinate zoneCoordinate) {
-        WeaponType wt = weapon.getWeaponType();
+    public Projectile(Weapon weapon, Coordinate coordinate, double angle, ZoneCoordinate zoneCoordinate, AbstractCharacter player) {
+        owner = player;
+    	WeaponType wt = weapon.getWeaponType();
         this.velocityX = Math.cos(angle) * wt.getAbsVelocity();
         this.velocityY = Math.sin(angle) * wt.getAbsVelocity();
         this.pt = weapon.getProjectileType();
@@ -43,7 +47,11 @@ public class Projectile extends MoveableObject implements Collideable{
 
     @Override
     public void setToCollide(Collideable c) {
-        if(Damageable.class.isAssignableFrom(c.getClass())){
+    	if(c == owner){
+    		return;
+    	}
+    	
+    	if(Damageable.class.isAssignableFrom(c.getClass())){
             ((Damageable) c).doDamage(pt.getDamage());
         }
 

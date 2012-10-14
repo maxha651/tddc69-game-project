@@ -1,5 +1,6 @@
 package model.spacecraft.parts.types.projectile;
 
+import model.character.Player;
 import model.utility.math.Randomizer;
 
 import java.awt.*;
@@ -17,6 +18,7 @@ public class ProjectileBlue implements ProjectileType {
     int minDamage = 10;
     int maxDamage = 20;
     Color projectileColor = Color.BLUE;
+    Player owner;
 
     @Override
     public int getDamage() {

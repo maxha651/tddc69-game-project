@@ -274,7 +274,9 @@ public class GraphicalViewer extends Viewer {
             ic.add("K     : Toggle show keybinding");
             ic.add("C     : Toggle draw cross");
             ic.add("B     : Toggle bounds");
-
+            ic.add("P     : Pause game");
+            ic.add("ESC   : End game");
+            ic.add("R     : Restart game");
         }
 
         g2d.setColor(informationFontColor);
