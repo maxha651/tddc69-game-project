@@ -2,6 +2,7 @@ package model;
 
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
+import model.world.World;
 import model.world.WorldObject;
 
 /**
@@ -15,15 +16,29 @@ public abstract class MoveableObject extends WorldObject{
 
     protected double velocityX, velocityY;
 
+    protected double rotationSpeed = 0;
+
     public double getRotationSpeed() {
         return rotationSpeed;
     }
 
-    public void setRotationSpeed(double rotationSpeed) {
-        this.rotationSpeed = rotationSpeed;
+    private boolean isOutOfBounds(double zoneSize){
+        return coordinate.getX() < 0 || coordinate.getX() > zoneSize ||
+                coordinate.getY() < 0 || coordinate.getY() > zoneSize;
     }
 
-    protected double rotationSpeed = 0;
+    @Override
+    public void update(World world) {
+        updatePosition(world.getZoneSize());
+
+        if(isOutOfBounds(world.getZoneSize())){
+            world.removeWorldObject(this);
+            updateZone(world.getZoneSize());
+            world.addWorldObject(this);
+        }
+
+        super.update(world);
+    }
 
     public void updatePosition(double zoneSize){
         Coordinate c = new Coordinate();
@@ -41,21 +56,8 @@ public abstract class MoveableObject extends WorldObject{
         return velocityX;
     }
 
-    public void setVelocityX(double d) {
-        this.velocityX = d;
-    }
-
-    public void setVelocityY(double d) {
-        this.velocityY = d;
-    }
-
-    public void setVelocity(double x, double y){
-        this.velocityX = x;
-        this.velocityY = y;
-    }
-
     public double getVelocityY() {
-        return velocityY;  //To change body of implemented methods use File | Settings | File Templates.
+        return velocityY;
     }
 
     public void rotateLeft(double rad){
@@ -68,20 +70,6 @@ public abstract class MoveableObject extends WorldObject{
     public void rotateRight(double rad){
         rotationAngle += rad;
         while (rotationAngle > Math.PI*2){
-            rotationAngle = rotationAngle - 2*Math.PI;
-        }
-    }
-
-    public void rotateLeftOneDegree(){
-        rotationAngle -= (2*Math.PI)/360;
-        if(rotationAngle < 0){
-            rotationAngle = rotationAngle + 2*Math.PI;
-        }
-    }
-
-    public void rotateRightOneDegree(){
-        rotationAngle += (2*Math.PI)/360;
-        if(rotationAngle > Math.PI*2){
             rotationAngle = rotationAngle - 2*Math.PI;
         }
     }

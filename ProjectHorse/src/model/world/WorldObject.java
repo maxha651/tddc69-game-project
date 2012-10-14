@@ -59,16 +59,8 @@ public abstract class WorldObject extends AbstractGameObject implements Boundabl
         return width;
     }
 
-    public void setWidth(double width) {
-        this.width = width;
-    }
-
     public double getHeight() {
         return height;
-    }
-
-    public void setHeight(double height) {
-        this.height = height;
     }
 
     public double getRotationAngle() {
@@ -87,19 +79,17 @@ public abstract class WorldObject extends AbstractGameObject implements Boundabl
         return zoneCoordinate;
     }
 
-    public void setCoordinate(Coordinate coordinate) {
-        this.coordinate = coordinate;
-    }
-
-    public void setZoneCoordinate(ZoneCoordinate zoneCoordinate) {
-        this.zoneCoordinate = zoneCoordinate;
-    }
-
     public boolean isAlive() {
         if(this.state == WorldObjectState.ALIVE){
             return true;
         }
         return false;
+    }
+
+    public void update(World world){
+        if (!isAlive()){
+            this.destroy(world);
+        }
     }
 
     public void destroy(World world){

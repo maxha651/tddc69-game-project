@@ -12,4 +12,14 @@ import java.awt.*;
  * To change this template use File | Settings | File Templates.
  */
 public class MoveableBackgroundObject extends MoveableObject {
+
+    @Override
+    public double getBoundingWidth() {
+        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public double getBoundingHeight() {
+        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

@@ -187,7 +187,7 @@ public class World {
     private boolean isMoveable(WorldObject o){
         return MoveableObject.class.isAssignableFrom(o.getClass());
     }
-
+/*
     private void updateCollideable(Collideable object){
         Coordinate objCoord = object.getCoordinate();
         WorldObjectContainer nearbyObjects;
@@ -204,7 +204,7 @@ public class World {
                 }
             }
         }
-    }
+    }*/
 
     private void updateMoveable(MoveableObject object, Zone zone){
         (object).updatePosition(zoneSize);
@@ -219,17 +219,7 @@ public class World {
 
     private void update(Zone zone){
         for(WorldObject object : zone.getWorldObjects()){
-            if(!object.isAlive()){
-                object.destroy(this);
-                numberOfWorldObjects--;
-                continue;
-            }
-            if(isMoveable(object)){
-                updateMoveable((MoveableObject) object, zone);
-            }
-            if(isCollideable(object)){
-                updateCollideable((Collideable) object);
-            }
+            object.update(this);
         }
     }
 

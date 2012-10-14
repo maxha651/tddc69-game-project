@@ -1,11 +1,14 @@
 package model.character;
 
+
+import model.CollideableObject;
 import model.background.Projectile;
 import model.properties.Boundable;
 import model.properties.Collideable;
 import model.spacecraft.Spacecraft;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
+import model.world.World;
 
 /**
  * Abstraction of coordination in 2D space, velocity, face angle and requests of
@@ -14,6 +17,7 @@ import model.utility.shape.ZoneCoordinate;
 public class Player extends AbstractCharacter implements Collideable, Boundable{
 
     int mass;
+    int fireDelay = 0;
     public boolean accelerationRequest = false;
     public boolean turnLeftRequest = false;
     public boolean turnRightRequest = false;
@@ -31,14 +35,43 @@ public class Player extends AbstractCharacter implements Collideable, Boundable{
         this.mass = 400;
     }
 
-    /**
-     * Creates a projectile and gives it velocity and position according to player face angle and player weapon.
-     */
-    public Projectile fire(){
+    @Override
+    public void update(World world) {
+        super.update(world);
+
+        if(turnLeftRequest){
+            rotateLeft(Math.toRadians(getSpacecraft().getEngine().getRotationSpeed()));
+        }
+        if(turnRightRequest){
+            rotateRight(Math.toRadians(getSpacecraft().getEngine().getRotationSpeed()));
+        }
+        if(fireRequest){
+            fire(world);
+        }
+        fireDelay--;
+
+        if(accelerationRequest){
+            accelerate();
+        }
+        else{
+            deaccelerate();
+        }
+    }
+
+    public int getFireDelay(){
+        return spacecraft.getWeapon1().getWeaponType().getFireDelay();
+    }
+
+    public void fire(World world){
+        if (fireDelay > 0){
+            return;
+        }
+        fireDelay = getFireDelay();
         Coordinate projectileCoord = new Coordinate(this.getCoordinate());
         projectileCoord.setX(projectileCoord.getX() + Math.cos(rotationAngle) * width/2);
         projectileCoord.setY(projectileCoord.getY() + Math.sin(rotationAngle) * height/2);
-        return new Projectile(spacecraft.getWeapon1(), projectileCoord, this.rotationAngle, new ZoneCoordinate(this.zoneCoordinate), this);
+        Projectile projectile = new Projectile(spacecraft.getWeapon1(), projectileCoord, this.rotationAngle, new ZoneCoordinate(this.zoneCoordinate), this);
+        world.addWorldObject(projectile);
     }
     
     /**
@@ -54,7 +87,7 @@ public class Player extends AbstractCharacter implements Collideable, Boundable{
     }
     //getters and setters
     @Override
-    public void setToCollide(Collideable c) {
+    public void setToCollide(CollideableObject c) {
         return;
     }
 

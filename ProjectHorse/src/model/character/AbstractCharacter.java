@@ -1,17 +1,13 @@
 package model.character;
 
+import model.CollideableObject;
 import model.GameModel;
 import model.MoveableObject;
 import model.spacecraft.parts.Engine;
 import model.spacecraft.Spacecraft;
 import model.utility.math.StandardMath;
 
-/**
- * AbstractCharacter contains basic functionality for noncombatant characters.
- * Combatant functionality is added in subclasses if needed.
- */
-
-public abstract class AbstractCharacter extends MoveableObject {
+public abstract class AbstractCharacter extends CollideableObject {
     public Spacecraft getSpacecraft() {
         return spacecraft;
     }
@@ -31,11 +27,6 @@ public abstract class AbstractCharacter extends MoveableObject {
         deaccelerate();
     }
 
-    @Override
-    public void updatePosition(double zoneSize) {
-        super.updatePosition(zoneSize);
-    }
-
     public void deaccelerate() {
         double velocityLength = StandardMath.pyth(velocityX, velocityY);
 
@@ -47,14 +38,13 @@ public abstract class AbstractCharacter extends MoveableObject {
                 this.velocityX = 0;
                 this.velocityY = 0;
             }
-
         }
     }
 
 
     public void updatePosition(boolean accelerate, double zoneSize) {
         this.updateVelocity(accelerate);
-        super.updatePosition(zoneSize);
+        //super.updatePosition(zoneSize);
     }
 
     public void accelerate() {

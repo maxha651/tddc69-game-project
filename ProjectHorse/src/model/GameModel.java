@@ -1,7 +1,6 @@
 package model;
 
 
-import model.background.AbstractProjectile;
 import model.background.Asteroid;
 import model.background.EngineParticle;
 import model.background.Projectile;
@@ -14,7 +13,6 @@ import model.world.World;
 import model.world.WorldObject;
 import model.world.WorldObjectContainer;
 
-import java.util.LinkedList;
 import java.util.Observable;
 
 public class GameModel extends Observable {
@@ -122,7 +120,7 @@ public class GameModel extends Observable {
         tick++;
 
         //add collision checks and method for returning all moveable objects
-        updatePlayers();
+       // updatePlayers();
         //updateProjectiles();
         updateEnemies();
 
@@ -181,7 +179,7 @@ public class GameModel extends Observable {
         a.updateZone(ZONE_SIZE);
         world.addWorldObject(a);
     }
-
+/*
     public void updatePlayer(int i){
         Player p = getPlayer(i);
 
@@ -218,7 +216,7 @@ public class GameModel extends Observable {
     public void updatePlayers(){
         updatePlayer(1);
         updatePlayer(2);
-    }
+    }*/
 
     public double getZoneSize(){
         return ZONE_SIZE;

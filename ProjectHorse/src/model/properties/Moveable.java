@@ -8,8 +8,4 @@ public interface Moveable {
     public double getVelocityY();
     public Coordinate getCoordinate();
     public ZoneCoordinate getZoneCoordinate();
-    public void setCoordinate(Coordinate c);
-    public void updatePosition(double zoneSize);
-    public void updateZone(double zoneSize);
-
 }
