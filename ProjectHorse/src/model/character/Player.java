@@ -21,26 +21,18 @@ import java.awt.*;
  * 1 player. 
  */
 public class Player extends AbstractCharacter implements Collideable, Boundable, Damageable{
-
+    final static int DEFAULT_HEALTH = 100;
     GameModel gameModel;
 	int score = 0;
     int mass;
     int fireDelay = 0;
-    int health = 200;
+    int health = DEFAULT_HEALTH;
     public boolean accelerationRequest = false;
     public boolean turnLeftRequest = false;
     public boolean turnRightRequest = false;
     public boolean fireRequest = false;
     public int deathParticleAmount = 100;
     Color color = Color.RED; //not graphical color -- no graphical implementation -- used if needed
-
-    public int getHealth() {
-        return health;
-    }
-
-    public void setHealth(int health) {
-        this.health = health;
-    }
 
     /**
      * Standard constructor that initializes 1 player.
@@ -56,6 +48,10 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
         this.score = 0;
     }
 
+    /**
+     * Updates information about the player.
+     * @param world
+     */
     @Override
     public void update(World world) {
         super.update(world);
@@ -81,15 +77,18 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
 
     }
 
+    /**
+     * Spawns 1 engine particle by the engine of the spacecraft.
+     * @param world
+     */
     public void spawnEngineParticle(World world){
         EngineParticle ep = new EngineParticle(this);
         world.addWorldObject(ep);
     }
 
-    public int getFireDelay(){
-        return spacecraft.getWeapon1().getWeaponType().getFireDelay();
-    }
-
+    /**
+     * Fires a projectile of type taken from the weapon the player uses. Other projectile information is also taken from the weapon.
+     */
     public void fire(World world){
         if (fireDelay > 0){
             return;
@@ -113,7 +112,7 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
         this.width = spacecraft.getBounds().getWidth();
         this.height = spacecraft.getBounds().getHeight();
         this.mass = 400;
-        this.health = 200;
+        this.health = DEFAULT_HEALTH;
         this.rotationAngle = Math.toRadians(Randomizer.randomInt(0, 360));
         this.velocityX = 0;
         this.velocityY = 0;
@@ -122,8 +121,29 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
         turnRightRequest = false;
         fireRequest = false;
     }
-    
-    
+
+    @Override
+    public void doDamage(int amount) {
+        health -= amount;
+        if(health <= 0){
+            this.state = WorldObjectState.DEAD;
+        }
+    }
+
+    /**
+     * Destroys the player and then lets the world remove him when the world is "ready".
+     * @param world
+     */
+    @Override
+    public void destroy(World world){
+        super.destroy(world);
+
+        for(int i = 0; i < deathParticleAmount; i++){
+            world.addWorldObject(new SpacecraftDeathParticle(this));
+        }
+
+        gameModel.reset();
+    }
     
     //getters and setters
     @Override
@@ -152,27 +172,8 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
     }
 
     @Override
-    public void doDamage(int amount) {
-        health -= amount;
-        if(health <= 0){
-            this.state = WorldObjectState.DEAD;
-        }
-    }
-
-    @Override
     public int scoreYield() {
         return 10000;
-    }
-
-    @Override
-    public void destroy(World world){
-        super.destroy(world);
-        
-        for(int i = 0; i < deathParticleAmount; i++){
-            world.addWorldObject(new SpacecraftDeathParticle(this));
-        }
-
-        gameModel.reset();
     }
 
     public void addScore(int i) {
@@ -190,5 +191,17 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public int getFireDelay(){
+        return spacecraft.getWeapon1().getWeaponType().getFireDelay();
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
     }
 }

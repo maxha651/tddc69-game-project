@@ -129,7 +129,7 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
     }
     
     public void calculateDeathParticleAmount(){
-    	deathParticleAmount = (int) ((width*height/180));
-    	redParticleAmount = (int) ((width*height/320));
+    	deathParticleAmount = (int) ((width*height/130));
+    	redParticleAmount = (int) ((width*height/1000));
     }
 }
