@@ -15,7 +15,7 @@ import model.world.WorldObjectState;
  */
 public class AsteroidParticle extends Particle {
     public AsteroidParticle(Asteroid a){
-        super(a.getCoordinate(), a.getZoneCoordinate());
+        super(new Coordinate(a.getCoordinate()), new ZoneCoordinate(a.getZoneCoordinate()));
         tickToKill = 50 + Randomizer.randomInt(1, 40);
         this.width = Randomizer.randomInt(1, 5);
         this.height = width;
@@ -23,11 +23,5 @@ public class AsteroidParticle extends Particle {
         this.velocityX = Randomizer.randomDouble(0, 4)*model.utility.math.StandardMath.reverseSign(a.getVelocityX()) - Randomizer.randomDouble(0, 4)*model.utility.math.StandardMath.reverseSign(a.getVelocityX());
         this.velocityY = Randomizer.randomDouble(0, 4)*model.utility.math.StandardMath.reverseSign(a.getVelocityY()) - Randomizer.randomDouble(0, 4)*model.utility.math.StandardMath.reverseSign(a.getVelocityY());
         this.setRotationAngle(Randomizer.randomDouble(0,10));
-
-        this.coordinate = new Coordinate(a.getCoordinate());
-
-        this.coordinate.setX(coordinate.getX());
-        this.coordinate.setY(coordinate.getY());
-        this.zoneCoordinate = new ZoneCoordinate(a.getZoneCoordinate());
     }
 }

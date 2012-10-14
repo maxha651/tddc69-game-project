@@ -16,6 +16,7 @@ import model.world.World;
  */
 public class Player extends AbstractCharacter implements Collideable, Boundable{
 
+	int score;
     int mass;
     int fireDelay = 0;
     public boolean accelerationRequest = false;
@@ -33,6 +34,7 @@ public class Player extends AbstractCharacter implements Collideable, Boundable{
         this.width = spacecraft.getBounds().getWidth();
         this.height = spacecraft.getBounds().getHeight();
         this.mass = 400;
+        this.score = 0;
     }
 
     @Override
@@ -84,7 +86,11 @@ public class Player extends AbstractCharacter implements Collideable, Boundable{
         this.width = spacecraft.getBounds().getWidth();
         this.height = spacecraft.getBounds().getHeight();
         this.mass = 400;
+        this.score = 0;
     }
+    
+    
+    
     //getters and setters
     @Override
     public void setToCollide(CollideableObject c) {

@@ -20,7 +20,8 @@ public class Particle extends Effect {
     int tick = 0;
     int tickToKill = 50;
     public Particle(Coordinate c, ZoneCoordinate z) {
-
+    	this.coordinate = c;
+    	this.zoneCoordinate = z;
     }
 
     @Override

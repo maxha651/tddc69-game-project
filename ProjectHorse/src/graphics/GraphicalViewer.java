@@ -277,6 +277,8 @@ public class GraphicalViewer extends Viewer {
             ic.add("P     : Pause game");
             ic.add("ESC   : End game");
             ic.add("R     : Restart game");
+            
+
         }
 
         g2d.setColor(informationFontColor);
