@@ -114,8 +114,13 @@ public class WorldObjectPainter {
     }
 
     public boolean outOfCamera(Player p, GraphicalViewer gv){
+        double zoneSize = (int) gm.getZoneSize();
+
         ZoneCoordinate zc = p.getZoneCoordinate();
         Coordinate c = p.getCoordinate();
+
+        double maxX =  gv.width + p.getZoneCoordinate().getX()*zoneSize + p.getCoordinate().getX();
+
         return true;
     }
 

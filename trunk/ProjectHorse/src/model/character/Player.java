@@ -26,13 +26,21 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
 	int score = 0;
     int mass;
     int fireDelay = 0;
-    int health = 160;
+    int health = 200;
     public boolean accelerationRequest = false;
     public boolean turnLeftRequest = false;
     public boolean turnRightRequest = false;
     public boolean fireRequest = false;
     public int deathParticleAmount = 100;
     Color color = Color.RED; //not graphical color -- no graphical implementation -- used if needed
+
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
 
     /**
      * Standard constructor that initializes 1 player.
@@ -105,7 +113,7 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
         this.width = spacecraft.getBounds().getWidth();
         this.height = spacecraft.getBounds().getHeight();
         this.mass = 400;
-        this.health = 100;
+        this.health = 200;
         this.rotationAngle = Math.toRadians(Randomizer.randomInt(0, 360));
         this.velocityX = 0;
         this.velocityY = 0;

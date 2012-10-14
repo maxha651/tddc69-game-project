@@ -50,12 +50,13 @@ public class GraphicalViewer extends Viewer {
     private Color paintColor = DEFAULT_PAINT_COLOR; //used for painting anything else
 
     //controllers for painting
-    public boolean lockOnPlayer = true;            //make camera move with player
-    public boolean drawCross = false;              //draw a cross in middle of screen
+    public boolean lockOnPlayer = true;             //make camera move with player
+    public boolean drawCross = false;               //draw a cross in middle of screen
     public boolean paintExtraInformation = false;   //paint extra information suchs as paint time, update time etc
     public boolean paintKeyBindings = false;        //make key bindings visible for the player
-    public boolean paintWorldObjectBounds = false; //paint bounds on the screen
+    public boolean paintWorldObjectBounds = false;  //paint bounds of type WorldObjects on the screen
     public boolean drawScore = true;               //draw player score
+    public boolean drawPlayerInformation = true;   //draw player information such as health etc
 
     //other controllers
     private long paintTime = 0;                    //for measuring elapsed time for 1 paint
@@ -106,6 +107,9 @@ public class GraphicalViewer extends Viewer {
         }
         if(drawScore){
             drawScore(g2d);
+        }
+        if(drawPlayerInformation){
+            drawPlayerInformation(g2d);
         }
 
         //paint on the actual graphics object -- cast to Graphics2D so we can use built in drawImage method
@@ -160,10 +164,23 @@ public class GraphicalViewer extends Viewer {
         g2d.drawLine(0, height/2, width, height/2);
     }
 
+    /**
+     * Draws the score in middle of the screen
+     */
     public void drawScore(Graphics2D g2d){
-        setFontToMonospace(g2d, 20);
+        setFontToMonospace(g2d, 16);
         g2d.setColor(p.getColor());
-        g2d.drawString("score : " + p.getScore(), PANEL_PADDING_HORI, PANEL_PADDING_VERT/2);
+        g2d.drawString("score : " + p.getScore(), PANEL_PADDING_HORI, PANEL_PADDING_VERT / 2);
+    }
+
+    /**
+     * Draw player information on the screen.
+     * @param g2d
+     */
+    public void drawPlayerInformation(Graphics2D g2d){
+        setFontToMonospace(g2d, 12);
+        g2d.setColor(informationFontColor);
+        g2d.drawString("health : " + p.getHealth(), PANEL_PADDING_HORI, PANEL_PADDING_VERT);
     }
 
     /**
@@ -184,7 +201,6 @@ public class GraphicalViewer extends Viewer {
         ic.add("Game version     : " + gameModel.VERSION);
         String velX = toTruncatedStr(p.getVelocityX(), 1);
         String velY = toTruncatedStr(p.getVelocityY(), 1);
-
         ic.add("Player velocity  : " + velX + ", " + velY);
         ic.add("Player absveloc  : " + toTruncatedStr(p.getAbsoluteVelocity(), 1));
         ic.add("Player angle     : " + toTruncatedStr(Math.toDegrees(p.getRotationAngle()), 1) + " (degrees), " + toTruncatedStr(p.getRotationAngle(), 1) + " (radians)");
@@ -214,8 +230,6 @@ public class GraphicalViewer extends Viewer {
             ic.add("P     : Pause game");
             ic.add("ESC   : End game");
             ic.add("R     : Restart game");
-            
-
         }
 
         g2d.setColor(informationFontColor);
@@ -252,8 +266,6 @@ public class GraphicalViewer extends Viewer {
         Font f = new Font("MONOSPACED", Font.BOLD, size);
         g2d.setFont(f);
     }
-
-
 
     public boolean isLockOnPlayer() {
         return lockOnPlayer;
@@ -306,6 +318,22 @@ public class GraphicalViewer extends Viewer {
 
     public int getWidth() {
         return width;
+    }
+
+    public int getCameraX() {
+        return cameraX;
+    }
+
+    public void setCameraX(int cameraX) {
+        this.cameraX = cameraX;
+    }
+
+    public int getCameraY() {
+        return cameraY;
+    }
+
+    public void setCameraY(int cameraY) {
+        this.cameraY = cameraY;
     }
 }
 
