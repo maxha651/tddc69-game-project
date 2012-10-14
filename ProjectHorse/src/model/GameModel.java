@@ -13,6 +13,7 @@ import model.world.WorldObject;
 import model.world.WorldObjectContainer;
 import model.world.WorldObjectState;
 
+import java.awt.*;
 import java.util.Observable;
 
 public class GameModel extends Observable {
@@ -37,7 +38,10 @@ public class GameModel extends Observable {
     public static final int COLLIDING_CHECK_DISTANCE = 50; // determines how faraway objects to check for collision
     public static final int ZONE_UPDATE_SPAN = 5;    //the spawn of how many zones are loaded away from player
     public static final int asteroidSpawnRate = 2; //how many asteroids to spawn per tick
-
+    public static final Coordinate startCoordinatePlayer1 = new Coordinate(0, 0);
+    public static final Coordinate startCoordinatePlayer2 = new Coordinate(0, 0);
+    public static final ZoneCoordinate startZonePlayer1 = new ZoneCoordinate(0, 0);
+    public static final ZoneCoordinate startZonePlayer2 = new ZoneCoordinate(1, 1);
     World world;
 
     //graphics controllers
@@ -81,17 +85,19 @@ public class GameModel extends Observable {
      */
     public void reset(){
     	world = new World(ZONE_SIZE);
+
     	if(player1 == null){
-            player1 = new Player();
+            player1 = new Player(this, startCoordinatePlayer1, startZonePlayer1);
     	} else {
-    		player1.reset();
+    		player1.reset(startCoordinatePlayer1, startZonePlayer1);
     	}
     	
     	if(player2 == null){
-            player2 = new Player();
+            player2 = new Player(this, startCoordinatePlayer2, startZonePlayer2);
     	} else {
-    		player2.reset();
+    		player2.reset(startCoordinatePlayer2, startZonePlayer2);
     	}
+
     	player1.setState(WorldObjectState.ALIVE);
     	player2.setState(WorldObjectState.ALIVE);
         world.addWorldObject(player1);
@@ -104,10 +110,14 @@ public class GameModel extends Observable {
     public void initialize(){
     	world = new World(ZONE_SIZE);
 
-    	player1 = new Player();
-    	player2 = new Player();
+    	player1 = new Player(this, startCoordinatePlayer1, startZonePlayer1);
+    	player2 = new Player(this, startCoordinatePlayer2, startZonePlayer2);
 
-    	world.addWorldObject(player1);
+
+
+        player2.setColor(Color.BLUE);
+
+        world.addWorldObject(player1);
     	world.addWorldObject(player2);
     	world.addWorldObjectSpawner(new AsteroidSpawner());
     	numberOfWorldObjects = 0;

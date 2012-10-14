@@ -2,15 +2,19 @@ package model.character;
 
 
 import model.CollideableObject;
+import model.GameModel;
 import model.background.*;
 import model.properties.Boundable;
 import model.properties.Collideable;
 import model.properties.Damageable;
 import model.spacecraft.Spacecraft;
+import model.utility.math.Randomizer;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 import model.world.World;
 import model.world.WorldObjectState;
+
+import java.awt.*;
 
 /**
  * Abstraction of coordination in 2D space, velocity, face angle and requests of
@@ -18,6 +22,7 @@ import model.world.WorldObjectState;
  */
 public class Player extends AbstractCharacter implements Collideable, Boundable, Damageable{
 
+    GameModel gameModel;
 	int score = 0;
     int mass;
     int fireDelay = 0;
@@ -27,14 +32,16 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
     public boolean turnRightRequest = false;
     public boolean fireRequest = false;
     public int deathParticleAmount = 100;
+    Color color = Color.RED; //not graphical color -- no graphical implementation -- used if needed
 
     /**
      * Standard constructor that initializes 1 player.
      */
-    public Player(){
+    public Player(GameModel gameModel, Coordinate c, ZoneCoordinate zc){
+        this.gameModel = gameModel;
         this.setSpacecraft(new Spacecraft());
-        this.coordinate = new Coordinate(0,0);
-        this.zoneCoordinate = new ZoneCoordinate(0,0);
+        this.coordinate = new Coordinate(c);
+        this.zoneCoordinate = new ZoneCoordinate(zc);
         this.width = spacecraft.getBounds().getWidth();
         this.height = spacecraft.getBounds().getHeight();
         this.mass = 400;
@@ -91,14 +98,21 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
     /**
      * Resets this player to default player. 
      */
-    public void reset(){
+    public void reset(Coordinate c, ZoneCoordinate zc){
     	this.setSpacecraft(new Spacecraft());
-        this.coordinate = new Coordinate(0,0);
-        this.zoneCoordinate = new ZoneCoordinate(0,0);
+        this.coordinate = new Coordinate(c);
+        this.zoneCoordinate = new ZoneCoordinate(zc);
         this.width = spacecraft.getBounds().getWidth();
         this.height = spacecraft.getBounds().getHeight();
         this.mass = 400;
         this.health = 100;
+        this.rotationAngle = Math.toRadians(Randomizer.randomInt(0, 360));
+        this.velocityX = 0;
+        this.velocityY = 0;
+        accelerationRequest = false;
+        turnLeftRequest = false;
+        turnRightRequest = false;
+        fireRequest = false;
     }
     
     
@@ -150,6 +164,7 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
             world.addWorldObject(new SpacecraftDeathParticle(this));
         }
 
+        gameModel.reset();
     }
 
     public void addScore(int i) {
@@ -159,5 +174,13 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
 
     public int getScore(){
         return score;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
     }
 }
