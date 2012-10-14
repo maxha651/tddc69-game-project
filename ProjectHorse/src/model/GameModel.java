@@ -3,12 +3,11 @@ package model;
 
 import model.background.Asteroid;
 import model.background.EngineParticle;
-import model.background.Projectile;
 import model.character.Player;
 import model.utility.math.Randomizer;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
-import model.world.AsteroidSpawner;
+import model.world.spawners.AsteroidSpawner;
 import model.world.World;
 import model.world.WorldObject;
 import model.world.WorldObjectContainer;

@@ -1,9 +1,6 @@
 package model.background;
 
-import model.CollideCheck;
 import model.CollideableObject;
-import model.GameModel;
-import model.MoveableObject;
 import model.properties.Collideable;
 import model.properties.Damageable;
 import model.utility.math.Randomizer;
