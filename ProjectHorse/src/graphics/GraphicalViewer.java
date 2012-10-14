@@ -34,6 +34,7 @@ public class GraphicalViewer extends Viewer {
 
     //reference/pointer to the image loader used
     ImageLoader imageLoader;
+    WorldObjectPainter painter;
 
     //default values / constants
     final static int DEFAULT_SCREEN_WIDTH_PX = 1300/2, DEFAULT_SCREEN_HEIGHT_PX = 768;
@@ -74,6 +75,7 @@ public class GraphicalViewer extends Viewer {
          this.p = p;
          this.gameModel = gameModel;
          this.imageLoader = imageLoader;
+         this.painter = new WorldObjectPainter(imageLoader, gameModel);
          Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
          this.width = (screenSize.width - PANEL_PADDING_HORI)/2;
          this.height = (DEFAULT_SCREEN_HEIGHT_PX - PANEL_PADDING_VERT);
@@ -135,7 +137,7 @@ public class GraphicalViewer extends Viewer {
         WorldObjectContainer woc = gameModel.getAllObjectsInArea(zs, start, stop);
 
         for(WorldObject wo : woc){
-            paintWorldObject(g2d, wo);
+            painter.paintWorldObject(wo, g2d, cameraX, cameraY, this);
             g2d.setTransform(saved);
             if(paintWorldObjectBounds){
                 if(Collideable.class.isAssignableFrom(wo.getClass())){
@@ -168,57 +170,6 @@ public class GraphicalViewer extends Viewer {
         paintY = (int) ((-cameraY + positionY) - bHeight / 2);
 
         g2d.drawRect(paintX, paintY, bWidth, bHeight);
-    }
-
-    /**
-     * Paints a single world object upon the g2d object
-     */
-    public void paintWorldObject(Graphics2D g2d, WorldObject wo){
-
-        Coordinate positionInZone = wo.getCoordinate();
-        ZoneCoordinate zoneCoordinate = wo.getZoneCoordinate();
-        double zoneSize = gameModel.getZoneSize();
-
-        int positionX =(int) (positionInZone.getX() + zoneSize*zoneCoordinate.getX());
-        int positionY =(int) (positionInZone.getY() + zoneSize*zoneCoordinate.getY());
-
-        int bWidth = (int) wo.getWidth();
-        int bHeight = (int) wo.getHeight();
-
-        int paintX;
-        int paintY;
-
-        int rotateX;
-        int rotateY;
-
-        rotateX = (int) ((-cameraX + positionX));
-        rotateY = (int) ((-cameraY + positionY));
-
-        paintX = (int) ((-cameraX + positionX) - bWidth / 2);
-        paintY = (int) ((-cameraY + positionY) - bHeight / 2);
-
-        //rotation
-        double angle = wo.getRotationAngle();
-
-        final AffineTransform rotate = AffineTransform.getRotateInstance(angle, rotateX, rotateY);
-        g2d.transform(rotate);
-
-        //random stuff for asteroid that can be removed but its fun
-        if(wo.getClass() == Asteroid.class){
-            g2d.drawImage(imageLoader.getAsteroidImage(), paintX, paintY, bWidth, bHeight, this);
-        } else if(wo.getClass() == Player.class) {
-            g2d.drawImage(imageLoader.getPlayerImage(gameModel.getPlayer()), paintX, paintY, bWidth, bHeight, this);
-        } else if(wo.getClass() == EngineParticle.class) {
-            g2d.drawImage(imageLoader.getEngineParticleImage(), paintX, paintY, bWidth, bHeight, this);
-        } else if(wo.getClass() == Projectile.class) {
-            g2d.drawImage(imageLoader.getProjectileImage((Projectile) wo), paintX, paintY, bWidth, bHeight, this);
-        } else if(wo.getClass() == AsteroidParticle.class) {
-            g2d.drawImage(imageLoader.getAsteroidParticleImage(), paintX, paintY, bWidth, bHeight, this);
-        } else if(wo.getClass() == RedAsteroidParticle.class) {
-            g2d.drawImage(imageLoader.getRedAsteroidParticleImage(), paintX, paintY, bWidth, bHeight, this);
-        } else if(wo.getClass() == RedProjectileDeathParticle.class) {
-        	g2d.drawImage(imageLoader.getRedDeathParticleImage(), paintX, paintY, bWidth, bHeight, this);
-        }
     }
 
     /**

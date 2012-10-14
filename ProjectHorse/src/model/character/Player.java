@@ -2,27 +2,34 @@ package model.character;
 
 
 import model.CollideableObject;
+import model.background.AsteroidParticle;
 import model.background.Projectile;
+import model.background.RedAsteroidParticle;
+import model.background.SpacecraftDeathParticle;
 import model.properties.Boundable;
 import model.properties.Collideable;
+import model.properties.Damageable;
 import model.spacecraft.Spacecraft;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 import model.world.World;
+import model.world.WorldObjectState;
 
 /**
  * Abstraction of coordination in 2D space, velocity, face angle and requests of
  * 1 player. 
  */
-public class Player extends AbstractCharacter implements Collideable, Boundable{
+public class Player extends AbstractCharacter implements Collideable, Boundable, Damageable{
 
 	int score;
     int mass;
     int fireDelay = 0;
+    int health = 100;
     public boolean accelerationRequest = false;
     public boolean turnLeftRequest = false;
     public boolean turnRightRequest = false;
     public boolean fireRequest = false;
+    public int deathParticleAmount = 100;
 
     /**
      * Standard constructor that initializes 1 player.
@@ -116,5 +123,23 @@ public class Player extends AbstractCharacter implements Collideable, Boundable{
     @Override
     public double getBoundingHeight() {
         return height;
+    }
+
+    @Override
+    public void doDamage(int amount) {
+        health -= amount;
+        if(health <= 0){
+            this.state = WorldObjectState.DEAD;
+        }
+    }
+
+    @Override
+    public void destroy(World world){
+        super.destroy(world);
+        
+        for(int i = 0; i < deathParticleAmount; i++){
+            world.addWorldObject(new SpacecraftDeathParticle(this));
+        }
+
     }
 }

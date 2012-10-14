@@ -26,6 +26,7 @@ public class Spacecraft implements Boundable {
         this.hull = new Hull();
         this.engine = new Engine();
         this.weapon1 = new Weapon();
+        this.shield = new ShieldGenerator();
     }
 
     public Rectangle getBounds(){
