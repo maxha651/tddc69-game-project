@@ -50,8 +50,8 @@ public class GraphicalViewer extends Viewer {
     //controllers for painting
     public boolean lockOnPlayer = true;            //make camera move with player
     public boolean drawCross = false;              //draw a cross in middle of screen
-    public boolean paintExtraInformation = true;   //paint extra information suchs as paint time, update time etc
-    public boolean paintKeyBindings = true;        //make key bindings visible for the player
+    public boolean paintExtraInformation = false;   //paint extra information suchs as paint time, update time etc
+    public boolean paintKeyBindings = false;        //make key bindings visible for the player
     public boolean paintWorldObjectBounds = false; //paint bounds on the screen
 
     //other controllers

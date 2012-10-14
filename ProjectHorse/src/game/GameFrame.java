@@ -27,6 +27,29 @@ public class GameFrame extends JFrame implements KeyListener{
     GraphicalViewer viewer1;
     GraphicalViewer viewer2;
 
+    //key coding
+
+    //player 1
+    final static int PLAYER_1_FIRE = KeyEvent.VK_SPACE;
+    final static int PLAYER_1_TURN_LEFT = KeyEvent.VK_A;
+    final static int PLAYER_1_TURN_RIGHT = KeyEvent.VK_D;
+    final static int PLAYER_1_THROTTLE = KeyEvent.VK_W;
+    final static int PLAYER_1_FOCUS_CAMERA = KeyEvent.VK_F;
+
+    //player 2
+    final static int PLAYER_2_TURN_LEFT = KeyEvent.VK_LEFT;
+    final static int PLAYER_2_FIRE = KeyEvent.VK_ENTER;
+    final static int PLAYER_2_TURN_RIGHT = KeyEvent.VK_RIGHT;
+    final static int PLAYER_2_THROTTLE = KeyEvent.VK_UP;
+
+    //other
+    final static int SHOW_INFORMATION = KeyEvent.VK_I;
+    final static int DRAW_BOUNDS = KeyEvent.VK_B;
+    final static int SHOW_KEY_CODING = KeyEvent.VK_K;
+    final static int DRAW_CROSS = KeyEvent.VK_C;
+
+
+
     public GameFrame(GameModel gameModel) {
 
         super(FRAME_TITLE);
@@ -60,43 +83,43 @@ public class GameFrame extends JFrame implements KeyListener{
         int keyCode = e.getKeyCode();
         // Player p = gameModel.getPlayer();
         switch(keyCode){
-            case KeyEvent.VK_W:
+            case PLAYER_1_THROTTLE:
                 gameModel.getPlayer(1).accelerationRequest = true;
                 break;
-            case KeyEvent.VK_A:
+            case PLAYER_1_TURN_LEFT:
                 gameModel.getPlayer(1).turnLeftRequest = true;
                 break;
-            case KeyEvent.VK_D:
+            case PLAYER_1_TURN_RIGHT:
                 gameModel.getPlayer(1).turnRightRequest = true;
                 break;
-            case KeyEvent.VK_UP:
-                gameModel.getPlayer(2).accelerationRequest = true;
-                break;
-            case KeyEvent.VK_LEFT:
-                gameModel.getPlayer(2).turnLeftRequest = true;
-                break;
-            case KeyEvent.VK_RIGHT:
-                gameModel.getPlayer(2).turnRightRequest = true;
-                break;
-            case KeyEvent.VK_CONTROL:
-                gameModel.getPlayer(2).fireRequest = true;
-                break;
-            case KeyEvent.VK_F:
-                viewer1.setLockOnPlayer(!viewer1.isLockOnPlayer());
-                break;
-            case KeyEvent.VK_SPACE:
+            case PLAYER_1_FIRE:
                 gameModel.getPlayer(1).fireRequest = true;
                 break;
-            case KeyEvent.VK_I :
+            case PLAYER_2_THROTTLE:
+                gameModel.getPlayer(2).accelerationRequest = true;
+                break;
+            case PLAYER_2_TURN_LEFT:
+                gameModel.getPlayer(2).turnLeftRequest = true;
+                break;
+            case PLAYER_2_TURN_RIGHT:
+                gameModel.getPlayer(2).turnRightRequest = true;
+                break;
+            case PLAYER_2_FIRE:
+                gameModel.getPlayer(2).fireRequest = true;
+                break;
+            case PLAYER_1_FOCUS_CAMERA:
+                viewer1.setLockOnPlayer(!viewer1.isLockOnPlayer());
+                break;
+            case SHOW_INFORMATION:
                 viewer1.setPaintExtraInformation(!viewer1.isPaintExtraInformation());
                 break;
-            case KeyEvent.VK_C :
+            case DRAW_CROSS:
                 viewer1.setDrawCross(!viewer1.isDrawCross());
                 break;
-            case KeyEvent.VK_K :
+            case SHOW_KEY_CODING:
                 viewer1.setPaintKeyBindings(!viewer1.isPaintKeyBindings());
                 break;
-            case KeyEvent.VK_B :
+            case DRAW_BOUNDS :
                 viewer1.setPaintWorldObjectBounds(!viewer1.isPaintWorldObjectBounds());
                 break;
         }
@@ -107,28 +130,28 @@ public class GameFrame extends JFrame implements KeyListener{
         int keyCode = e.getKeyCode();
 
         switch(keyCode){
-            case KeyEvent.VK_W:
+            case PLAYER_1_THROTTLE:
                 gameModel.getPlayer(1).accelerationRequest = false;
                 break;
-            case KeyEvent.VK_A:
+            case PLAYER_1_TURN_LEFT:
                 gameModel.getPlayer(1).turnLeftRequest = false;
                 break;
-            case KeyEvent.VK_D:
+            case PLAYER_1_TURN_RIGHT:
                 gameModel.getPlayer(1).turnRightRequest = false;
                 break;
-            case KeyEvent.VK_UP:
-                gameModel.getPlayer(2).accelerationRequest = false;
-                break;
-            case KeyEvent.VK_LEFT:
-                gameModel.getPlayer(2).turnLeftRequest = false;
-                break;
-            case KeyEvent.VK_RIGHT:
-                gameModel.getPlayer(2).turnRightRequest = false;
-                break;
-            case KeyEvent.VK_SPACE:
+            case PLAYER_1_FIRE:
                 gameModel.getPlayer(1).fireRequest = false;
                 break;
-            case KeyEvent.VK_CONTROL:
+            case PLAYER_2_THROTTLE:
+                gameModel.getPlayer(2).accelerationRequest = false;
+                break;
+            case PLAYER_2_TURN_LEFT:
+                gameModel.getPlayer(2).turnLeftRequest = false;
+                break;
+            case PLAYER_2_TURN_RIGHT:
+                gameModel.getPlayer(2).turnRightRequest = false;
+                break;
+            case PLAYER_2_FIRE:
                 gameModel.getPlayer(2).fireRequest = false;
                 break;
         }
