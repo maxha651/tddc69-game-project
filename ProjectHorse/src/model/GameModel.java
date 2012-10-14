@@ -127,14 +127,27 @@ public class GameModel extends Observable {
         //updateProjectiles();
         updateEnemies();
 
-        // Temporary
-        ZoneCoordinate startZoneToUpdate = new ZoneCoordinate(player1.getZoneCoordinate());
-        startZoneToUpdate.setX(startZoneToUpdate.getX() -ZONE_UPDATE_SPAN);
-        startZoneToUpdate.setY(startZoneToUpdate.getY() -ZONE_UPDATE_SPAN);
+        ZoneCoordinate p1Coord = player1.getZoneCoordinate();
+        ZoneCoordinate p2Coord = player2.getZoneCoordinate();
+        ZoneCoordinate startZoneToUpdate = new ZoneCoordinate(0,0);
+        ZoneCoordinate stopZoneToUpdate  = new ZoneCoordinate(0,0);
 
-        ZoneCoordinate stopZoneToUpdate = new ZoneCoordinate(player1.getZoneCoordinate());
-        stopZoneToUpdate.setX(stopZoneToUpdate.getX() +ZONE_UPDATE_SPAN);
-        stopZoneToUpdate.setY(stopZoneToUpdate.getY() +ZONE_UPDATE_SPAN);
+        if(p1Coord.getX() < p2Coord.getX()){
+            startZoneToUpdate.setX(p1Coord.getX() - ZONE_UPDATE_SPAN);
+            stopZoneToUpdate.setX(p2Coord.getX()  + ZONE_UPDATE_SPAN);
+        }
+        else{
+            startZoneToUpdate.setX(p2Coord.getX() - ZONE_UPDATE_SPAN);
+            stopZoneToUpdate.setX(p1Coord.getX()  + ZONE_UPDATE_SPAN);
+        }
+        if(p1Coord.getY() < p2Coord.getY()){
+            startZoneToUpdate.setY(p1Coord.getY() - ZONE_UPDATE_SPAN);
+            stopZoneToUpdate.setY(p2Coord.getY()  + ZONE_UPDATE_SPAN);
+        }
+        else{
+            startZoneToUpdate.setY(p2Coord.getY() - ZONE_UPDATE_SPAN);
+            stopZoneToUpdate.setY(p2Coord.getY()  + ZONE_UPDATE_SPAN);
+        }
 
         world.update(startZoneToUpdate, stopZoneToUpdate);
         spawnEngineParticles();
