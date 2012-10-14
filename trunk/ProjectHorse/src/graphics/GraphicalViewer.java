@@ -37,10 +37,9 @@ public class GraphicalViewer extends Viewer {
     WorldObjectPainter painter;
 
     //default values / constants
-    final static int DEFAULT_SCREEN_WIDTH_PX = 1300/2, DEFAULT_SCREEN_HEIGHT_PX = 768;
     final static int PANEL_PADDING_VERT = 40;
     final static int PANEL_PADDING_HORI = 20;
-    final static int DEFAULT_STRING_SIZE = 14;
+    final static int DEFAULT_FONT_SIZE = 14;
     final static Color DEFAULT_PAINT_COLOR = Color.WHITE;
     final static Color DEFAULT_BACKGROUND_COLOR = Color.BLACK;
     final static Color DEFAULT_FONT_COLOR = Color.WHITE;
@@ -56,6 +55,7 @@ public class GraphicalViewer extends Viewer {
     public boolean paintExtraInformation = false;   //paint extra information suchs as paint time, update time etc
     public boolean paintKeyBindings = false;        //make key bindings visible for the player
     public boolean paintWorldObjectBounds = false; //paint bounds on the screen
+    public boolean drawScore = true;               //draw player score
 
     //other controllers
     private long paintTime = 0;                    //for measuring elapsed time for 1 paint
@@ -78,7 +78,7 @@ public class GraphicalViewer extends Viewer {
          this.painter = new WorldObjectPainter(imageLoader, gameModel);
          Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
          this.width = (screenSize.width - PANEL_PADDING_HORI)/2;
-         this.height = (DEFAULT_SCREEN_HEIGHT_PX - PANEL_PADDING_VERT);
+         this.height = (screenSize.height - PANEL_PADDING_VERT);
          bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB_PRE);
     }
 
@@ -103,6 +103,9 @@ public class GraphicalViewer extends Viewer {
         }
         if(drawCross){
             drawCross(g2d);
+        }
+        if(drawScore){
+            drawScore(g2d);
         }
 
         //paint on the actual graphics object -- cast to Graphics2D so we can use built in drawImage method
@@ -158,7 +161,9 @@ public class GraphicalViewer extends Viewer {
     }
 
     public void drawScore(Graphics2D g2d){
-
+        setFontToMonospace(g2d, 20);
+        g2d.setColor(p.getColor());
+        g2d.drawString("score : " + p.getScore(), PANEL_PADDING_HORI, PANEL_PADDING_VERT/2);
     }
 
     /**
@@ -169,7 +174,7 @@ public class GraphicalViewer extends Viewer {
         Engine e = p.getSpacecraft().getEngine();
 
         //initialize font and information container
-        setFontToMonospace(g2d);
+        setFontToMonospace(g2d, DEFAULT_FONT_SIZE);
         InformationContainer ic = new InformationContainer(20, 20);
 
         //the strings to draw
@@ -243,10 +248,12 @@ public class GraphicalViewer extends Viewer {
     }
 
     //getters and setters
-    static public void setFontToMonospace(Graphics2D g2d){
-        Font f = new Font("MONOSPACED", Font.BOLD, DEFAULT_STRING_SIZE);
+    static public void setFontToMonospace(Graphics2D g2d, int size){
+        Font f = new Font("MONOSPACED", Font.BOLD, size);
         g2d.setFont(f);
     }
+
+
 
     public boolean isLockOnPlayer() {
         return lockOnPlayer;
