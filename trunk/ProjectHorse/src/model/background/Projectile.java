@@ -93,5 +93,4 @@ public class Projectile extends CollideableObject implements Collideable{
           world.addWorldObject(new RedProjectileDeathParticle(this));
         }
     }
-    
 }
