@@ -36,7 +36,9 @@ public class GraphicalViewer extends Viewer {
     ImageLoader imageLoader;
 
     //default values / constants
-    final static int DEFAULT_SCREEN_WIDTH_PX = 1366/2, DEFAULT_SCREEN_HEIGHT_PX = 768;
+    final static int DEFAULT_SCREEN_WIDTH_PX = 1300/2, DEFAULT_SCREEN_HEIGHT_PX = 768;
+    final static int PANEL_PADDING_VERT = 40;
+    final static int PANEL_PADDING_HORI = 20;
     final static int DEFAULT_STRING_SIZE = 14;
     final static Color DEFAULT_PAINT_COLOR = Color.WHITE;
     final static Color DEFAULT_BACKGROUND_COLOR = Color.BLACK;
@@ -72,8 +74,9 @@ public class GraphicalViewer extends Viewer {
          this.p = p;
          this.gameModel = gameModel;
          this.imageLoader = imageLoader;
-         this.width = DEFAULT_SCREEN_WIDTH_PX;
-         this.height = DEFAULT_SCREEN_HEIGHT_PX;
+         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+         this.width = (screenSize.width - PANEL_PADDING_HORI)/2;
+         this.height = (DEFAULT_SCREEN_HEIGHT_PX - PANEL_PADDING_VERT);
          bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB_PRE);
     }
 
