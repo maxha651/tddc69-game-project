@@ -35,7 +35,7 @@ public class InformationContainer {
 
     public void paint(Graphics2D g2d){
         for(int i = 0; i < numberOfRows; i++){
-            g2d.drawString(this.queue.remove(), stringPaddingX, (stringPaddingY*(i + 1)));
+            g2d.drawString(this.queue.remove(), stringPaddingX, (stringPaddingY*(i + 3)));
         }
     }
 }

@@ -95,9 +95,6 @@ public class WorldObjectPainter {
             g2d.drawImage(imageLoader.getAsteroidImage(), paintX, paintY, bWidth, bHeight, gv);
         } else if(wo.getClass() == Player.class) {
             g2d.drawImage(imageLoader.getPlayerImage((Player) wo), paintX, paintY, bWidth, bHeight, gv);
-            if(outOfCamera((Player) wo, gv)){
-                drawPlayerIndicator(g2d, wo, cameraX, cameraY);
-            }
         } else if(wo.getClass() == EngineParticle.class) {
             g2d.drawImage(imageLoader.getEngineParticleImage(), paintX, paintY, bWidth, bHeight, gv);
         } else if(wo.getClass() == Projectile.class) {
@@ -112,21 +109,4 @@ public class WorldObjectPainter {
         	g2d.drawImage(imageLoader.getRedDeathParticleImage(), paintX, paintY, bWidth, bHeight, gv);
         }
     }
-
-    public boolean outOfCamera(Player p, GraphicalViewer gv){
-        double zoneSize = (int) gm.getZoneSize();
-
-        ZoneCoordinate zc = p.getZoneCoordinate();
-        Coordinate c = p.getCoordinate();
-
-        double maxX =  gv.width + p.getZoneCoordinate().getX()*zoneSize + p.getCoordinate().getX();
-
-        return true;
-    }
-
-    public void drawPlayerIndicator(Graphics2D g2d, WorldObject wo, int cameraX, int cameraY){
-
-    }
-
-
 }

@@ -113,8 +113,6 @@ public class GameModel extends Observable {
     	player1 = new Player(this, startCoordinatePlayer1, startZonePlayer1);
     	player2 = new Player(this, startCoordinatePlayer2, startZonePlayer2);
 
-
-
         player2.setColor(Color.BLUE);
 
         world.addWorldObject(player1);

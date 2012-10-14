@@ -169,8 +169,11 @@ public class GraphicalViewer extends Viewer {
      */
     public void drawScore(Graphics2D g2d){
         setFontToMonospace(g2d, 16);
+
         g2d.setColor(p.getColor());
         g2d.drawString("score : " + p.getScore(), PANEL_PADDING_HORI, PANEL_PADDING_VERT / 2);
+        g2d.setColor(Color.white);
+        g2d.drawString("score : " + p.getScore(), PANEL_PADDING_HORI-2, PANEL_PADDING_VERT / 2 - 2);
     }
 
     /**
@@ -178,9 +181,12 @@ public class GraphicalViewer extends Viewer {
      * @param g2d
      */
     public void drawPlayerInformation(Graphics2D g2d){
-        setFontToMonospace(g2d, 12);
-        g2d.setColor(informationFontColor);
+        setFontToMonospace(g2d, 16);
+
+        g2d.setColor(p.getColor());
         g2d.drawString("health : " + p.getHealth(), PANEL_PADDING_HORI, PANEL_PADDING_VERT);
+        g2d.setColor(Color.white);
+        g2d.drawString("health : " + p.getHealth(), PANEL_PADDING_HORI - 3, PANEL_PADDING_VERT - 3);
     }
 
     /**
@@ -249,6 +255,28 @@ public class GraphicalViewer extends Viewer {
 
         cameraX = (int) (positionX - width / 2);
         cameraY = (int) (positionY - height / 2);
+    }
+
+    /**
+     * Checking if a player p is outside of camera.
+     * @param p
+     * @return
+     */
+    public boolean outOfCamera(Player p){
+        double zoneSize = (int) gameModel.getZoneSize();
+
+        ZoneCoordinate zc = p.getZoneCoordinate();
+        Coordinate c = p.getCoordinate();
+        int cameraX = getCameraX();
+        int cameraY = getCameraY();
+
+        double posX = p.getCoordinate().getX() + zc.getX()*zoneSize;
+        double posY = p.getCoordinate().getY() + zc.getY()*zoneSize;
+
+        if(posX < cameraX + width && posX > cameraX && posY < cameraY + height && posY > cameraY){
+            return false;
+        }
+        return true;
     }
 
     /**
