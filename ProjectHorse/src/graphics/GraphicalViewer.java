@@ -251,6 +251,7 @@ public class GraphicalViewer extends Viewer {
         playerCoordinateString = (p.getZoneCoordinate().getX() + ", " + p.getZoneCoordinate().getY());
         ic.add("Player zone coord: " + playerCoordinateString);
         ic.add("World objects #  : " + gameModel.numberOfWorldObjects);
+        ic.add("Zones #          : " + gameModel.numberOfZones());
         ic.add("Update Time (ms) : " + gameModel.updateTime);
         ic.add("Paint Time  (ms) : " + this.paintTime);
         ic.add("Tick#(upd. done) : " + gameModel.tick);

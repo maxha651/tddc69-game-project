@@ -7,7 +7,7 @@ package model.utility.shape;
  * Time: 17:23
  * To change this template use File | Settings | File Templates.
  */
-public class ZoneCoordinate {
+public class ZoneCoordinate implements Comparable{
 
     int x;
     int y;
@@ -20,6 +20,22 @@ public class ZoneCoordinate {
     public ZoneCoordinate (ZoneCoordinate zoneCoordinate){
         this.x = zoneCoordinate.getX();
         this.y = zoneCoordinate.getY();
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
     }
 
     @Override
@@ -42,19 +58,18 @@ public class ZoneCoordinate {
         return result;
     }
 
-    public int getX() {
-        return x;
-    }
+    @Override
+    public int compareTo(Object o) {
+        if (this == o) return 0;
+        if (!(o instanceof ZoneCoordinate)) throw new ClassCastException(o.getClass().toString());
 
-    public int getY() {
-        return y;
-    }
+        ZoneCoordinate that = (ZoneCoordinate) o;
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
-    public void setY(int y) {
-        this.y = y;
+        if (x != that.x) {
+            return x - that.x;
+        }
+        else{
+            return y - that.y;
+        }
     }
 }

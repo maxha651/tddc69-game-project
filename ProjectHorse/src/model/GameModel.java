@@ -9,6 +9,7 @@ import model.character.Player;
 import model.utility.math.Randomizer;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
+import model.world.AsteroidSpawner;
 import model.world.World;
 import model.world.WorldObject;
 import model.world.WorldObjectContainer;
@@ -35,9 +36,9 @@ public class GameModel extends Observable {
     //object controllers
     public static final double DEFAULT_VELOCITY_FLOOR = 0.2;
     public static final double DEFAULT_SPACE_FRICTION = 0.98;
-    public static final double ZONE_SIZE = 300;
+    public static final double ZONE_SIZE = 1000;
     public static final int COLLIDING_CHECK_DISTANCE = 50; // determines how faraway objects to check for collision
-    public static final int ZONE_UPDATE_SPAN = 15;    //the spawn of how many zones are loaded away from player
+    public static final int ZONE_UPDATE_SPAN = 5;    //the spawn of how many zones are loaded away from player
     public static final int asteroidSpawnRate = 2; //how many asteroids to spawn per tick
 
     World world = new World(ZONE_SIZE);
@@ -59,6 +60,11 @@ public class GameModel extends Observable {
         player2 = new Player();
         world.addWorldObject(player1);
         world.addWorldObject(player2);
+        world.addWorldObjectSpawner(new AsteroidSpawner());
+    }
+
+    public int numberOfZones(){
+        return world.getNumOfZones();
     }
 
     public Player getPlayer() {
@@ -99,11 +105,6 @@ public class GameModel extends Observable {
         stopZoneToUpdate.setY(stopZoneToUpdate.getY() +ZONE_UPDATE_SPAN);
 
         world.update(startZoneToUpdate, stopZoneToUpdate);
-
-        // add new asteroids
-        if(tick % 5 == 0){
-            spawnAsteroids();
-        }
         spawnEngineParticles();
 
         if(tick > 8000 && true){ //change true to false if you want to remove automatic quitting
@@ -145,7 +146,7 @@ public class GameModel extends Observable {
         z.setX(player1.getZoneCoordinate().getX() + xDifference*2);
         z.setY(player1.getZoneCoordinate().getY() + yDifference*2);
 
-        Asteroid a = new Asteroid(this.world, c, z);
+        Asteroid a = new Asteroid(c, z);
         a.updateZone(ZONE_SIZE);
         world.addWorldObject(a);
     }
