@@ -146,7 +146,7 @@ public class GameModel extends Observable {
         }
         else{
             startZoneToUpdate.setY(p2Coord.getY() - ZONE_UPDATE_SPAN);
-            stopZoneToUpdate.setY(p2Coord.getY()  + ZONE_UPDATE_SPAN);
+            stopZoneToUpdate.setY(p1Coord.getY()  + ZONE_UPDATE_SPAN);
         }
 
         world.update(startZoneToUpdate, stopZoneToUpdate);
