@@ -15,6 +15,8 @@ import java.awt.*;
  * Time: 18:33
  * To change this template use File | Settings | File Templates.
  */
+
+// Hej
 public class Particle extends Effect {
     Color c = Color.CYAN;
     int tick = 0;
