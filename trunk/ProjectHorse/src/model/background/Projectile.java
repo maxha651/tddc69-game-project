@@ -27,6 +27,7 @@ public class Projectile extends CollideableObject implements Collideable{
     AbstractCharacter owner;
     
     int tick = 0;
+    int deathParticleAmount = 5;
     boolean hasCollided = false;
 
     public Projectile(Weapon weapon, Coordinate coordinate, double angle, ZoneCoordinate zoneCoordinate, AbstractCharacter player) {
@@ -66,7 +67,7 @@ public class Projectile extends CollideableObject implements Collideable{
         super.update(world);
 
         collisionCheck(world);
-
+        
         if(tick < 125){
             this.tick++;
         } else {
@@ -83,4 +84,14 @@ public class Projectile extends CollideableObject implements Collideable{
     public int getMass() {
         return 0; // massless
     }
+    
+    @Override
+    public void destroy(World world){
+    	super.destroy(world);
+
+        for(int i = 0; i < deathParticleAmount; i++){
+          //world.addWorldObject(new RedProjectileDeathParticle(this));
+        }
+    }
+    
 }

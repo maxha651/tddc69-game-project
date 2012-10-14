@@ -41,11 +41,11 @@ public class CollideableObject extends MoveableObject {
 
         double xDiff = Math.abs(thatCoord.getX() - thisCoord.getX());
         double yDiff = Math.abs(thatCoord.getY() - thisCoord.getY());
-        double allowedXDiff = (this.getBoundingWidth() + collideable.getBoundingWidth());
-        double allowedYDiff = (this.getBoundingHeight() + collideable.getBoundingHeight());
+        double allowedXDiff = Math.abs(this.getBoundingWidth() - collideable.getBoundingWidth());
+        double allowedYDiff = Math.abs(this.getBoundingHeight() - collideable.getBoundingHeight());
 
         if( xDiff < allowedXDiff && yDiff < allowedYDiff){
-            unCollide(this, collideable, allowedXDiff - xDiff, allowedYDiff - yDiff);
+            //unCollide(this, collideable, allowedXDiff - xDiff, allowedYDiff - yDiff);
             return true;
         }
 

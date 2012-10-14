@@ -47,7 +47,8 @@ public class CollideCheck {
     }
 
     private static void unCollide(Collideable c1, Collideable c2, double xIntersect, double yIntersect){
-        Coordinate c1Coord = c1.getCoordinate();
+        System.out.println("DO NOT USE");
+    	Coordinate c1Coord = c1.getCoordinate();
         Coordinate c2Coord = c2.getCoordinate();
 
         if(xIntersect < yIntersect){
