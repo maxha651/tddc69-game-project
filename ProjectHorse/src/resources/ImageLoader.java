@@ -26,7 +26,8 @@ public class ImageLoader {
     BufferedImage laserblue1;
     BufferedImage engineparticlered;
     BufferedImage asteroidparticle1;
-
+    BufferedImage reddeath;
+    
     public BufferedImage getAsteroidImage(){
         return asteroid1 = getImage(asteroid1, "asteroid1.png");
     }
@@ -56,6 +57,11 @@ public class ImageLoader {
     public BufferedImage getRedAsteroidParticleImage(){
         engineparticlered = getImage(engineparticlered, "engineparticlered.png");
         return engineparticlered;
+    }
+    
+    public BufferedImage getRedDeathParticleImage(){
+        reddeath = getImage(reddeath, "reddeathparticle.png");
+        return reddeath;
     }
 
     private BufferedImage getImage(BufferedImage bf, String path){
