@@ -141,35 +141,10 @@ public class GraphicalViewer extends Viewer {
             g2d.setTransform(saved);
             if(paintWorldObjectBounds){
                 if(Collideable.class.isAssignableFrom(wo.getClass())){
-                    paintWorldObjectBounds(g2d, wo, Color.RED);
+                    painter.paintWorldObjectBounds(wo, g2d, cameraX, cameraY, Color.RED);
                 }
             }
         }
-    }
-
-    /**
-     * Paints all the bounds of the objects.
-     */
-    public void paintWorldObjectBounds(Graphics2D g2d, WorldObject wo, Color c){
-        g2d.setColor(c);
-
-        Coordinate positionInZone = wo.getCoordinate();
-        ZoneCoordinate zoneCoordinate = wo.getZoneCoordinate();
-        double zoneSize = gameModel.getZoneSize();
-
-        int positionX =(int) (positionInZone.getX() + zoneSize*zoneCoordinate.getX());
-        int positionY =(int) (positionInZone.getY() + zoneSize*zoneCoordinate.getY());
-
-        int bWidth = (int) wo.getBoundingWidth();
-        int bHeight = (int) wo.getBoundingHeight();
-
-        int paintX;
-        int paintY;
-
-        paintX = (int) ((-cameraX + positionX) - bWidth / 2);
-        paintY = (int) ((-cameraY + positionY) - bHeight / 2);
-
-        g2d.drawRect(paintX, paintY, bWidth, bHeight);
     }
 
     /**
@@ -180,6 +155,10 @@ public class GraphicalViewer extends Viewer {
         //draw vertical lines
         g2d.drawLine(width/2, 0, width/2, height);
         g2d.drawLine(0, height/2, width, height/2);
+    }
+
+    public void drawScore(Graphics2D g2d){
+
     }
 
     /**
@@ -267,7 +246,6 @@ public class GraphicalViewer extends Viewer {
     static public void setFontToMonospace(Graphics2D g2d){
         Font f = new Font("MONOSPACED", Font.BOLD, DEFAULT_STRING_SIZE);
         g2d.setFont(f);
-
     }
 
     public boolean isLockOnPlayer() {

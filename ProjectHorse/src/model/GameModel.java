@@ -150,7 +150,6 @@ public class GameModel extends Observable {
         }
 
         world.update(startZoneToUpdate, stopZoneToUpdate);
-        spawnEngineParticles();
 
         if(tick > 8000 && true){ //change true to false if you want to remove automatic quitting
             //to make the game not fuck up the computer if memory leaks
@@ -168,19 +167,6 @@ public class GameModel extends Observable {
         }
     }
 
-    public void spawnEngineParticles(){
-        if(player1.accelerationRequest == true){
-            spawnEngineParticle();
-        }
-
-    }
-
-    public void spawnEngineParticle(){
-        EngineParticle ep = new EngineParticle(player1);
-        ep.updateZone(ZONE_SIZE);
-        world.addWorldObject(ep);
-    }
-
     public void spawnAsteroid(){
         Coordinate c = new Coordinate(player1.getCoordinate()); //make this some other arbitary coordinate .. now spawns on top of player
         ZoneCoordinate z = new ZoneCoordinate(player1.getZoneCoordinate());
@@ -195,44 +181,6 @@ public class GameModel extends Observable {
         a.updateZone(ZONE_SIZE);
         world.addWorldObject(a);
     }
-/*
-    public void updatePlayer(int i){
-        Player p = getPlayer(i);
-
-        if(p.turnLeftRequest){
-            p.rotateLeft(Math.toRadians(p.getSpacecraft().getEngine().getRotationSpeed()));
-        } else if (p.turnRightRequest) {
-            p.rotateRight(Math.toRadians(p.getSpacecraft().getEngine().getRotationSpeed()));
-        }
-        if (p.accelerationRequest){
-            p.accelerate();
-        }
-        else{
-            p.deaccelerate();
-        }
-
-        //player.updatePosition(accelerationRequest, ZONE_SIZE);
-        if(p.fireRequest){
-            if (fireDelay <= 0){
-                Projectile temp = p.fire();
-
-                // might have changed zones
-                temp.updateZone(ZONE_SIZE);
-
-                world.addWorldObject(temp);
-
-                fireDelay = fireDelayDefault;
-            }
-            else{
-                fireDelay--;
-            }
-        }
-    }
-
-    public void updatePlayers(){
-        updatePlayer(1);
-        updatePlayer(2);
-    }*/
 
     public double getZoneSize(){
         return ZONE_SIZE;

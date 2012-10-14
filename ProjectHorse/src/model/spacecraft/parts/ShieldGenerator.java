@@ -11,7 +11,7 @@ import model.spacecraft.parts.types.shield.ShieldType;
  * Time: 23:42
  * To change this template use File | Settings | File Templates.
  */
-public class ShieldGenerator extends SpacecraftPart implements Damageable {
+public class ShieldGenerator extends SpacecraftPart {
     ShieldType shieldType;
     int currentShieldStrength;
 
@@ -40,8 +40,4 @@ public class ShieldGenerator extends SpacecraftPart implements Damageable {
         }
     }
 
-    @Override
-    public void doDamage(int amount) {
-        currentShieldStrength -= amount;
-    }
 }
