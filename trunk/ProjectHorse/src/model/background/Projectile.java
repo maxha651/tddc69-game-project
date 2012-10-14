@@ -90,7 +90,7 @@ public class Projectile extends CollideableObject implements Collideable{
     	super.destroy(world);
 
         for(int i = 0; i < deathParticleAmount; i++){
-          //world.addWorldObject(new RedProjectileDeathParticle(this));
+          world.addWorldObject(new RedProjectileDeathParticle(this));
         }
     }
     
