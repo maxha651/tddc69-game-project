@@ -16,6 +16,8 @@ import model.world.WorldObjectContainer;
  */
 public class CollideableObject extends MoveableObject {
 
+    private final double allowedIntersection = 0.9;
+
     protected boolean isCollideable(Object o){
         return CollideableObject.class.isAssignableFrom(o.getClass());
     }
@@ -41,8 +43,8 @@ public class CollideableObject extends MoveableObject {
 
         double xDiff = Math.abs(thatCoord.getX() - thisCoord.getX());
         double yDiff = Math.abs(thatCoord.getY() - thisCoord.getY());
-        double allowedXDiff = Math.abs(this.getBoundingWidth() - collideable.getBoundingWidth());
-        double allowedYDiff = Math.abs(this.getBoundingHeight() - collideable.getBoundingHeight());
+        double allowedXDiff = (this.getBoundingWidth() + collideable.getBoundingWidth())/2 * allowedIntersection;
+        double allowedYDiff = (this.getBoundingHeight() + collideable.getBoundingHeight())/2 * allowedIntersection;
 
         if( xDiff < allowedXDiff && yDiff < allowedYDiff){
             return true;
