@@ -1,22 +1,18 @@
 package model.world;
 
-import model.CollideCheck;
-import model.GameModel;
 import model.MoveableObject;
 import model.properties.Collideable;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 
 import java.util.LinkedList;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Max
- * Date: 2012-09-26
- * Time: 16:49
- * To change this template use File | Settings | File Templates.
+ * Uses Zones to store WorldObjects. Dynamically allocates new Zones when needed
+ * Uses WorldObjectSpawner to spawn new WorldObjects in newly created zones
+ *
+ * Is Threadsafe
  */
 public class World {
     double zoneSize;
@@ -39,25 +35,39 @@ public class World {
         spawners.add(spawner);
     }
 
+    /**
+     * Spawns WorldObjects using WorldObjectSpawner
+     * @param zoneCoordinate
+     */
     private void spawnWorldObjects(ZoneCoordinate zoneCoordinate){
         for (WorldObjectSpawner spawner : spawners){
             spawner.spawnWorldObjects(this, zoneCoordinate);
         }
     }
 
+    /**
+     * Returns Zone if exists, otherwise creates the zone and returns it.
+     *
+     * @param coordinate
+     * @return
+     */
     private Zone getZone(ZoneCoordinate coordinate){
         Zone zone = zones.get(coordinate);
 
         if (zone == null){
-            zones.put(new ZoneCoordinate(coordinate), new Zone(zoneSize));
+            zone = new Zone(zoneSize);
+            zones.put(new ZoneCoordinate(coordinate), zone);
             spawnWorldObjects(coordinate);
         }
-        return zones.get(coordinate);
+        return zone;
     }
 
     public void addWorldObject(WorldObject worldObject){
         ZoneCoordinate zoneCoord = worldObject.getZoneCoordinate();
         Zone zone = getZone(zoneCoord);
+
+        // Checks which zone to put WorldObject in
+        // Only needed in special cases
         if (!zone.isWithinBoundaries(worldObject)){
             worldObject.updateZone(zoneSize);
             addWorldObject(worldObject);
@@ -70,7 +80,7 @@ public class World {
 
     public void removeWorldObject(WorldObject worldObject){
         ZoneCoordinate zoneCoordinate = worldObject.getZoneCoordinate();
-        if (zoneExists(zoneCoordinate)){
+        if (zoneExist(zoneCoordinate)){
             getZone(worldObject.getZoneCoordinate()).removeWorldObject(worldObject);
         }
     }
@@ -100,6 +110,15 @@ public class World {
         zoneCoordinate.setX(zoneCoordinate.getX() + 1);
     }
 
+    /**
+     * Changes zoneCoordinate to the upper left zone of the area of which
+     * we want to check, while keeping the start and stop coordinates the same globally
+     * by only changing the value to be relative to the new zoneCoordinate
+     *
+     * @param zoneCoordinate Relative zone
+     * @param start The upper left corner of the search area
+     * @param stop The lower right corner of the search area
+     */
     private void moveToFirstZoneToCheck(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
         while (start.getY() < 0){
             moveOneZoneUp(zoneCoordinate, start, stop);
@@ -115,6 +134,16 @@ public class World {
         }
     }
 
+    /**
+     * Returns all objects within a rectangle with its upper left corner at start
+     * and its lower right corner at stop. Start and stop is relative to ZoneCoordinate
+     *
+     * @param zoneCoordinate Checks relative to this coordinate
+     * @param start The upper left corner of the search area
+     * @param stop The lower right corner of the search area
+     * @return Returns all objects in the rectangular area from start to stop
+     */
+
     public WorldObjectContainer getAllObjectsInArea(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
         WorldObjectContainer resObjects = new WorldObjectContainer();
         ZoneCoordinate tempZoneCoordinate = new ZoneCoordinate(zoneCoordinate);
@@ -126,16 +155,14 @@ public class World {
         double tempStopY = tempStop.getY();
         int tempZoneY = tempZoneCoordinate.getY();
 
+        //Iterates through x-coordinates
         while (tempStop.getX() > 0){
             tempStart.setY(tempStartY);
             tempStop.setY(tempStopY);
             tempZoneCoordinate.setY(tempZoneY);
 
-            
             while (tempStop.getY() > 0){
-                if (zoneExists(tempZoneCoordinate)){
                 resObjects.addAll(getZone(tempZoneCoordinate).getAllObjectsInArea(tempStart, tempStop));
-                }
                 moveOneZoneDown(tempZoneCoordinate, tempStart, tempStop);
             }
             moveOneZoneRight(tempZoneCoordinate, tempStart, tempStop);
@@ -144,12 +171,22 @@ public class World {
         return resObjects;
     }
 
+    /**
+     * Updates ALL created zones
+     */
     public void update(){
         for(Zone zone : zones.values()){
             update(zone);
         }
     }
 
+    /**
+     * Updates all zones with zoneCoordinates ranging
+     * from start to stop
+     *
+     * @param start Updates from this zone to stop zone
+     * @param stop Updates to this zone from start zone
+     */
     public void update(ZoneCoordinate start, ZoneCoordinate stop){
         for(int x = start.getX(); x <= stop.getX(); x++){
             for(int y = start.getY(); y <= stop.getY(); y++){
@@ -159,12 +196,25 @@ public class World {
         clearAdjacentZones(start, stop);
     }
 
+    /**
+     * Clears all objects from zone. Will spawn new objects if called by getZone
+     *
+     * @param zoneCoordinate
+     */
     private void clearZone(ZoneCoordinate zoneCoordinate){
-        if (zoneExists(zoneCoordinate)){
+        if (zoneExist(zoneCoordinate)){
             numberOfWorldObjects -= zones.remove(zoneCoordinate).getWorldObjects().size();
         }
     }
 
+    /**
+     * Clears zones two steps away from the updated area. Objects moving out of the
+     * updated area will get stuck in the area inbetween before getting cleared from the
+     * game or gets into the updated zone again
+     *
+     * @param start The upper left corner of the updated area
+     * @param stop The lower left corner of the updated area
+     */
     private void clearAdjacentZones(ZoneCoordinate start, ZoneCoordinate stop){
         for (int x = start.getX() -2; x <= stop.getX() +2; x++){
             ZoneCoordinate tempCoord = new ZoneCoordinate(x, start.getY() -2);
@@ -184,43 +234,6 @@ public class World {
         update(getZone(zoneCoordinate));
     }
 
-    private boolean isCollideable(WorldObject o){
-        return Collideable.class.isAssignableFrom(o.getClass());
-    }
-
-    private boolean isMoveable(WorldObject o){
-        return MoveableObject.class.isAssignableFrom(o.getClass());
-    }
-/*
-    private void updateCollideable(Collideable object){
-        Coordinate objCoord = object.getCoordinate();
-        WorldObjectContainer nearbyObjects;
-        int checkDistance = GameModel.COLLIDING_CHECK_DISTANCE;
-        nearbyObjects = getAllObjectsInArea(object.getZoneCoordinate(),
-                new Coordinate(objCoord.getX() - checkDistance, objCoord.getY() - checkDistance),
-                new Coordinate(objCoord.getX() + checkDistance, objCoord.getY() + checkDistance));
-
-        for(WorldObject nearbyObject : nearbyObjects){
-            if (isCollideable(nearbyObject) && nearbyObject != object){
-                if(CollideCheck.isColliding(object, (Collideable) nearbyObject, zoneSize)){
-                    object.setToCollide((Collideable) nearbyObject);
-                    ((Collideable) nearbyObject).setToCollide(object);
-                }
-            }
-        }
-    }*/
-
-    private void updateMoveable(MoveableObject object, Zone zone){
-        (object).updatePosition(zoneSize);
-
-        if(!zone.isWithinBoundaries(object)){
-            zone.removeWorldObject(object);
-            numberOfWorldObjects--;
-            object.updateZone(zoneSize);
-            addWorldObject(object);
-        }
-    }
-
     private void update(Zone zone){
         for(WorldObject object : zone.getWorldObjects()){
             object.update(this);
@@ -231,19 +244,7 @@ public class World {
         return zones.size();
     }
 
-    private boolean zoneExists(ZoneCoordinate zoneCoordinate){
+    private boolean zoneExist(ZoneCoordinate zoneCoordinate){
         return zones.get(zoneCoordinate) != null;
-    }
-
-    private void createZones(){
-        zones.put(new ZoneCoordinate(-1, -1), new Zone(zoneSize));
-        zones.put(new ZoneCoordinate(0,-1), new Zone(zoneSize));
-        zones.put(new ZoneCoordinate(1,-1), new Zone(zoneSize));
-        zones.put(new ZoneCoordinate(-1,0), new Zone(zoneSize));
-        zones.put(new ZoneCoordinate(0,0), new Zone(zoneSize));
-        zones.put(new ZoneCoordinate(1, 0), new Zone(zoneSize));
-        zones.put(new ZoneCoordinate(-1,1), new Zone(zoneSize));
-        zones.put(new ZoneCoordinate(0,1), new Zone(zoneSize));
-        zones.put(new ZoneCoordinate(1,1), new Zone(zoneSize));
     }
 }

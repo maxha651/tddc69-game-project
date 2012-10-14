@@ -42,15 +42,6 @@ public class Zone {
         return size;
     }
 
-    /**
-     * Returns all objects within a rectangle with its upper left corner at start
-     * and its lower right corner at stop
-     *
-     * @param start The upper left corner of the search area
-     * @param stop The lower right corner of the search area
-     * @return Returns all objects in the rectangular area from start to stop
-     */
-
     public WorldObjectContainer getAllObjectsInArea(Coordinate start, Coordinate stop){
         WorldObjectContainer resObjects = new WorldObjectContainer();
 
