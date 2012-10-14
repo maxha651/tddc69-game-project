@@ -204,6 +204,33 @@ public class GameFrame extends JFrame implements KeyListener, MouseListener{
 			break;		
 		}
 	}
+
+    /**
+     * Resets the game model and the locks the camera on the player.
+     */
+    public void reset(){
+        gameModel.reset();
+    }
+
+    /**
+     * Add all the components to the frame.
+     * Default is 2 player with 2 viewers.
+     */
+    public void addAllComponents(){
+        BasicImageLoader img = new BasicImageLoader();
+        viewer1 = new GraphicalViewer(gameModel, gameModel.getPlayer(1), img);
+        viewer2 = new GraphicalViewer(gameModel, gameModel.getPlayer(2), img);
+
+        GridLayout gl = new GridLayout(0, 2);
+        gl.setHgap(5);
+        this.setLayout(gl);
+
+        //add components to the frame
+        this.add(viewer1);
+        this.add(viewer2);
+
+        this.pack();
+    }
 	
 	@Override
 	public void mouseClicked(MouseEvent arg0) {
@@ -223,24 +250,5 @@ public class GameFrame extends JFrame implements KeyListener, MouseListener{
 		
 	}
 	
-	public void reset(){
-		gameModel.reset();
-		viewer1.lockCameraOnPlayer();
-	}
-	
-	public void addAllComponents(){
-		    BasicImageLoader img = new BasicImageLoader();
-	        viewer1 = new GraphicalViewer(gameModel, gameModel.getPlayer(1), img);
-	        viewer2 = new GraphicalViewer(gameModel, gameModel.getPlayer(2), img);
 
-	        GridLayout gl = new GridLayout(0, 2);
-	        gl.setHgap(5);
-	        this.setLayout(gl);
-
-	        //add components to the frame
-	        this.add(viewer1);
-	        this.add(viewer2);
-	        
-	        this.pack();
-	}
 }

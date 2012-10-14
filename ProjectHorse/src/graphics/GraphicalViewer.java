@@ -37,12 +37,14 @@ public class GraphicalViewer extends Viewer {
     WorldObjectPainter painter;
 
     //default values / constants
-    final static int PANEL_PADDING_VERT = 40;
-    final static int PANEL_PADDING_HORI = 20;
+    final static int PANEL_PADDING_VERT = 80; //pads the width  of the graphical viewer
+    final static int PANEL_PADDING_HORI = 20; //pads the height of the graphical viewer
     final static int DEFAULT_FONT_SIZE = 14;
+    final static int PLAYER_INFORMATION_FONT_PAD = 25;
     final static Color DEFAULT_PAINT_COLOR = Color.WHITE;
     final static Color DEFAULT_BACKGROUND_COLOR = Color.BLACK;
     final static Color DEFAULT_FONT_COLOR = Color.WHITE;
+    private final static int SCREEN_PADDING = 100; //how many pixels outside of screen width and height we should paint
 
     //colors used for painting
     public Color backgroundColor = DEFAULT_BACKGROUND_COLOR;
@@ -66,8 +68,7 @@ public class GraphicalViewer extends Viewer {
     //camera position in the current zone
     private int cameraX, cameraY;
 
-    //how many pixels outside of screen width and height we should paint
-    private final static int SCREEN_PADDING = 100;
+
 
     /**
      * Standard constructor that takes a gameModel and initializes the image loading
@@ -171,9 +172,9 @@ public class GraphicalViewer extends Viewer {
         setFontToMonospace(g2d, 16);
 
         g2d.setColor(p.getColor());
-        g2d.drawString("score : " + p.getScore(), PANEL_PADDING_HORI, PANEL_PADDING_VERT / 2);
+        g2d.drawString("score : " + p.getScore(), PLAYER_INFORMATION_FONT_PAD/2, PLAYER_INFORMATION_FONT_PAD *2);
         g2d.setColor(Color.white);
-        g2d.drawString("score : " + p.getScore(), PANEL_PADDING_HORI-2, PANEL_PADDING_VERT / 2 - 2);
+        g2d.drawString("score : " + p.getScore(), (PLAYER_INFORMATION_FONT_PAD -2)/2, (PLAYER_INFORMATION_FONT_PAD - 2)*2);
     }
 
     /**
@@ -182,11 +183,10 @@ public class GraphicalViewer extends Viewer {
      */
     public void drawPlayerInformation(Graphics2D g2d){
         setFontToMonospace(g2d, 16);
-
         g2d.setColor(p.getColor());
-        g2d.drawString("health : " + p.getHealth(), PANEL_PADDING_HORI, PANEL_PADDING_VERT);
+        g2d.drawString("health : " + p.getHealth(), PLAYER_INFORMATION_FONT_PAD/2 , PLAYER_INFORMATION_FONT_PAD );
         g2d.setColor(Color.white);
-        g2d.drawString("health : " + p.getHealth(), PANEL_PADDING_HORI - 3, PANEL_PADDING_VERT - 3);
+        g2d.drawString("health : " + p.getHealth(), (PLAYER_INFORMATION_FONT_PAD  - 2)/2, PLAYER_INFORMATION_FONT_PAD  - 2);
     }
 
     /**

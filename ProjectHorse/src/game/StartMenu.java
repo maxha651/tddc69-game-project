@@ -6,11 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Max
- * Date: 2012-10-13
- * Time: 15:02
- * To change this template use File | Settings | File Templates.
+ * The start menu
  */
 public class StartMenu extends JFrame{
 

@@ -21,7 +21,11 @@ import java.awt.*;
  * 1 player. 
  */
 public class Player extends AbstractCharacter implements Collideable, Boundable, Damageable{
+
+    //declarations and initialization
     final static int DEFAULT_HEALTH = 100;
+    final static int DEFAULT_SCORE_YIELD = 10000;
+    int scoreYield = DEFAULT_SCORE_YIELD;
     GameModel gameModel;
 	int score = 0;
     int mass;
@@ -173,7 +177,7 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
 
     @Override
     public int scoreYield() {
-        return 10000;
+        return scoreYield;
     }
 
     public void addScore(int i) {
