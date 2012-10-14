@@ -17,7 +17,7 @@ import model.world.*;
  */
 public class Asteroid extends CollideableObject implements Collideable, Damageable{
 
-    int health = 1;
+    int health = 15;
     boolean hasCollided = false;
     double tempVelocityX;
     double tempVelocityY;
@@ -75,6 +75,10 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
     @Override
     public void setToCollide(CollideableObject c) {
         hasCollided = true;
+
+        if(Damageable.class.isAssignableFrom(c.getClass())){
+            ((Damageable) c).doDamage(5);
+        }
 
         //double massRatio =(double) mass / (double) c.getMass() ; // divides by zero
 

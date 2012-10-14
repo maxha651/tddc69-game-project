@@ -66,7 +66,6 @@ public class World {
         Zone zone = getZone(zoneCoord);
 
         // Checks which zone to put WorldObject in
-        // Only needed in special cases
         if (!zone.isWithinBoundaries(worldObject)){
             worldObject.updateZone(zoneSize);
             addWorldObject(worldObject);

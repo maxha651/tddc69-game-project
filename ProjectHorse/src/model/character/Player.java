@@ -59,6 +59,7 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
     @Override
     public void update(World world) {
         super.update(world);
+        collisionCheck(world);
 
         if(turnLeftRequest){
             rotateLeft(Math.toRadians(getSpacecraft().getEngine().getRotationSpeed()));
@@ -115,7 +116,7 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
         this.zoneCoordinate = new ZoneCoordinate(zc);
         this.width = spacecraft.getBounds().getWidth();
         this.height = spacecraft.getBounds().getHeight();
-        this.mass = 400;
+        this.mass = (int) Math.sqrt(width*height);
         this.health = DEFAULT_HEALTH;
         this.rotationAngle = Math.toRadians(Randomizer.randomInt(0, 360));
         this.velocityX = 0;
@@ -145,14 +146,18 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
         for(int i = 0; i < deathParticleAmount; i++){
             world.addWorldObject(new SpacecraftDeathParticle(this));
         }
-
-        gameModel.reset();
     }
     
     //getters and setters
     @Override
     public void setToCollide(CollideableObject c) {
-        return;
+        velocityX *= 0.5;
+        velocityY *= 0.5;
+
+        if(Damageable.class.isAssignableFrom(c.getClass())){
+            ((Damageable) c).doDamage(10);
+        }
+
     }
 
     @Override
