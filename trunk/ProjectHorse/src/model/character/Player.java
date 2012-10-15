@@ -43,7 +43,7 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
      */
     public Player(GameModel gameModel, Coordinate c, ZoneCoordinate zc){
         this.gameModel = gameModel;
-        this.setSpacecraft(new Spacecraft());
+        this.setSpacecraft(new Spacecraft(this));
         this.coordinate = new Coordinate(c);
         this.zoneCoordinate = new ZoneCoordinate(zc);
         this.width = spacecraft.getBounds().getWidth();
@@ -142,7 +142,7 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
     @Override
     public void destroy(World world){
         super.destroy(world);
-
+        gameModel.giveScoreToOtherPlayer(this);
         for(int i = 0; i < deathParticleAmount; i++){
             world.addWorldObject(new SpacecraftDeathParticle(this));
         }

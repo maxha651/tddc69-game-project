@@ -22,6 +22,7 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
     double tempVelocityX;
     double tempVelocityY;
     int mass;
+    int damageYield;
     public int deathParticleAmount = 0;
     public int redParticleAmount = 0;
 
@@ -35,7 +36,7 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
         this.tempVelocityX = velocityX;
         this.tempVelocityY = velocityY;
         this.setRotationAngle(Randomizer.randomDouble(0,10));
-
+        this.damageYield = mass/3;
         this.coordinate = c;
         this.zoneCoordinate = z;
 
@@ -77,7 +78,7 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
         hasCollided = true;
 
         if(Damageable.class.isAssignableFrom(c.getClass())){
-            ((Damageable) c).doDamage(5);
+            ((Damageable) c).doDamage(damageYield);
         }
 
         //double massRatio =(double) mass / (double) c.getMass() ; // divides by zero
