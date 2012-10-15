@@ -1,7 +1,6 @@
 package model.world;
 
 import model.AbstractGameObject;
-import model.GameModel;
 import model.properties.Boundable;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
@@ -59,8 +58,7 @@ public abstract class WorldObject extends AbstractGameObject implements Boundabl
                 coordinate.getY() < 0 || coordinate.getY() > zoneSize;
     }
 
-    // Might not work
-    public double getAngleTo(WorldObject worldObject, double zoneSize){
+    public int getXDifference(WorldObject worldObject, double zoneSize){
         ZoneCoordinate thisZoneCoord = new ZoneCoordinate(zoneCoordinate);
         Coordinate thisCoord = new Coordinate(coordinate);
 
@@ -68,18 +66,37 @@ public abstract class WorldObject extends AbstractGameObject implements Boundabl
         Coordinate thatCoord = new Coordinate(worldObject.getCoordinate());
 
         if(!thatZoneCoord.equals(thisZoneCoord)){
-            double yZoneDiff = (double) (thatZoneCoord.getY() - thisZoneCoord.getY()) * zoneSize;
-            double xZoneDiff = (double) (thatZoneCoord.getX() - thisZoneCoord.getX()) * zoneSize;
-
-            thatCoord.setY(thatCoord.getY() + yZoneDiff);
-            thatCoord.setX(thatCoord.getX() + xZoneDiff);
+            double xZoneDiff = (double) (thatZoneCoord.getX() - thisZoneCoord.getX());
+            thatCoord.setX(thatCoord.getX() + xZoneDiff*zoneSize);
         }
 
-        double xDiff = thatCoord.getX() - thisCoord.getX();
-        double yDiff = thatCoord.getY() - thisCoord.getY();
+        return (int) (thatCoord.getX() - thisCoord.getX());
+    }
 
-        assert false; // Should not be used before tested
-        return Math.atan(yDiff/xDiff);
+    public int getYDifference(WorldObject worldObject, double zoneSize){
+        ZoneCoordinate thisZoneCoord = new ZoneCoordinate(zoneCoordinate);
+        Coordinate thisCoord = new Coordinate(coordinate);
+
+        ZoneCoordinate thatZoneCoord = new ZoneCoordinate(worldObject.getZoneCoordinate());
+        Coordinate thatCoord = new Coordinate(worldObject.getCoordinate());
+
+        if(!thatZoneCoord.equals(thisZoneCoord)){
+            double yZoneDiff = (double) (thatZoneCoord.getY() - thisZoneCoord.getY());
+            thatCoord.setY(thatCoord.getY() + yZoneDiff*zoneSize);
+        }
+
+        return (int) (thatCoord.getY() - thisCoord.getY());
+    }
+
+    public double getAngleTo(WorldObject worldObject, double zoneSize){
+        double xDiff = getXDifference(worldObject, zoneSize);
+        double yDiff = getYDifference(worldObject, zoneSize);
+        double angle = Math.atan(yDiff/xDiff);
+
+        if(xDiff < 0){
+            angle += Math.PI;
+        }
+        return angle;
     }
 
     public void setState(WorldObjectState state) {

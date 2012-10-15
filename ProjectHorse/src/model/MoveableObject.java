@@ -18,11 +18,12 @@ public abstract class MoveableObject extends WorldObject{
         return rotationSpeed;
     }
 
-    @Override
+
     /**
      * Besides calling the update of WorldObject, updates the object's
      * position, rotation and introduces an isOutOfBoundsCheck
      */
+    @Override
     public void update(World world) {
         updatePosition();
         updateRotation();
