@@ -14,8 +14,6 @@ import model.utility.shape.ZoneCoordinate;
  */
 public abstract class Effect extends MoveableBackgroundObject {
 
-
-
     @Override
     public void updatePosition(double size){
         super.updatePosition(size);

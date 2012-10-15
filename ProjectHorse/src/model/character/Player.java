@@ -187,7 +187,6 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
 
     public void addScore(int i) {
         this.score += i;
-        System.out.println(score);
     }
 
     public int getScore(){

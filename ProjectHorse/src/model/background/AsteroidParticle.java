@@ -18,7 +18,7 @@ public class AsteroidParticle extends Particle {
 	
     public AsteroidParticle(Asteroid a){
         super(new Coordinate(a.getCoordinate()), new ZoneCoordinate(a.getZoneCoordinate()));
-        tickToKill = 50 + Randomizer.randomInt(1, 40);
+        tickToKill = (short) ((short) 50 + Randomizer.randomInt(1, 40));
         this.width = Randomizer.randomInt(1, 5);
         this.height = width;
         this.rotationSpeed = (Randomizer.randomInt(0,300) - Randomizer.randomInt(0,300))/3000.0;

@@ -26,7 +26,6 @@ public abstract class AbstractImageLoader {
         if(bf == null){
         	timesRun++;
             bf = load(path, bf);
-            System.out.println(timesRun);
             return bf;
         }
         return bf;

@@ -7,7 +7,7 @@ import model.utility.shape.ZoneCoordinate;
 public class RedProjectileDeathParticle extends Particle {
 	public RedProjectileDeathParticle(Projectile p){
 		super(new Coordinate(p.getCoordinate()), new ZoneCoordinate(p.getZoneCoordinate()));
-		tickToKill = 20 + Randomizer.randomInt(1, 20);
+		tickToKill = (short) (20 + Randomizer.randomInt(1, 20));
 		this.width = Randomizer.randomInt(1, 3);
 		this.height = width;
 		this.rotationSpeed = (Randomizer.randomInt(0,300) - Randomizer.randomInt(0,300))/3000.0;

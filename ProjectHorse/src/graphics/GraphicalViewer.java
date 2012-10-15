@@ -81,7 +81,7 @@ public class GraphicalViewer extends Viewer {
          Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
          this.width = (screenSize.width - PANEL_PADDING_HORI)/2;
          this.height = (screenSize.height - PANEL_PADDING_VERT);
-         bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB_PRE);
+         this.bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
     }
 
     /**
