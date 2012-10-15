@@ -211,4 +211,12 @@ public class GameModel extends Observable {
             return player2;
         }
     }
+    
+    public Player getOtherPlayer(Player p){
+    	if(p == player1){
+    		return player2;
+    	} else {
+    		return player1;
+    	}
+    }
 }
