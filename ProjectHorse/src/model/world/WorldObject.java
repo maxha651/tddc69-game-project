@@ -58,6 +58,10 @@ public abstract class WorldObject extends AbstractGameObject implements Boundabl
                 coordinate.getY() < 0 || coordinate.getY() > zoneSize;
     }
 
+    /**
+     * The vertical difference between the coordinate of this object and another object's
+     *
+     */
     public int getXDifference(WorldObject worldObject, double zoneSize){
         ZoneCoordinate thisZoneCoord = new ZoneCoordinate(zoneCoordinate);
         Coordinate thisCoord = new Coordinate(coordinate);
@@ -73,6 +77,10 @@ public abstract class WorldObject extends AbstractGameObject implements Boundabl
         return (int) (thatCoord.getX() - thisCoord.getX());
     }
 
+    /**
+     * The horizontal difference between the coordinate of this object and another object's
+     *
+     */
     public int getYDifference(WorldObject worldObject, double zoneSize){
         ZoneCoordinate thisZoneCoord = new ZoneCoordinate(zoneCoordinate);
         Coordinate thisCoord = new Coordinate(coordinate);
@@ -88,6 +96,11 @@ public abstract class WorldObject extends AbstractGameObject implements Boundabl
         return (int) (thatCoord.getY() - thisCoord.getY());
     }
 
+    /**
+     * Calculates the angle to another object
+     *
+     * @return angle in radians
+     */
     public double getAngleTo(WorldObject worldObject, double zoneSize){
         double xDiff = getXDifference(worldObject, zoneSize);
         double yDiff = getYDifference(worldObject, zoneSize);
