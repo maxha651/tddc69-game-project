@@ -27,14 +27,14 @@ import java.awt.image.BufferedImage;
 public class GraphicalViewer extends Viewer {
 
     //model used in painting
-    GameModel gameModel;
-    Player p;
-    BufferedImage bufferedImage;
-    AffineTransform saved;
+    public GameModel gameModel;
+    public Player p;
+    private BufferedImage bufferedImage;
+    private AffineTransform saved;
 
     //reference/pointer to the image loader used
-    ImageLoader imageLoader;
-    WorldObjectPainter painter;
+    private ImageLoader imageLoader;
+    private WorldObjectPainter painter;
 
     //default values / constants
     final static int PANEL_PADDING_VERT = 80; //pads the width  of the graphical viewer
@@ -69,9 +69,7 @@ public class GraphicalViewer extends Viewer {
 
     //camera position in the current zone
     private int cameraX, cameraY;
-
-
-
+    
     /**
      * Standard constructor that takes a gameModel and initializes the image loading
      */

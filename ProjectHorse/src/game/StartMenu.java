@@ -10,10 +10,10 @@ import java.awt.event.ActionListener;
  */
 public class StartMenu extends JFrame{
 
-    static final String FRAME_TITLE = "Welcome to Space Explorer!";
+    private static final String FRAME_TITLE = "Welcome to Space Explorer!";
 
-    JButton startButton;
-    JButton exitButton;
+    private JButton startButton;
+    private JButton exitButton;
 
     public StartMenu(){
         super(FRAME_TITLE);

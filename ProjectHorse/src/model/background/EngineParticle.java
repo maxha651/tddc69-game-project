@@ -8,29 +8,43 @@ import model.utility.shape.ZoneCoordinate;
 import model.world.WorldObjectState;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Brain
- * Date: 2012-10-01
- * Time: 18:37
- * To change this template use File | Settings | File Templates.
+ * Engine particle constructs itself behind an engine in the world.
  */
-public class EngineParticle extends Particle {
+public class EngineParticle extends Particle {	
+	static final int MAX_SIZE = 3;
+	static final int MAX_VEL = 3;
 
+	private static final int MIN_LIFE_SPAN = 15;
+	private static final int LIFE_SPAN_SPREAD = 8;
+
+	/**
+	 * Basic constructor for an EngineParticle.
+	 * Takes an AbstractCharacter p and uses its coordinates to spawn particles behind the spacecraft.
+	 */
     public EngineParticle(AbstractCharacter p){
-
-        super(p.getCoordinate(), p.getZoneCoordinate());
-        this.tickToKill = 25;
-        this.height = this.width = Randomizer.randomInt(1, 3);
-        this.setRotationAngle(Randomizer.randomInt(0, 360));
-        this.rotationSpeed = (Randomizer.randomInt(0,300) - Randomizer.randomInt(0,300))/3000.0;
-        this.velocityX = Randomizer.randomDouble(0, 3)*model.utility.math.StandardMath.reverseSign(p.getVelocityX()) - Randomizer.randomDouble(0, 2)*model.utility.math.StandardMath.reverseSign(p.getVelocityX());
-        this.velocityY = Randomizer.randomDouble(0, 3)*model.utility.math.StandardMath.reverseSign(p.getVelocityY()) - Randomizer.randomDouble(0, 2)*model.utility.math.StandardMath.reverseSign(p.getVelocityY());
-        this.setRotationAngle(Randomizer.randomDouble(0,10));
-
-        this.coordinate = new Coordinate(p.getCoordinate());
-
-        this.coordinate.setX(coordinate.getX() - Math.cos(p.getRotationAngle()) * p.getWidth()/2);
-        this.coordinate.setY(coordinate.getY() - Math.sin(p.getRotationAngle()) * p.getHeight()/2);
-        this.zoneCoordinate = new ZoneCoordinate(p.getZoneCoordinate());
+    	 super(getParticleCoordinate(p), 
+           	  new ZoneCoordinate(p.getZoneCoordinate()), 
+           	  getParticleVelocityX(),
+           	  getParticleVelocityY(),
+           	  MAX_SIZE,
+           	  getParticleLifeSpan());       	
+    }
+    
+    //private methods used for basic calculations
+    private static double getParticleVelocityX(){
+    	return Randomizer.randomDouble(0, MAX_VEL) - Randomizer.randomDouble(0, MAX_VEL);    
+    }
+    
+    private static double getParticleVelocityY(){
+    	return Randomizer.randomDouble(0, MAX_VEL) - Randomizer.randomDouble(0, MAX_VEL);
+    }
+    
+    private static short getParticleLifeSpan(){
+		return (short) (MIN_LIFE_SPAN + Randomizer.randomInt(0, LIFE_SPAN_SPREAD));
+	}
+    
+    private static Coordinate getParticleCoordinate(AbstractCharacter p){
+    	return new Coordinate(p.getCoordinate().getX() - Math.cos(p.getRotationAngle()) * p.getWidth()/2,
+    			p.getCoordinate().getY() - Math.sin(p.getRotationAngle()) * p.getHeight()/2);       
     }
 }

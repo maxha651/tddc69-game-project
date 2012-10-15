@@ -15,15 +15,32 @@ import model.world.WorldObjectState;
  * To change this template use File | Settings | File Templates.
  */
 public class SpacecraftDeathParticle extends Particle {
-	static final int M_V = 3; //max velocity
 	
-    public SpacecraftDeathParticle(Player player){
-        super(new Coordinate(player.getCoordinate()), new ZoneCoordinate(player.getZoneCoordinate()));
-        tickToKill = (short) (50 + Randomizer.randomInt(1, 40));
-        this.height = this.width = Randomizer.randomInt(1, 5);
-        this.rotationSpeed = (Randomizer.randomInt(0,300) - Randomizer.randomInt(0,300))/3000.0;
-        this.velocityX = Randomizer.randomDouble(0, M_V)*model.utility.math.StandardMath.reverseSign(player.getVelocityX()) - Randomizer.randomDouble(0, M_V)*model.utility.math.StandardMath.reverseSign(player.getVelocityX());
-        this.velocityY = Randomizer.randomDouble(0, M_V)*model.utility.math.StandardMath.reverseSign(player.getVelocityY()) - Randomizer.randomDouble(0, M_V)*model.utility.math.StandardMath.reverseSign(player.getVelocityY());
-        this.setRotationAngle(Randomizer.randomDouble(0,10));
-    }
+	private static final int MAX_SIZE = 3;
+	private static final int MAX_VEL = 5;
+
+	private static final int MIN_LIFE_SPAN = 25;
+	private static final int LIFE_SPAN_SPREAD = 20;
+	
+	public SpacecraftDeathParticle(Player p){
+		super(new Coordinate(p.getCoordinate()), 
+			new ZoneCoordinate(p.getZoneCoordinate()), 
+			getParticleVelocityX(),
+			getParticleVelocityY(),
+			MAX_SIZE,
+			getParticleLifeSpan());       	
+	}
+
+	//private methods used for basic calculations
+	private static double getParticleVelocityX(){
+		return Randomizer.randomDouble(0, MAX_VEL) - Randomizer.randomDouble(0, MAX_VEL);    
+	}
+
+	private static double getParticleVelocityY(){
+		return Randomizer.randomDouble(0, MAX_VEL) - Randomizer.randomDouble(0, MAX_VEL);
+	}
+
+	private static short getParticleLifeSpan(){
+		return (short) (MIN_LIFE_SPAN + Randomizer.randomInt(0, LIFE_SPAN_SPREAD));
+	}
 }

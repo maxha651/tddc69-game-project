@@ -6,8 +6,14 @@ import java.awt.image.BufferedImage;
 import model.background.Projectile;
 import model.character.Player;
 
+/**
+ * ImageLoader for a basic game.
+ * This only loads images once. When an image has been loaded it is then stored 
+ * in RAM for further use.
+ */
 public class BasicImageLoader extends AbstractImageLoader implements ImageLoader {
 	
+		//declarations of all images used 
 		BufferedImage asteroid1;
 	    BufferedImage spaceship1;
         BufferedImage redplayer;
@@ -23,13 +29,19 @@ public class BasicImageLoader extends AbstractImageLoader implements ImageLoader
 	    }
 
 	    public BufferedImage getPlayerImage(Player p){
+	    	
+	    	/*
             if(p.getColor().equals(Color.RED)){
                 redplayer = getImage(redplayer, "redplayer.png");
                 return redplayer;
             } else {
                 blueplayer = getImage(blueplayer, "blueplayer.png");
                 return blueplayer;
-            }
+            }*/
+	    	
+	    	redplayer = getImage(redplayer, "redplayer.png");
+            return redplayer;
+	    	
 	    }
 
 	    public BufferedImage getProjectileImage(Projectile p){

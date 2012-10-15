@@ -110,6 +110,7 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
      * Resets this player to default player. 
      */
     public void reset(Coordinate c, ZoneCoordinate zc){
+    	this.setState(WorldObjectState.ALIVE);
     	this.setSpacecraft(new Spacecraft());
         this.coordinate = new Coordinate(c);
         this.zoneCoordinate = new ZoneCoordinate(zc);

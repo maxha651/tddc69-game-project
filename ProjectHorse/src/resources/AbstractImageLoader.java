@@ -18,23 +18,32 @@ import java.util.LinkedList;
  */
 public abstract class AbstractImageLoader {
 	
-	int timesRun = 0;
-    
-  
-    
+	/**
+	 * Loads an image from this class package if the image has not yet been loaded.
+	 * Loads from filename/path "path" to BufferedImage bf.
+	 * If the image has already been loaded then return reference to the image.
+	 * @param bf
+	 * @param path
+	 * @return
+	 */
     protected BufferedImage getImage(BufferedImage bf, String path){
         if(bf == null){
-        	timesRun++;
             bf = load(path, bf);
             return bf;
         }
         return bf;
     }
 
+    /**
+     * Tries to load an image from path into BufferedImage bf
+     * System exits if it can't find the image
+     * @param path
+     * @param bf
+     * @return
+     */
     private BufferedImage load(String path, BufferedImage bf){
         try {
             bf = ImageIO.read(this.getClass().getResource(path));
-
         } catch (IOException e) {
             //e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
             System.err.print("[ImageLoader] Could not load image from path: " + path);
