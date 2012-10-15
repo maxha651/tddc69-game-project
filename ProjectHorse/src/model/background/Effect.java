@@ -15,9 +15,4 @@ import model.world.World;
  */
 public abstract class Effect extends MoveableBackgroundObject {
 
-    @Override
-    public void update(World world){
-        super.update(world);
-    }
-
 }

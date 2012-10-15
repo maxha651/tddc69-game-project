@@ -83,8 +83,6 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
             
         }
         
-      
-
         //double massRatio =(double) mass / (double) c.getMass() ; // divides by zero
         if(c.getClass() != Projectile.class){
         	tempVelocityX = c.getVelocityX();// * massRatio * 0.7;
