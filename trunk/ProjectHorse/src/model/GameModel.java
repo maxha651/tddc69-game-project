@@ -21,7 +21,7 @@ public class GameModel extends Observable {
     boolean alive = true;
     int seed;
     public long tick = 0;
-    private final int RESET_DELAY = 100;
+    private static final int RESET_DELAY = 200;
     private int resetTick;
 
     //player controllers
