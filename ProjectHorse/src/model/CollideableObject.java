@@ -14,9 +14,15 @@ import model.world.WorldObjectContainer;
  * Time: 4:48 PM
  * To change this template use File | Settings | File Templates.
  */
-public class CollideableObject extends MoveableObject {
+public abstract class CollideableObject extends MoveableObject {
 
     private final double allowedIntersection = 0.9;
+
+    protected int mass;
+
+    public int getMass(){
+        return mass;
+    }
 
     protected boolean isCollideable(Object o){
         return CollideableObject.class.isAssignableFrom(o.getClass());
