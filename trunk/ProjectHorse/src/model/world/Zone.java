@@ -3,13 +3,9 @@ package model.world;
 import model.utility.shape.Coordinate;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Max
- * Date: 2012-09-22
- * Time: 12:31
- * To change this template use File | Settings | File Templates.
+ * Fix (WorldObjectContainer = ZONE?)
  */
-// Implement Zone as synchronized WorldObjectContainer (?)
+
 public class Zone {
     private final Coordinate origo;
     private final double zoneSize;

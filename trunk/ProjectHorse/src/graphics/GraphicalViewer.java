@@ -102,6 +102,9 @@ public class GraphicalViewer extends Viewer {
         //start painting in correct order
         paintBackground(g2d);
         paintWorldObjects(g2d);
+
+        //Draws a pointer to the other player (broken)
+        //drawPointer(g2d);
         if(paintExtraInformation){
             paintExtraInformation(g2d);
         }
@@ -255,6 +258,17 @@ public class GraphicalViewer extends Viewer {
 
         cameraX = (positionX - width / 2);
         cameraY = (positionY - height / 2);
+    }
+
+    public void drawPointer(Graphics2D g2d){
+        Player w1 = gameModel.getPlayer(1);
+        Player w2 = gameModel.getPlayer(2);
+        double angleBetween = w1.getAngleTo(w2, gameModel.getZoneSize());
+
+        g2d.setColor(Color.RED);
+        g2d.fillRect((int) (w1.getCoordinate().getY() + Math.sin(angleBetween) * 300),
+                (int) (w1.getCoordinate().getX() + Math.cos(angleBetween) * 300),
+                10, 10);
     }
 
     /**

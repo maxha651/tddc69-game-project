@@ -7,11 +7,7 @@ import model.world.WorldObject;
 import model.world.WorldObjectContainer;
 
 /**
- * Created with IntelliJ IDEA.
- * User: max
- * Date: 10/14/12
- * Time: 4:48 PM
- * To change this template use File | Settings | File Templates.
+ * Any WorldObject which can collide with other objects
  */
 public abstract class CollideableObject extends MoveableObject {
 
@@ -31,6 +27,9 @@ public abstract class CollideableObject extends MoveableObject {
         return;
      }
 
+    /**
+     * Checks if object collides with another object (collideable).
+     */
     protected boolean isColliding(CollideableObject collideable, double zoneSize){
         ZoneCoordinate thisZoneCoord = new ZoneCoordinate(zoneCoordinate);
         Coordinate thisCoord = new Coordinate(coordinate);
@@ -54,6 +53,13 @@ public abstract class CollideableObject extends MoveableObject {
         return xDiff < allowedXDiff && yDiff < allowedYDiff;
     }
 
+    /**
+     * Moves two colliding(doesn't check if colliding!) objects c1 and c2
+     * away from each other so they don't collide anymore
+     *
+     * @param xIntersect The amount the two objects intersects in x
+     * @param yIntersect The amount the two objects intersects in y
+     */
     protected static void unCollide(CollideableObject c1, CollideableObject c2, double xIntersect, double yIntersect){
         Coordinate c1Coord = c1.getCoordinate();
         Coordinate c2Coord = c2.getCoordinate();
@@ -68,6 +74,11 @@ public abstract class CollideableObject extends MoveableObject {
         }
     }
 
+    /**
+     * Checks whether the object collides with another object and acts accordingly.
+     *
+     * @param world The World which contains the object
+     */
     protected void collisionCheck(World world){
 
         WorldObjectContainer nearbyObjects;
