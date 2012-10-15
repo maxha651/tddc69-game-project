@@ -3,11 +3,7 @@ package graphics;
 import javax.swing.*;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Brain
- * Date: 2012-09-21
- * Time: 01:35
- * To change this template use File | Settings | File Templates.
+ * The standard viewer class that all other kinds of viewers should extend from.
  */
-public class Viewer extends JComponent {
+public abstract class Viewer extends JComponent {
 }

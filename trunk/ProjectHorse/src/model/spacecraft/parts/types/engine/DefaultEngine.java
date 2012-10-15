@@ -9,9 +9,9 @@ package model.spacecraft.parts.types.engine;
  */
 public class DefaultEngine implements EngineType {
 
-    double acceleration = 0.4;
-    double maxVelocity = 9;
-    double rotationSpeed = 3;
+    double acceleration = 0.5;
+    double maxVelocity = 8;
+    double rotationSpeed = 4;
     boolean sideStep = false;
 
     @Override

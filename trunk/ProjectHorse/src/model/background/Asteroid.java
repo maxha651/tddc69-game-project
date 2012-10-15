@@ -17,25 +17,27 @@ import model.world.*;
  */
 public class Asteroid extends CollideableObject implements Collideable, Damageable{
 
-    int health;
+    short health;
     boolean hasCollided = false;
     double tempVelocityX;
     double tempVelocityY;
+    int mass;
     int damageYield;
-    static public int deathParticleAmount = 0;
-    static public int redParticleAmount = 0;
+    public int deathParticleAmount;
+    static public int redParticleAmount;
 
     public Asteroid(Coordinate c, ZoneCoordinate z){
-        this.width = this.boundingHeight = Randomizer.randomInt(20, 80);
+        this.width = this.boundingHeight = Randomizer.randomInt(20, 90);
         this.height = this.boundingWidth = this.boundingHeight + Randomizer.randomInt(0, 15);
-        this.health = this.mass = (int) Math.sqrt(boundingHeight*boundingWidth);
+        this.mass = (int) Math.sqrt(boundingHeight*boundingWidth);
         this.rotationSpeed = (Randomizer.randomInt(0,300) - Randomizer.randomInt(0,300))/5000.0;
         this.velocityX = Randomizer.randomDouble(0, 4) - Randomizer.randomDouble(0, 4);
         this.velocityY = Randomizer.randomDouble(0, 4) - Randomizer.randomDouble(0, 4);
         this.tempVelocityX = velocityX;
         this.tempVelocityY = velocityY;
         this.setRotationAngle(Randomizer.randomDouble(0,10));
-        this.damageYield = mass/10;
+        this.damageYield = mass/20;
+        this.health = (short) ((Math.pow(mass, 2)) / 60);
         this.coordinate = c;
         this.zoneCoordinate = z;
 
@@ -43,17 +45,23 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
 
     @Override
     public void update(World world) {
-        checkIfCollided();
         super.update(world);
+
         collisionCheck(world);
     }
 
-    private void checkIfCollided(){
+    private void collidedCheck(){
         if(hasCollided){
             velocityX = tempVelocityX;
             velocityY = tempVelocityY;
             hasCollided = false;
         }
+    }
+
+    @Override
+    public void updatePosition(double size){
+        collidedCheck();
+        super.updatePosition(size);
     }
 
     @Override
@@ -68,21 +76,21 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
 
     @Override
     public void setToCollide(CollideableObject c) {
-        hasCollided = true;
+    	  hasCollided = true;
 
         if(Damageable.class.isAssignableFrom(c.getClass())){
             ((Damageable) c).doDamage(damageYield);
-            if(c.getClass() == Projectile.class){
-            	c.setState(WorldObjectState.DEAD);
-            	return;
-            }
+            
         }
+        
+      
 
-        double massRatio =(double) c.getMass() / (double) mass;
-
-        if(massRatio != 0){
-            tempVelocityX = c.getVelocityX();
-            tempVelocityY = c.getVelocityY();
+        //double massRatio =(double) mass / (double) c.getMass() ; // divides by zero
+        if(c.getClass() != Projectile.class){
+        	tempVelocityX = c.getVelocityX();// * massRatio * 0.7;
+        	tempVelocityY = c.getVelocityY();// * massRatio * 0.7;
+        } else {
+        	c.setState(WorldObjectState.DEAD);
         }
     }
 
@@ -126,6 +134,12 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
         for(int i = 0; i < deathParticleAmount; i++){
             world.addWorldObject(new AsteroidParticle(this));
         }
+
+        /*
+        for(int i = 0; i < redParticleAmount; i++){
+            world.addWorldObject(new RedAsteroidParticle(this));
+        }
+        */
     }
     
     public void calculateDeathParticleAmount(){
