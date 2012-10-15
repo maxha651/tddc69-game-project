@@ -10,6 +10,8 @@ import model.world.WorldObjectState;
  * Standard class for asteroids particles.
  */
 public class AsteroidParticle extends Particle {
+	
+	//default constants
 	private static final int MAX_VEL = 3; //max velocityX and max velocityY of the asteroid particles
 	private static final int MAX_SIZE = 8;
 

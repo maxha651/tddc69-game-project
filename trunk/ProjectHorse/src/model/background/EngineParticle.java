@@ -11,8 +11,10 @@ import model.world.WorldObjectState;
  * Engine particle constructs itself behind an engine in the world.
  */
 public class EngineParticle extends Particle {	
-	static final int MAX_SIZE = 3;
-	static final int MAX_VEL = 3;
+	
+	//default constants
+	private static final int MAX_SIZE = 3;
+	private static final int MAX_VEL = 3;
 
 	private static final int MIN_LIFE_SPAN = 15;
 	private static final int LIFE_SPAN_SPREAD = 8;

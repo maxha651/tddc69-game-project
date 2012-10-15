@@ -15,21 +15,29 @@ import model.world.World;
 import model.world.WorldObjectState;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Max
- * Date: 2012-09-23
- * Time: 23:53
- * To change this template use File | Settings | File Templates.
+ * The projectile class is used for all projectiles in the world, such as laser beams,
+ * missiles, gun shots etc. 
+ * 
+ * Is removed on collision <=> "health = 0"
  */
 public class Projectile extends CollideableObject implements Collideable{
 
-    ProjectileType pt;
-    AbstractCharacter owner;
+	//default declarations
+    private ProjectileType pt;
+    public AbstractCharacter owner;
+    private int tick = 0;
+    private boolean hasCollided = false;
     
-    int tick = 0;
-    int deathParticleAmount = 5;
-    boolean hasCollided = false;
+    static private int deathParticleAmount = 5;
 
+    /** 
+     * Default constructor for a projectile.
+     * @param weapon
+     * @param coordinate
+     * @param angle
+     * @param zoneCoordinate
+     * @param player
+     */
     public Projectile(Weapon weapon, Coordinate coordinate, double angle, ZoneCoordinate zoneCoordinate, AbstractCharacter player) {
         owner = player;
     	WeaponType wt = weapon.getWeaponType();
@@ -44,8 +52,12 @@ public class Projectile extends CollideableObject implements Collideable{
         this.boundingWidth = pt.getBoundingWidth();
     }
 
-    public Projectile() {
+    /**
+     * Do NOT use this constructor.
+     */
+    private Projectile() {
         System.out.println("DO NOT USE THIS CONSTRUCTOR -- WHY ARE YOU USING ME!??? :(( (in Projectile)");
+        System.exit(1);
     }
 
     @Override
@@ -94,6 +106,7 @@ public class Projectile extends CollideableObject implements Collideable{
     public void destroy(World world){
     	super.destroy(world);
 
+    	//spawn death particles
         for(int i = 0; i < deathParticleAmount; i++){
           world.addWorldObject(new RedProjectileDeathParticle(this));
         }
