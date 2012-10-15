@@ -4,6 +4,7 @@ import model.character.Player;
 import model.utility.math.Randomizer;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
+import model.world.World;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,8 +16,8 @@ import model.utility.shape.ZoneCoordinate;
 public abstract class Effect extends MoveableBackgroundObject {
 
     @Override
-    public void updatePosition(double size){
-        super.updatePosition(size);
+    public void update(World world){
+        super.update(world);
     }
 
 }

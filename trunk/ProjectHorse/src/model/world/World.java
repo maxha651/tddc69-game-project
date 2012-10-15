@@ -15,18 +15,21 @@ import java.util.concurrent.ConcurrentSkipListMap;
  */
 public class World {
     double zoneSize;
-    ConcurrentSkipListMap<ZoneCoordinate, Zone> zones;
+    ConcurrentSkipListMap<ZoneCoordinate, Zone> zoneMap;
     LinkedList<WorldObjectSpawner> spawners;
 
     public int getNumberOfWorldObjects() {
+        int numberOfWorldObjects = 0;
+
+        for(Zone zone : zoneMap.values()){
+            numberOfWorldObjects += zone.getNumberOfWorldObjects();
+        }
         return numberOfWorldObjects;
     }
 
-    int numberOfWorldObjects = 0;
-
     public World(double zoneSize){
         this.zoneSize = zoneSize;
-        this.zones = new ConcurrentSkipListMap<ZoneCoordinate, Zone>();
+        this.zoneMap = new ConcurrentSkipListMap<ZoneCoordinate, Zone>();
         this.spawners = new LinkedList<WorldObjectSpawner>();
     }
 
@@ -51,11 +54,11 @@ public class World {
      * @return
      */
     private Zone getZone(ZoneCoordinate coordinate){
-        Zone zone = zones.get(coordinate);
+        Zone zone = zoneMap.get(coordinate);
 
         if (zone == null){
             zone = new Zone(zoneSize);
-            zones.put(new ZoneCoordinate(coordinate), zone);
+            zoneMap.put(new ZoneCoordinate(coordinate), zone);
             spawnWorldObjects(coordinate);
         }
         return zone;
@@ -72,7 +75,6 @@ public class World {
         }
         else{
             zone.add(worldObject);
-            numberOfWorldObjects++;
         }
     }
 
@@ -173,7 +175,7 @@ public class World {
      * Updates ALL created zones
      */
     public void update(){
-        for(Zone zone : zones.values()){
+        for(Zone zone : zoneMap.values()){
             update(zone);
         }
     }
@@ -200,9 +202,7 @@ public class World {
      * @param zoneCoordinate
      */
     private void clearZone(ZoneCoordinate zoneCoordinate){
-        if (zoneExist(zoneCoordinate)){
-            numberOfWorldObjects -= zones.remove(zoneCoordinate).getWorldObjects().size();
-        }
+        zoneMap.remove(zoneCoordinate);
     }
 
     /**
@@ -239,10 +239,10 @@ public class World {
     }
 
     public int getNumOfZones(){
-        return zones.size();
+        return zoneMap.size();
     }
 
     private boolean zoneExist(ZoneCoordinate zoneCoordinate){
-        return zones.get(zoneCoordinate) != null;
+        return zoneMap.get(zoneCoordinate) != null;
     }
 }

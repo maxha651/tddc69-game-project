@@ -1,7 +1,6 @@
 package model.world;
 
 import model.utility.shape.Coordinate;
-import model.utility.shape.ZoneCoordinate;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,20 +12,17 @@ import model.utility.shape.ZoneCoordinate;
 // Implement Zone as synchronized WorldObjectContainer (?)
 public class Zone {
     private Coordinate origo;
-    private double size;
+    private double zoneSize;
 
     private WorldObjectContainer worldObjects;
 
-    public Zone(double size) {
+    public Zone(double zoneSize) {
         this.origo = new Coordinate(0.0, 0.0);
-        this.size = size;
+        this.zoneSize = zoneSize;
         worldObjects = new WorldObjectContainer();
     }
 
     public void add(WorldObject object) throws IndexOutOfBoundsException {
-        if (!isWithinBoundaries(object)){
-            throw new IndexOutOfBoundsException();
-        }
         worldObjects.add(object);
     }
 
@@ -34,12 +30,12 @@ public class Zone {
         return worldObjects.remove(object);
     }
 
-    public void clear(){
-        worldObjects.clear();
+    public double getZoneSize(){
+        return zoneSize;
     }
 
-    public double getSize(){
-        return size;
+    public int getNumberOfWorldObjects(){
+        return worldObjects.size();
     }
 
     public WorldObjectContainer getAllObjectsInArea(Coordinate start, Coordinate stop){
@@ -58,10 +54,10 @@ public class Zone {
     }
 
     private boolean isWithinBoundaries(Coordinate position){
-        if (position.getX() < origo.getX() || position.getX() > origo.getX() + size){
+        if (position.getX() < origo.getX() || position.getX() > origo.getX() + zoneSize){
             return false;
         }
-        if (position.getY() < origo.getY() || position.getY() > origo.getY() + size){
+        if (position.getY() < origo.getY() || position.getY() > origo.getY() + zoneSize){
             return false;
         }
         return true;

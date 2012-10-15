@@ -151,8 +151,8 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
     //getters and setters
     @Override
     public void setToCollide(CollideableObject c) {
-        velocityX *= 0.5;
-        velocityY *= 0.5;
+        velocityX = 0;
+        velocityY = 0;
 
         if(Damageable.class.isAssignableFrom(c.getClass())){
             ((Damageable) c).doDamage(10);
