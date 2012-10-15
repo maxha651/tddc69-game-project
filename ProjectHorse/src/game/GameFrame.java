@@ -20,37 +20,35 @@ import java.util.Observer;
 public class GameFrame extends JFrame implements KeyListener, MouseListener{
 
 	//declarations and default initializations
-    JMenuBar menuBar;
-    JMenu fileMenu, settingsMenu, viewMenu;
-    static final String FRAME_TITLE = "Space Explorer";
-    GameModel gameModel;
-    Game game; //used for pausing/unpausing/destroying game
-    GraphicalViewer viewer1;
-    GraphicalViewer viewer2;
+    private static final String FRAME_TITLE = "Space Explorer";
+    private GameModel gameModel;
+    private Game game; //used for pausing/unpausing/destroying game
+    private GraphicalViewer viewer1;
+    private GraphicalViewer viewer2;
 
     //player 1 key coding
-    final static int PLAYER_1_FIRE = KeyEvent.VK_SPACE;
-    final static int PLAYER_1_TURN_LEFT = KeyEvent.VK_A;
-    final static int PLAYER_1_TURN_RIGHT = KeyEvent.VK_D;
-    final static int PLAYER_1_THROTTLE = KeyEvent.VK_W;
-    final static int PLAYER_1_FOCUS_CAMERA = KeyEvent.VK_F;
+    private final static int PLAYER_1_FIRE = KeyEvent.VK_SPACE;
+    private final static int PLAYER_1_TURN_LEFT = KeyEvent.VK_A;
+    private final static int PLAYER_1_TURN_RIGHT = KeyEvent.VK_D;
+    private final static int PLAYER_1_THROTTLE = KeyEvent.VK_W;
+    private final static int PLAYER_1_FOCUS_CAMERA = KeyEvent.VK_F;
 
     //player 2 key coding
-    final static int PLAYER_2_TURN_LEFT = KeyEvent.VK_LEFT;
-    final static int PLAYER_2_FIRE = KeyEvent.VK_ENTER;
-    final static int PLAYER_2_TURN_RIGHT = KeyEvent.VK_RIGHT;
-    final static int PLAYER_2_THROTTLE = KeyEvent.VK_UP;
-    final static int PLAYER_2_THROTTLE_MOUSE = MouseEvent.BUTTON3;
-    final static int PLAYER_2_FIRE_MOUSE = MouseEvent.BUTTON1;
+    private final static int PLAYER_2_TURN_LEFT = KeyEvent.VK_LEFT;
+    private final static int PLAYER_2_FIRE = KeyEvent.VK_ENTER;
+    private final static int PLAYER_2_TURN_RIGHT = KeyEvent.VK_RIGHT;
+    private final static int PLAYER_2_THROTTLE = KeyEvent.VK_UP;
+    private final static int PLAYER_2_THROTTLE_MOUSE = MouseEvent.BUTTON3;
+    private final static int PLAYER_2_FIRE_MOUSE = MouseEvent.BUTTON1;
 
     //other key coding
-    final static int SHOW_INFORMATION = KeyEvent.VK_I;
-    final static int DRAW_BOUNDS = KeyEvent.VK_B;
-    final static int SHOW_KEY_CODING = KeyEvent.VK_K;
-    final static int DRAW_CROSS = KeyEvent.VK_C;
-    final static int PAUSE = KeyEvent.VK_P;
-    final static int QUIT = KeyEvent.VK_Q;
-    final static int RESTART = KeyEvent.VK_R;
+    private final static int SHOW_INFORMATION = KeyEvent.VK_I;
+    private final static int DRAW_BOUNDS = KeyEvent.VK_B;
+    private final static int SHOW_KEY_CODING = KeyEvent.VK_K;
+    private final static int DRAW_CROSS = KeyEvent.VK_C;
+    private final static int PAUSE = KeyEvent.VK_P;
+    private final static int QUIT = KeyEvent.VK_Q;
+    private final static int RESTART = KeyEvent.VK_R;
     
     /**
      * The default constructor that creates 2 graphical viewers (one for each player).
@@ -216,7 +214,7 @@ public class GameFrame extends JFrame implements KeyListener, MouseListener{
      * Add all the components to the frame.
      * Default is 2 player with 2 viewers.
      */
-    public void addAllComponents(){
+    private void addAllComponents(){
         BasicImageLoader img = new BasicImageLoader();
         viewer1 = new GraphicalViewer(gameModel, gameModel.getPlayer(1), img);
         viewer2 = new GraphicalViewer(gameModel, gameModel.getPlayer(2), img);
