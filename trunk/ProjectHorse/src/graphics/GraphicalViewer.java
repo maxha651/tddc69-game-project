@@ -1,11 +1,8 @@
 package graphics;
 
 import model.GameModel;
-import model.background.*;
 import model.character.Player;
-import model.properties.Boundable;
 import model.properties.Collideable;
-import model.spacecraft.parts.Engine;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 import model.world.WorldObject;
@@ -41,6 +38,8 @@ public class GraphicalViewer extends Viewer {
     final static int PANEL_PADDING_HORI = 20; //pads the height of the graphical viewer
     final static int DEFAULT_FONT_SIZE = 14;
     final static int PLAYER_INFORMATION_FONT_PAD = 25;
+    final static int POINTER_SIZE = 10;
+    final static Color POINTER_COLOR = Color.RED;
     final static Color DEFAULT_PAINT_COLOR = Color.WHITE;
     final static Color DEFAULT_BACKGROUND_COLOR = Color.BLACK;
     final static Color DEFAULT_FONT_COLOR = Color.WHITE;
@@ -100,9 +99,10 @@ public class GraphicalViewer extends Viewer {
         //start painting in correct order
         paintBackground(g2d);
         paintWorldObjects(g2d);
+        drawPointerToOtherPlayer(g2d);
 
         //Draws a pointer to the other player (broken)
-        //drawPointer(g2d);
+        //drawPointerToOtherPlayer(g2d);
         if(paintExtraInformation){
             paintExtraInformation(g2d);
         }
@@ -218,6 +218,7 @@ public class GraphicalViewer extends Viewer {
         ic.add("Player angle     : " + toTruncatedStr(Math.toDegrees(p.getRotationAngle()), 1) + " (degrees), " + toTruncatedStr(p.getRotationAngle(), 1) + " (radians)");
         playerCoordinateString = (p.getZoneCoordinate().getX() + ", " + p.getZoneCoordinate().getY());
         ic.add("Player zone coord: " + playerCoordinateString);
+        ic.add("Angle between pl : " + gameModel.getPlayer(1).getAngleTo(gameModel.getPlayer(2), gameModel.getZoneSize()));
         ic.add("World objects #  : " + gameModel.numberOfWorldObjects);
         ic.add("Zones #          : " + gameModel.numberOfZones());
         ic.add("Update Time (ms) : " + gameModel.updateTime);
@@ -263,15 +264,24 @@ public class GraphicalViewer extends Viewer {
         cameraY = (positionY - height / 2);
     }
 
-    public void drawPointer(Graphics2D g2d){
-        Player w1 = gameModel.getPlayer(1);
-        Player w2 = gameModel.getPlayer(2);
-        double angleBetween = w1.getAngleTo(w2, gameModel.getZoneSize());
+    public void drawPointerToOtherPlayer(Graphics2D g2d){
+        Player otherPlayer = gameModel.getOtherPlayer(p);
+        double zoneSize = gameModel.getZoneSize();
 
-        g2d.setColor(Color.RED);
-        g2d.fillRect((int) (w1.getCoordinate().getY() + Math.sin(angleBetween) * 300),
-                (int) (w1.getCoordinate().getX() + Math.cos(angleBetween) * 300),
-                10, 10);
+        if(Math.abs(p.getXDifference(otherPlayer, zoneSize)) > width/2 ||
+                Math.abs(p.getYDifference(otherPlayer, zoneSize)) > height/2){
+
+            double angle = p.getAngleTo(otherPlayer, zoneSize);
+
+            int positionX = (int) (p.getZoneCoordinate().getX()*zoneSize + p.getCoordinate().getX());
+            int positionY = (int) (p.getZoneCoordinate().getY()*zoneSize + p.getCoordinate().getY());
+
+            int paintX = (int) (-cameraX + positionX + Math.cos(angle)*(width/2 -PANEL_PADDING_VERT));
+            int paintY = (int) (-cameraY + positionY + Math.sin(angle)*(height/2 -PANEL_PADDING_HORI));
+
+            g2d.setColor(POINTER_COLOR);
+            g2d.fillRect(paintX, paintY, POINTER_SIZE, POINTER_SIZE);
+        }
     }
 
     /**

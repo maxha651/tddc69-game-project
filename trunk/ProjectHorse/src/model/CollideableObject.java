@@ -31,22 +31,9 @@ public abstract class CollideableObject extends MoveableObject {
      * Checks if object collides with another object (collideable).
      */
     protected boolean isColliding(CollideableObject collideable, double zoneSize){
-        ZoneCoordinate thisZoneCoord = new ZoneCoordinate(zoneCoordinate);
-        Coordinate thisCoord = new Coordinate(coordinate);
+        double xDiff = Math.abs(getYDifference(collideable, zoneSize));
+        double yDiff = Math.abs(getXDifference(collideable, zoneSize));
 
-        ZoneCoordinate thatZoneCoord = new ZoneCoordinate(collideable.getZoneCoordinate());
-        Coordinate thatCoord = new Coordinate(collideable.getCoordinate());
-
-        if(!thatZoneCoord.equals(thisZoneCoord)){
-            double yZoneDiff = (double) (thatZoneCoord.getY() - thisZoneCoord.getY()) * zoneSize;
-            double xZoneDiff = (double) (thatZoneCoord.getX() - thisZoneCoord.getX()) * zoneSize;
-
-            thatCoord.setY(thatCoord.getY() + yZoneDiff);
-            thatCoord.setX(thatCoord.getX() + xZoneDiff);
-        }
-
-        double xDiff = Math.abs(thatCoord.getX() - thisCoord.getX());
-        double yDiff = Math.abs(thatCoord.getY() - thisCoord.getY());
         double allowedXDiff = (this.getBoundingWidth() + collideable.getBoundingWidth())/2 * ALLOWED_INTERSECTION;
         double allowedYDiff = (this.getBoundingHeight() + collideable.getBoundingHeight())/2 * ALLOWED_INTERSECTION;
 
