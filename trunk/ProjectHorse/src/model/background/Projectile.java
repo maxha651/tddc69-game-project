@@ -56,6 +56,11 @@ public class Projectile extends CollideableObject implements Collideable{
     	
     	if(Damageable.class.isAssignableFrom(c.getClass())){
             ((Damageable) c).doDamage(pt.getDamage());
+            if(c.getClass() != Player.class){
+            	if(owner.getClass() == Player.class){
+            		((Player) owner).addScore(((Damageable) c).scoreYield());
+            	}
+            }
         }
 
         hasCollided = true;

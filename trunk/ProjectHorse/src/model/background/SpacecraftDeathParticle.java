@@ -19,7 +19,7 @@ public class SpacecraftDeathParticle extends Particle {
 	
     public SpacecraftDeathParticle(Player player){
         super(new Coordinate(player.getCoordinate()), new ZoneCoordinate(player.getZoneCoordinate()));
-        tickToKill = 50 + Randomizer.randomInt(1, 40);
+        tickToKill = (short) (50 + Randomizer.randomInt(1, 40));
         this.width = Randomizer.randomInt(1, 5);
         this.height = width;
         this.rotationSpeed = (Randomizer.randomInt(0,300) - Randomizer.randomInt(0,300))/3000.0;

@@ -10,8 +10,9 @@ import java.util.Random;
  * To change this template use File | Settings | File Templates.
  */
 public class Randomizer {
+	public static Random rm = new Random();
     public static int randomInt(int min, int max){
-        Random rm = new Random();
+        //Random rm = new Random();
         if(min <= max){
             return min  + rm.nextInt(max - min + 1);
         } else {
@@ -20,7 +21,7 @@ public class Randomizer {
     }
 
     public static double randomDouble(double min, double max){
-        Random rm = new Random();
+        //Random rm = new Random();
         if(min <= max){
             return rm.nextDouble()*max + min;
         } else {

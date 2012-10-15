@@ -17,18 +17,18 @@ import model.world.*;
  */
 public class Asteroid extends CollideableObject implements Collideable, Damageable{
 
-    int health = 15;
+    short health = 100;
     boolean hasCollided = false;
     double tempVelocityX;
     double tempVelocityY;
     int mass;
     int damageYield;
-    public int deathParticleAmount = 0;
-    public int redParticleAmount = 0;
+    static public int deathParticleAmount = 0;
+    static public int redParticleAmount = 0;
 
     public Asteroid(Coordinate c, ZoneCoordinate z){
         this.width = this.boundingHeight = Randomizer.randomInt(20, 80);
-        this.height = this.boundingWidth = this.boundingHeight + Randomizer.randomInt(0, 15) - Randomizer.randomInt(0, 15);
+        this.height = this.boundingWidth = this.boundingHeight + Randomizer.randomInt(0, 15);
         this.mass = (int) Math.sqrt(boundingHeight*boundingWidth);
         this.rotationSpeed = (Randomizer.randomInt(0,300) - Randomizer.randomInt(0,300))/5000.0;
         this.velocityX = Randomizer.randomDouble(0, 4) - Randomizer.randomDouble(0, 4);
@@ -79,6 +79,10 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
 
         if(Damageable.class.isAssignableFrom(c.getClass())){
             ((Damageable) c).doDamage(damageYield);
+            if(c.getClass() == Projectile.class){
+            	c.setState(WorldObjectState.DEAD);
+            	return;
+            }
         }
 
         //double massRatio =(double) mass / (double) c.getMass() ; // divides by zero
@@ -128,9 +132,11 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
             world.addWorldObject(new AsteroidParticle(this));
         }
 
+        /*
         for(int i = 0; i < redParticleAmount; i++){
             world.addWorldObject(new RedAsteroidParticle(this));
         }
+        */
     }
     
     public void calculateDeathParticleAmount(){
