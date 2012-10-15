@@ -65,6 +65,10 @@ public class World {
         return zone;
     }
 
+    /**
+     * Adds a WorldObject to the world. Checks whether it really is in the right zone before adding
+     *
+     */
     public void addWorldObject(WorldObject worldObject){
         ZoneCoordinate zoneCoord = worldObject.getZoneCoordinate();
         Zone zone = getZone(zoneCoord);
@@ -81,7 +85,7 @@ public class World {
 
     public void removeWorldObject(WorldObject worldObject){
         ZoneCoordinate zoneCoordinate = worldObject.getZoneCoordinate();
-        if (zoneExist(zoneCoordinate)){
+        if (zoneExists(zoneCoordinate)){
             getZone(worldObject.getZoneCoordinate()).removeWorldObject(worldObject);
         }
     }
@@ -243,7 +247,7 @@ public class World {
         return zoneMap.size();
     }
 
-    private boolean zoneExist(ZoneCoordinate zoneCoordinate){
+    private boolean zoneExists(ZoneCoordinate zoneCoordinate){
         return zoneMap.get(zoneCoordinate) != null;
     }
 }

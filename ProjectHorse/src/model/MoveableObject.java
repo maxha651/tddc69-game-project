@@ -6,11 +6,7 @@ import model.world.World;
 import model.world.WorldObject;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Askh
- * Date: 2012-09-27
- * Time: 19:20
- * To change this template use File | Settings | File Templates.
+ * A WorldObject which can alter it's position and rotate
  */
 public abstract class MoveableObject extends WorldObject{
 
@@ -22,14 +18,23 @@ public abstract class MoveableObject extends WorldObject{
         return rotationSpeed;
     }
 
+    /**
+     * Checks if the object has moved outside of the zone
+     *
+     */
     private boolean isOutOfBounds(double zoneSize){
         return coordinate.getX() < 0 || coordinate.getX() > zoneSize ||
                 coordinate.getY() < 0 || coordinate.getY() > zoneSize;
     }
 
     @Override
+    /**
+     * Besides calling the update of WorldObject, updates the object's
+     * position, rotation and introduces an isOutOfBoundsCheck
+     */
     public void update(World world) {
         updatePosition();
+        updateRotation();
 
         if(isOutOfBounds(world.getZoneSize())){
             world.removeWorldObject(this);
@@ -40,10 +45,18 @@ public abstract class MoveableObject extends WorldObject{
         super.update(world);
     }
 
+    /**
+     * Updates position according to current velocity
+     */
     public void updatePosition(){
         coordinate.setX(coordinate.getX() + velocityX);
         coordinate.setY(coordinate.getY() + velocityY);
-        
+    }
+
+    /**
+     * Updates rotation according to current rotation speed
+     */
+    public void updateRotation(){
         this.rotationAngle = this.rotationAngle + this.rotationSpeed;
     }
 
