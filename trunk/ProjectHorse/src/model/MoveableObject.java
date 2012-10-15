@@ -18,15 +18,6 @@ public abstract class MoveableObject extends WorldObject{
         return rotationSpeed;
     }
 
-    /**
-     * Checks if the object has moved outside of the zone
-     *
-     */
-    private boolean isOutOfBounds(double zoneSize){
-        return coordinate.getX() < 0 || coordinate.getX() > zoneSize ||
-                coordinate.getY() < 0 || coordinate.getY() > zoneSize;
-    }
-
     @Override
     /**
      * Besides calling the update of WorldObject, updates the object's

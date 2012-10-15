@@ -50,6 +50,15 @@ public abstract class WorldObject extends AbstractGameObject implements Boundabl
         }
     }
 
+    /**
+     * Checks if the object is outside the zone
+     *
+     */
+    public boolean isOutOfBounds(double zoneSize){
+        return coordinate.getX() < 0 || coordinate.getX() > zoneSize ||
+                coordinate.getY() < 0 || coordinate.getY() > zoneSize;
+    }
+
     // Might not work
     public double getAngleTo(WorldObject worldObject, double zoneSize){
         ZoneCoordinate thisZoneCoord = new ZoneCoordinate(zoneCoordinate);
