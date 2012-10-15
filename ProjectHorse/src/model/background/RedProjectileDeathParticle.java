@@ -5,12 +5,21 @@ import model.utility.math.Randomizer;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 
+/**
+ * Projectile particle constructs itself at the position of a dying projectile.
+ */
 public class RedProjectileDeathParticle extends Particle {
+	
+	//default constants
 	private static final int MAX_SIZE = 3;
 	private static final int MAX_VEL = 3;
 	private static final int MIN_LIFE_SPAN = 15;
 	private static final int LIFE_SPAN_SPREAD = 10;
 	
+	/**
+	 * Standard constructor that creates projectiles at coordinates of projectile p.
+	 * @param p
+	 */
 	public RedProjectileDeathParticle(Projectile p){
 		super(new Coordinate(p.getCoordinate()), 
 			new ZoneCoordinate(p.getZoneCoordinate()), 

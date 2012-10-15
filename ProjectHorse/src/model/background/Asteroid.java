@@ -21,15 +21,16 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
     private int damageYield;
     private int deathParticleAmount;
     
-    public final static int MAX_VELOCITY = 4;
-    public final static int ROTATION_SPEED_MAX_SPREAD = 150;
-    public final static double ROTATION_SPEED_FACTOR = 0.0002;
-    public final static int MAX_SIZE = 95;
-    public final static int MIN_SIZE = 20;
-    public final static int SIZE_SPREAD = 15;                  //spread between width and height
-    public final static int ROTATION_ANGLE_MAX_SPREAD = 10;    //max rotation angle when the asteroid is spawned
-    public final static int DAMAGE_YIELD_MASS_DIVISIOR = 20;   //used to calculate the damage yield
-    public final static int HEALTH_MASS_DIVISIOR = 60;
+    //default constants
+    private final static int MAX_VELOCITY = 4;
+    private final static int ROTATION_SPEED_MAX_SPREAD = 150;
+    private final static double ROTATION_SPEED_FACTOR = 0.0002;
+    private final static int MAX_SIZE = 95;
+    private final static int MIN_SIZE = 20;
+    private final static int SIZE_SPREAD = 15;                  //spread between width and height
+    private final static int ROTATION_ANGLE_MAX_SPREAD = 10;    //max rotation angle when the asteroid is spawned
+    private final static int DAMAGE_YIELD_MASS_DIVISIOR = 20;   //used to calculate the damage yield
+    private final static int HEALTH_MASS_DIVISIOR = 60;
     
     /**
      * Standard constructor that takes the zone and coordinate it should spawn at.

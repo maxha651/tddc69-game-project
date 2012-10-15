@@ -8,14 +8,11 @@ import model.utility.shape.ZoneCoordinate;
 import model.world.WorldObjectState;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Brain
- * Date: 2012-10-13
- * Time: 15:52
- * To change this template use File | Settings | File Templates.
+ * Spawns itself when a player dies.
  */
 public class SpacecraftDeathParticle extends Particle {
 	
+	//default constats
 	private static final int MAX_SIZE = 3;
 	private static final int MAX_VEL = 5;
 
