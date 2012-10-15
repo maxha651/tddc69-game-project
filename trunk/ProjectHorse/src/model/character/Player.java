@@ -25,6 +25,7 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
     //declarations and initialization
     final static int DEFAULT_HEALTH = 100;
     final static int DEFAULT_SCORE_YIELD = 10000;
+    final static int DEFAULT_MASS = 400;
     int scoreYield = DEFAULT_SCORE_YIELD;
     GameModel gameModel;
 	int score = 0;
@@ -47,8 +48,7 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
         this.zoneCoordinate = new ZoneCoordinate(zc);
         this.width = spacecraft.getBounds().getWidth();
         this.height = spacecraft.getBounds().getHeight();
-        this.mass = 400;
-        this.score = 0;
+        this.mass = DEFAULT_MASS;
     }
 
     /**

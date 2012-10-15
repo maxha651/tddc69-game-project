@@ -71,7 +71,7 @@ public class GraphicalViewer extends Viewer {
     private int cameraX, cameraY;
     
     /**
-     * Standard constructor that takes a gameModel and initializes the image loading
+     * Standard constructor that takes a gameModel and initializes the image loader
      */
     public GraphicalViewer(GameModel gameModel, Player p, ImageLoader imageLoader){
          this.p = p;
@@ -172,12 +172,14 @@ public class GraphicalViewer extends Viewer {
      * Draws the score in middle of the screen
      */
     public void drawScore(Graphics2D g2d){
-        setFontToMonospace(g2d, 16);
-
+        
+    	setFontToMonospace(g2d, 16);
+        int shadowPad = 2; 
+        
         g2d.setColor(p.getColor());
         g2d.drawString("score : " + p.getScore(), PLAYER_INFORMATION_FONT_PAD/2, PLAYER_INFORMATION_FONT_PAD *2);
         g2d.setColor(Color.white);
-        g2d.drawString("score : " + p.getScore(), (PLAYER_INFORMATION_FONT_PAD)/2 - 2, (PLAYER_INFORMATION_FONT_PAD)*2 - 2);
+        g2d.drawString("score : " + p.getScore(), (PLAYER_INFORMATION_FONT_PAD)/2 - shadowPad, (PLAYER_INFORMATION_FONT_PAD)*2 - shadowPad);
     }
 
     /**
@@ -185,11 +187,14 @@ public class GraphicalViewer extends Viewer {
      * @param g2d
      */
     public void drawPlayerInformation(Graphics2D g2d){
-        setFontToMonospace(g2d, 16);
+        
+    	setFontToMonospace(g2d, 16);
+        int shadowPad = 2;
+        
         g2d.setColor(p.getColor());
         g2d.drawString("health : " + p.getHealth(), PLAYER_INFORMATION_FONT_PAD/2 , PLAYER_INFORMATION_FONT_PAD );
         g2d.setColor(Color.white);
-        g2d.drawString("health : " + p.getHealth(), (PLAYER_INFORMATION_FONT_PAD)/2 - 2, PLAYER_INFORMATION_FONT_PAD-2);
+        g2d.drawString("health : " + p.getHealth(), (PLAYER_INFORMATION_FONT_PAD)/2 - shadowPad, PLAYER_INFORMATION_FONT_PAD - shadowPad);
     }
 
     /**
