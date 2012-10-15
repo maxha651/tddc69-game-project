@@ -6,15 +6,12 @@ import model.spacecraft.parts.types.hull.HullType;
 import java.awt.*;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Brain
- * Date: 2012-09-21
- * Time: 00:27
- * To change this template use File | Settings | File Templates.
+ * Spacecraft hull. 
+ * Not really used at the moment (but can be used).
  */
 public class Hull extends SpacecraftPart {
 
-    HullType hullType;
+    private HullType hullType;
 
     public Hull(){
         hullType = new DefaultHull();

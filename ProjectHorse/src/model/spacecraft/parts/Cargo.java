@@ -6,8 +6,14 @@ import model.spacecraft.parts.types.cargo.DefaultCargo;
 
 import java.util.LinkedList;
 
+/**
+ * The Cargo is basically an item container that a spacecraft can have.
+ * Not really used at the moment (but can be used).
+ * @author Askh
+ *
+ */
 public class Cargo extends SpacecraftPart {
-    CargoType cargoType;
+    private CargoType cargoType;
     private LinkedList<Item> items;
 
     public Cargo() {

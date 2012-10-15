@@ -14,6 +14,9 @@ import model.utility.shape.ZoneCoordinate;
  */
 public class NPC extends AbstractCharacter implements Collideable, Boundable {
 
+	/**
+	 * Do not use.
+	 */
     public NPC(){
         System.err.println("The NPC is not allowed for used. It is not finished yet.");
         System.exit(0);

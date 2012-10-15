@@ -4,15 +4,11 @@ import model.spacecraft.parts.types.engine.DefaultEngine;
 import model.spacecraft.parts.types.engine.EngineType;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Brain
- * Date: 2012-09-20
- * Time: 23:42
- * To change this template use File | Settings | File Templates.
+ * The engine is used to accelerate a spacecraft/Player.
  */
 public class Engine extends SpacecraftPart {
 
-    EngineType engineType;
+    private EngineType engineType;
 
     public Engine(){
         engineType = new DefaultEngine();

@@ -3,12 +3,9 @@ package model.items;
 import model.LocalObject;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Brain
- * Date: 2012-09-20
- * Time: 23:36
- * To change this template use File | Settings | File Templates.
+ * Used for items that the player can have in his cargo and items that can be dropped by
+ * NPCs and enemies.
  */
-public class Item extends LocalObject {
+public abstract class Item extends LocalObject {
 
 }

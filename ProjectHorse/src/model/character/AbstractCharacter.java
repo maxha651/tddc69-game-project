@@ -7,26 +7,20 @@ import model.spacecraft.parts.Engine;
 import model.spacecraft.Spacecraft;
 import model.utility.math.StandardMath;
 
+/**
+ * Used for body to NPC and Player classes. Basic functionality shared by its subclasses.
+ */
 public abstract class AbstractCharacter extends CollideableObject {
-    public Spacecraft getSpacecraft() {
-        return spacecraft;
-    }
+   
 
+    //default constants
     protected Spacecraft spacecraft;
     double spaceFriction = GameModel.DEFAULT_SPACE_FRICTION;
     double velocityFloor = GameModel.DEFAULT_VELOCITY_FLOOR;
 
-    private void updateVelocity(boolean accelerate) {
-        Engine e = this.spacecraft.getEngine();
-
-        if(accelerate){
-            accelerate();
-        }
-
-        //space friction
-        deaccelerate();
-    }
-
+    /**
+     * Deaccelerates the abstract character using space friction taken from GameModel
+     */
     public void deaccelerate() {
         double velocityLength = StandardMath.pyth(velocityX, velocityY);
 
@@ -39,10 +33,12 @@ public abstract class AbstractCharacter extends CollideableObject {
         }
     }
 
+    /**
+     * Accelerates the AbstractCharacter using variables from the spacecraft.
+     */
     public void accelerate() {
         double acceleration = spacecraft.getEngine().getAcceleration();
         double maxVelocity = spacecraft.getEngine().getVelocityMax();
-
 
         this.velocityX += StandardMath.xPart(acceleration, rotationAngle);
         this.velocityY += StandardMath.yPart(acceleration, rotationAngle);
@@ -54,10 +50,9 @@ public abstract class AbstractCharacter extends CollideableObject {
             this.velocityX *= maxAndNewVelocityRatio;
             this.velocityY *= maxAndNewVelocityRatio;
         }
-
     }
 
-
+    //getters and setters
     public void setSpacecraft(Spacecraft spacecraft) {
         this.spacecraft = spacecraft;
     }
@@ -78,5 +73,7 @@ public abstract class AbstractCharacter extends CollideableObject {
         this.velocityFloor = velocityFloor;
     }
 
-
+    public Spacecraft getSpacecraft() {
+        return spacecraft;
+    }
 }
