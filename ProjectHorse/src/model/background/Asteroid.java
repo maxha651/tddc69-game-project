@@ -22,8 +22,7 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
     double tempVelocityX;
     double tempVelocityY;
     int damageYield;
-    public int deathParticleAmount;
-    static public int redParticleAmount;
+    private int deathParticleAmount;
 
     public Asteroid(Coordinate c, ZoneCoordinate z){
         this.width = this.boundingHeight = Randomizer.randomInt(20, 90);
@@ -68,30 +67,20 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
     }
 
     @Override
-    public void setToCollide(CollideableObject c) {
+    public void setToCollide(CollideableObject object) {
     	  hasCollided = true;
 
-        if(Damageable.class.isAssignableFrom(c.getClass())){
-            ((Damageable) c).doDamage(damageYield);
+        if(Damageable.class.isAssignableFrom(object.getClass())){
+            ((Damageable) object).doDamage(damageYield);
             
         }
 
-        if(c.getClass() != Projectile.class){
-        	tempVelocityX = c.getVelocityX();
-        	tempVelocityY = c.getVelocityY();
+        if(object.getClass() != Projectile.class){
+        	tempVelocityX = object.getVelocityX();
+        	tempVelocityY = object.getVelocityY();
         } else {
-        	c.setState(WorldObjectState.DEAD);
+        	object.setState(WorldObjectState.DEAD);
         }
-    }
-
-    @Override
-    public double getBoundingWidth() {
-        return boundingWidth;
-    }
-
-    @Override
-    public double getBoundingHeight() {
-        return boundingHeight;
     }
 
     @Override
@@ -128,6 +117,5 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
     
     public void calculateDeathParticleAmount(){
     	deathParticleAmount = (int) ((width*height/130));
-    	redParticleAmount = (int) ((width*height/1000));
     }
 }

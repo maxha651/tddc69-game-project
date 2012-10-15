@@ -11,10 +11,10 @@ import model.utility.shape.Coordinate;
  */
 // Implement Zone as synchronized WorldObjectContainer (?)
 public class Zone {
-    private Coordinate origo;
-    private double zoneSize;
+    private final Coordinate origo;
+    private final double zoneSize;
 
-    private WorldObjectContainer worldObjects;
+    private final WorldObjectContainer worldObjects;
 
     public Zone(double zoneSize) {
         this.origo = new Coordinate(0.0, 0.0);

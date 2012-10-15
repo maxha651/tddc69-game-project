@@ -14,8 +14,6 @@ import model.utility.shape.ZoneCoordinate;
  */
 public class NPC extends AbstractCharacter implements Collideable, Boundable {
 
-    int mass;
-
     public NPC(){
         System.err.println("The NPC is not allowed for used. It is not finished yet.");
         System.exit(0);
@@ -31,11 +29,6 @@ public class NPC extends AbstractCharacter implements Collideable, Boundable {
     }
 
     @Override
-    public void setToCollide(CollideableObject c) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    @Override
     public boolean hasCollided() {
         return false;
     }
@@ -43,16 +36,6 @@ public class NPC extends AbstractCharacter implements Collideable, Boundable {
     @Override
     public int getMass() {
         return mass;
-    }
-
-    @Override
-    public double getBoundingWidth() {
-        return boundingWidth;
-    }
-
-    @Override
-    public double getBoundingHeight() {
-        return boundingHeight;
     }
 
     public void updateAI(){

@@ -15,13 +15,12 @@ import model.world.WorldObjectState;
  * To change this template use File | Settings | File Templates.
  */
 public class EngineParticle extends Particle {
-    int tick = 0;
+
     public EngineParticle(AbstractCharacter p){
 
         super(p.getCoordinate(), p.getZoneCoordinate());
         this.tickToKill = 25;
-        this.width = Randomizer.randomInt(1, 3);
-        this.height = width;
+        this.height = this.width = Randomizer.randomInt(1, 3);
         this.setRotationAngle(Randomizer.randomInt(0, 360));
         this.rotationSpeed = (Randomizer.randomInt(0,300) - Randomizer.randomInt(0,300))/3000.0;
         this.velocityX = Randomizer.randomDouble(0, 3)*model.utility.math.StandardMath.reverseSign(p.getVelocityX()) - Randomizer.randomDouble(0, 2)*model.utility.math.StandardMath.reverseSign(p.getVelocityX());

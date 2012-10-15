@@ -51,11 +51,7 @@ public abstract class CollideableObject extends MoveableObject {
         double allowedXDiff = (this.getBoundingWidth() + collideable.getBoundingWidth())/2 * ALLOWED_INTERSECTION;
         double allowedYDiff = (this.getBoundingHeight() + collideable.getBoundingHeight())/2 * ALLOWED_INTERSECTION;
 
-        if( xDiff < allowedXDiff && yDiff < allowedYDiff){
-            return true;
-        }
-
-        return false;
+        return xDiff < allowedXDiff && yDiff < allowedYDiff;
     }
 
     protected static void unCollide(CollideableObject c1, CollideableObject c2, double xIntersect, double yIntersect){

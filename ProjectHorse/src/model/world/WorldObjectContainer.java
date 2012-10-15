@@ -11,27 +11,6 @@ import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class WorldObjectContainer extends ConcurrentLinkedQueue<WorldObject> {
-
     public WorldObjectContainer() {
-    }
-
-    public boolean contains(Coordinate coordinate){
-        for(WorldObject object : this){
-            if(coordinate.equals(object.getCoordinate())){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public WorldObjectContainer get(Coordinate coordinate){
-        WorldObjectContainer res = new WorldObjectContainer();
-
-        for(WorldObject object : this){
-            if(coordinate.equals(object.getCoordinate())){
-                res.add(object);
-            }
-        }
-        return res;
     }
 }

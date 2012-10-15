@@ -1,7 +1,6 @@
 package graphics;
 
 import java.awt.*;
-import java.util.LinkedList;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
@@ -10,17 +9,17 @@ import java.util.concurrent.LinkedBlockingQueue;
  * correctly on a Graphics2D object given. Not thread safe.
  */
 public class InformationContainer {
-	private int startPositionPad = 4;
-    private int stringPaddingY;
-    private int stringPaddingX;
-    private int originX = 0;
-    private int originY = 0;
+	private static final int START_POSITION_PAD = 4;
+    private final int stringPaddingY;
+    private final int stringPaddingX;
+    private static final int DEFAULT_PADDING_X = 20;
+    private static final int DEFAULT_PADDING_Y = 20;
     private int numberOfRows = 0;
     private LinkedBlockingQueue<String> queue = new LinkedBlockingQueue<String>();
 
     public InformationContainer(){
-    	stringPaddingX = 20;
-    	stringPaddingY = 20;
+    	stringPaddingX = DEFAULT_PADDING_X;
+    	stringPaddingY = DEFAULT_PADDING_Y;
     }
     
     public InformationContainer(int padX, int padY){
@@ -43,7 +42,7 @@ public class InformationContainer {
      */
     public void paint(Graphics2D g2d){
         for(int i = 0; i < numberOfRows; i++){
-            g2d.drawString(this.queue.remove(), stringPaddingX, (stringPaddingY*(i + startPositionPad)));
+            g2d.drawString(this.queue.remove(), stringPaddingX, (stringPaddingY*(i + START_POSITION_PAD)));
         }
     }
 }

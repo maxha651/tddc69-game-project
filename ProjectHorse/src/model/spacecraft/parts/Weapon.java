@@ -24,7 +24,7 @@ public class Weapon extends SpacecraftPart {
 
     public Weapon(Player p){
         this.wt = new DefaultWeapon();
-        if(p.getColor() == Color.blue){
+        if(p.getColor().equals(Color.blue)){
             this.pt = new ProjectileBlue();
         } else {
             this.pt = new ProjectileRed();

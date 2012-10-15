@@ -51,8 +51,8 @@ public class WorldObjectPainter {
         int paintX;
         int paintY;
 
-        paintX = (int) ((-cameraX + positionX) - bWidth / 2);
-        paintY = (int) ((-cameraY + positionY) - bHeight / 2);
+        paintX = (-cameraX + positionX) - bWidth / 2;
+        paintY = (-cameraY + positionY) - bHeight / 2;
 
         g2d.drawRect(paintX, paintY, bWidth, bHeight);
 
@@ -76,11 +76,11 @@ public class WorldObjectPainter {
         int rotateX;
         int rotateY;
 
-        rotateX = (int) ((-cameraX + positionX));
-        rotateY = (int) ((-cameraY + positionY));
+        rotateX = (-cameraX + positionX);
+        rotateY = (-cameraY + positionY);
 
-        paintX = (int) ((-cameraX + positionX) - bWidth / 2);
-        paintY = (int) ((-cameraY + positionY) - bHeight / 2);
+        paintX = (-cameraX + positionX) - bWidth / 2;
+        paintY = (-cameraY + positionY) - bHeight / 2;
 
         //rotation
         double angle = wo.getRotationAngle();

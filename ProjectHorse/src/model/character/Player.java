@@ -28,7 +28,6 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
     int scoreYield = DEFAULT_SCORE_YIELD;
     GameModel gameModel;
 	int score = 0;
-    int mass;
     int fireDelay = 0;
     int health = DEFAULT_HEALTH;
     public boolean accelerationRequest = false;
@@ -150,12 +149,12 @@ public class Player extends AbstractCharacter implements Collideable, Boundable,
     
     //getters and setters
     @Override
-    public void setToCollide(CollideableObject c) {
+    public void setToCollide(CollideableObject object) {
         velocityX *= 0.5;
         velocityY *= 0.5;
 
-        if(Damageable.class.isAssignableFrom(c.getClass())){
-            ((Damageable) c).doDamage(10);
+        if(Damageable.class.isAssignableFrom(object.getClass())){
+            ((Damageable) object).doDamage(10);
         }
 
     }

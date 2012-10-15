@@ -27,7 +27,7 @@ public class StartMenu extends JFrame{
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 setVisible(false);
-                Game game = new Game();
+                new Game();
             }
         });
 

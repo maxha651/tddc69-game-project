@@ -23,7 +23,7 @@ public class BasicImageLoader extends AbstractImageLoader implements ImageLoader
 	    }
 
 	    public BufferedImage getPlayerImage(Player p){
-            if(p.getColor() == Color.RED){
+            if(p.getColor().equals(Color.RED)){
                 redplayer = getImage(redplayer, "redplayer.png");
                 return redplayer;
             } else {

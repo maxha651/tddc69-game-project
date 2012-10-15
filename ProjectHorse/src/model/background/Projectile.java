@@ -49,16 +49,16 @@ public class Projectile extends CollideableObject implements Collideable{
     }
 
     @Override
-    public void setToCollide(CollideableObject c) {
-    	if(c == owner){
+    public void setToCollide(CollideableObject object) {
+    	if(object == owner){
     		return;
     	}
     	
-    	if(Damageable.class.isAssignableFrom(c.getClass())){
-            ((Damageable) c).doDamage(pt.getDamage());
-            if(c.getClass() != Player.class){
+    	if(Damageable.class.isAssignableFrom(object.getClass())){
+            ((Damageable) object).doDamage(pt.getDamage());
+            if(object.getClass() != Player.class){
             	if(owner.getClass() == Player.class){
-            		((Player) owner).addScore(((Damageable) c).scoreYield());
+            		((Player) owner).addScore(((Damageable) object).scoreYield());
             	}
             }
         }

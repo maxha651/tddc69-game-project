@@ -11,10 +11,7 @@ import java.awt.event.ActionEvent;
  * SHOULD be made in the paint loop because of different CPU/GPU being used.
  */
 public class Game {
-
-    GameModel gameModel;
-    //final static int paintRateGoal = 60; 
-    final static int updateRateGoal = 80;
+    final static int UPDATE_RATE_GOAL = 80;
     boolean pause = false;
     
 	/**
@@ -23,8 +20,7 @@ public class Game {
     public Game(){
         final GameModel gameModel = new GameModel();
         final GameFrame gameFrame = new GameFrame(gameModel, this);
-        int updateTime = 1000/updateRateGoal; 
-        //int paintTime = 1000/paintRateGoal;
+        int updateTime = 1000/ UPDATE_RATE_GOAL;
         
         //game loop
         final Action doOneStep = new AbstractAction() {

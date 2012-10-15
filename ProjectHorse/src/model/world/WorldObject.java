@@ -80,10 +80,7 @@ public abstract class WorldObject extends AbstractGameObject implements Boundabl
     }
 
     public boolean isAlive() {
-        if(this.state == WorldObjectState.ALIVE){
-            return true;
-        }
-        return false;
+        return this.state == WorldObjectState.ALIVE;
     }
 
     public void update(World world){
