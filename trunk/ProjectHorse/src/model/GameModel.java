@@ -83,20 +83,14 @@ public class GameModel extends Observable {
     public void reset(){
     	world = new World(ZONE_SIZE);
 
-    	if(player1 == null){
-            player1 = new Player(this, START_COORDINATE_PLAYER_1, START_ZONE_PLAYER_1);
-    	} else {
+    	if(player1 != null && player2 != null){
     		player1.reset(START_COORDINATE_PLAYER_1, START_ZONE_PLAYER_1);
-    	}
-    	
-    	if(player2 == null){
-            player2 = new Player(this, START_COORDINATE_PLAYER_2, START_ZONE_PLAYER_2);
-    	} else {
     		player2.reset(START_COORDINATE_PLAYER_2, START_ZONE_PLAYER_2);
+    	} else {
+    		System.err.println("null pointer exception at player1 and player2");
+    		System.exit(0);
     	}
 
-    	player1.setState(WorldObjectState.ALIVE);
-    	player2.setState(WorldObjectState.ALIVE);
         world.addWorldObject(player1);
         world.addWorldObject(player2);
         world.addWorldObjectSpawner(new AsteroidSpawner());

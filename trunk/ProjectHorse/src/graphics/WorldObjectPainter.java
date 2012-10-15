@@ -5,7 +5,6 @@ import model.background.Asteroid;
 import model.background.AsteroidParticle;
 import model.background.EngineParticle;
 import model.background.Projectile;
-import model.background.RedAsteroidParticle;
 import model.background.RedProjectileDeathParticle;
 import model.background.SpacecraftDeathParticle;
 import model.character.Player;
@@ -24,8 +23,8 @@ import java.util.Observer;
  */
 public class WorldObjectPainter {
 
-    ImageLoader imageLoader;
-    GameModel gm;
+    private ImageLoader imageLoader;
+    private GameModel gm;
 
     /**
      * Basic constructor. Uses ImageLoader interface for obvious reasons. gm is only used to get its zone size at the moment.
@@ -35,6 +34,14 @@ public class WorldObjectPainter {
     	this.imageLoader = img;
     }
 
+    /**
+     * Paints the bounds of a world object using its getBoundingWidth() and getBoundingHeight() methods
+     * @param wo
+     * @param g2d
+     * @param cameraX
+     * @param cameraY
+     * @param c
+     */
     public void paintWorldObjectBounds(WorldObject wo, Graphics2D g2d, int cameraX, int cameraY, Color c){
         g2d.setColor(c);
 
@@ -57,7 +64,15 @@ public class WorldObjectPainter {
         g2d.drawRect(paintX, paintY, bWidth, bHeight);
 
     }
-
+    
+    /**
+     * Paints a WorldObject rotated accordingly on the Graphics2D g2d object.
+     * @param wo
+     * @param g2d
+     * @param cameraX
+     * @param cameraY
+     * @param gv
+     */
     public void paintWorldObject(WorldObject wo, Graphics2D g2d, int cameraX, int cameraY, GraphicalViewer gv){
 
         Coordinate positionInZone = wo.getCoordinate();
@@ -102,8 +117,6 @@ public class WorldObjectPainter {
             g2d.drawImage(imageLoader.getProjectileImage((Projectile) wo), paintX, paintY, bWidth, bHeight, gv);
         } else if(wo.getClass() == AsteroidParticle.class) {
             g2d.drawImage(imageLoader.getAsteroidParticleImage(), paintX, paintY, bWidth, bHeight, gv);
-        } else if(wo.getClass() == RedAsteroidParticle.class) {
-            g2d.drawImage(imageLoader.getRedAsteroidParticleImage(), paintX, paintY, bWidth, bHeight, gv);
         } else if(wo.getClass() == RedProjectileDeathParticle.class) {
         	g2d.drawImage(imageLoader.getRedDeathParticleImage(), paintX, paintY, bWidth, bHeight, gv);
         } else if(wo.getClass() == SpacecraftDeathParticle.class){

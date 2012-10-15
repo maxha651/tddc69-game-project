@@ -9,33 +9,43 @@ import model.utility.shape.ZoneCoordinate;
 import model.world.*;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Brain
- * Date: 2012-09-29
- * Time: 19:53
- * To change this template use File | Settings | File Templates.
+ * Model for an asteroid with velocity, damage yield, health, mass and collision
  */
 public class Asteroid extends CollideableObject implements Collideable, Damageable{
 
-    short health;
-    boolean hasCollided = false;
-    double tempVelocityX;
-    double tempVelocityY;
-    int damageYield;
+	//declarations
+    private short health;
+    private boolean hasCollided = false;
+    private double tempVelocityX;
+    private double tempVelocityY;
+    private int damageYield;
     private int deathParticleAmount;
-
+    
+    public final static int MAX_VELOCITY = 4;
+    public final static int ROTATION_SPEED_MAX_SPREAD = 150;
+    public final static double ROTATION_SPEED_FACTOR = 0.0002;
+    public final static int MAX_SIZE = 95;
+    public final static int MIN_SIZE = 20;
+    public final static int SIZE_SPREAD = 15;                  //spread between width and height
+    public final static int ROTATION_ANGLE_MAX_SPREAD = 10;    //max rotation angle when the asteroid is spawned
+    public final static int DAMAGE_YIELD_MASS_DIVISIOR = 20;   //used to calculate the damage yield
+    public final static int HEALTH_MASS_DIVISIOR = 60;
+    
+    /**
+     * Standard constructor that takes the zone and coordinate it should spawn at.
+     */
     public Asteroid(Coordinate c, ZoneCoordinate z){
-        this.width = this.boundingHeight = Randomizer.randomInt(20, 90);
-        this.height = this.boundingWidth = this.boundingHeight + Randomizer.randomInt(0, 15);
+        this.width = this.boundingWidth = Randomizer.randomInt(MIN_SIZE, MAX_SIZE);
+        this.height = this.boundingHeight = this.width - Randomizer.randomInt(0, SIZE_SPREAD);
         this.mass = (int) Math.sqrt(boundingHeight*boundingWidth);
-        this.rotationSpeed = (Randomizer.randomInt(0,300) - Randomizer.randomInt(0,300))/5000.0;
-        this.velocityX = Randomizer.randomDouble(0, 4) - Randomizer.randomDouble(0, 4);
-        this.velocityY = Randomizer.randomDouble(0, 4) - Randomizer.randomDouble(0, 4);
+        this.rotationSpeed = (Randomizer.randomInt(0,ROTATION_SPEED_MAX_SPREAD) - Randomizer.randomInt(0,ROTATION_SPEED_MAX_SPREAD))*ROTATION_SPEED_FACTOR;
+        this.velocityX = Randomizer.randomDouble(0, MAX_VELOCITY) - Randomizer.randomDouble(0, MAX_VELOCITY);
+        this.velocityY = Randomizer.randomDouble(0, MAX_VELOCITY) - Randomizer.randomDouble(0, MAX_VELOCITY);
         this.tempVelocityX = velocityX;
         this.tempVelocityY = velocityY;
-        this.setRotationAngle(Randomizer.randomDouble(0,10));
-        this.damageYield = mass/20;
-        this.health = (short) ((Math.pow(mass, 2)) / 60);
+        this.setRotationAngle(Randomizer.randomDouble(0,ROTATION_ANGLE_MAX_SPREAD));
+        this.damageYield = mass/DAMAGE_YIELD_MASS_DIVISIOR;
+        this.health = (short) ((Math.pow(mass, 2)) / HEALTH_MASS_DIVISIOR); //pow => high mass => high health
         this.coordinate = c;
         this.zoneCoordinate = z;
 
@@ -66,9 +76,13 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
         return boundingHeight;
     }
 
+    /**
+     * Sets this object to has collided. Contains collision velocity change and damage yield.
+     * If a projectile is the colliding object then remove the projectile.S 
+     */
     @Override
     public void setToCollide(CollideableObject object) {
-    	  hasCollided = true;
+    	hasCollided = true;
 
         if(Damageable.class.isAssignableFrom(object.getClass())){
             ((Damageable) object).doDamage(damageYield);
@@ -93,6 +107,9 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
         return mass;
     }
 
+    /**
+     * Does damage to this object. If the health is less or equal than 0 then set its state to dead.
+     */
     @Override
     public void doDamage(int amount) {
         health -= amount;
@@ -101,11 +118,17 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
         }
     }
 
+    /**
+     * Returns the score this object yields when killed.
+     */
     @Override
     public int scoreYield() {
         return 10;
     }
 
+    /**
+     * 
+     */
     @Override
     public void destroy(World world){
         super.destroy(world);
@@ -115,7 +138,10 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
         }
     }
     
-    public void calculateDeathParticleAmount(){
+    /**
+     * Calculates how many asteroid particles should be spawned upon death.
+     */
+    protected void calculateDeathParticleAmount(){
     	deathParticleAmount = (int) ((width*height/130));
     }
 }

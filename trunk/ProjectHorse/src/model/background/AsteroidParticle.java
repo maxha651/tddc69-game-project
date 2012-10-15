@@ -7,22 +7,39 @@ import model.utility.shape.ZoneCoordinate;
 import model.world.WorldObjectState;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Brain
- * Date: 2012-10-13
- * Time: 15:52
- * To change this template use File | Settings | File Templates.
+ * Standard class for asteroids particles.
  */
 public class AsteroidParticle extends Particle {
-	static final int M_V = 3; //max velocity
+	private static final int MAX_VEL = 3; //max velocityX and max velocityY of the asteroid particles
+	private static final int MAX_SIZE = 8;
+
+	private static final int MIN_LIFE_SPAN = 50;
+	private static final int LIFE_SPAN_SPREAD = 40;
 	
+	/**
+	 * Basic constructor for an AsteroidParticle.
+	 * Spawns the particle at the asteroids position with a randomized velocity and life span.
+	 * @param a
+	 */
     public AsteroidParticle(Asteroid a){
-        super(new Coordinate(a.getCoordinate()), new ZoneCoordinate(a.getZoneCoordinate()));
-        tickToKill = (short) ((short) 50 + Randomizer.randomInt(1, 40));
-        this.height = this.width = Randomizer.randomInt(1, 5);
-        this.rotationSpeed = (Randomizer.randomInt(0,300) - Randomizer.randomInt(0,300))/3000.0;
-        this.velocityX = Randomizer.randomDouble(0, M_V)*model.utility.math.StandardMath.reverseSign(a.getVelocityX()) - Randomizer.randomDouble(0, M_V)*model.utility.math.StandardMath.reverseSign(a.getVelocityX());
-        this.velocityY = Randomizer.randomDouble(0, M_V)*model.utility.math.StandardMath.reverseSign(a.getVelocityY()) - Randomizer.randomDouble(0, M_V)*model.utility.math.StandardMath.reverseSign(a.getVelocityY());
-        this.setRotationAngle(Randomizer.randomDouble(0,10));
+        super(new Coordinate(a.getCoordinate()), 
+        	  new ZoneCoordinate(a.getZoneCoordinate()), 
+        	  getParticleVelocityX(a),
+        	  getParticleVelocityY(a),
+        	  MAX_SIZE,
+        	  getParticleLifeSpan());
     }
+    
+    //private methods used for basic calculations
+    private static double getParticleVelocityX(Asteroid a){
+    	return Randomizer.randomDouble(0, MAX_VEL) - Randomizer.randomDouble(0, MAX_VEL);    
+    }
+    
+    private static double getParticleVelocityY(Asteroid a){
+    	return Randomizer.randomDouble(0, MAX_VEL) - Randomizer.randomDouble(0, MAX_VEL);
+    }
+    
+    private static short getParticleLifeSpan(){
+		return (short) (MIN_LIFE_SPAN + Randomizer.randomInt(0, LIFE_SPAN_SPREAD));
+	}
 }
