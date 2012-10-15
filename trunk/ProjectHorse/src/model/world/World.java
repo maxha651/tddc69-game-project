@@ -4,6 +4,7 @@ import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 import model.world.spawners.WorldObjectSpawner;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.concurrent.ConcurrentSkipListMap;
 
@@ -16,7 +17,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
 public class World {
     double zoneSize;
     ConcurrentSkipListMap<ZoneCoordinate, Zone> zoneMap;
-    LinkedList<WorldObjectSpawner> spawners;
+    Collection<WorldObjectSpawner> spawners;
 
     public int getNumberOfWorldObjects() {
         int numberOfWorldObjects = 0;

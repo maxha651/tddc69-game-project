@@ -1,6 +1,5 @@
 package model;
 
-import model.properties.Collideable;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 import model.world.World;
@@ -16,7 +15,7 @@ import model.world.WorldObjectContainer;
  */
 public abstract class CollideableObject extends MoveableObject {
 
-    private final double allowedIntersection = 0.9;
+    private final static double ALLOWED_INTERSECTION = 0.9;
 
     protected int mass;
 
@@ -49,8 +48,8 @@ public abstract class CollideableObject extends MoveableObject {
 
         double xDiff = Math.abs(thatCoord.getX() - thisCoord.getX());
         double yDiff = Math.abs(thatCoord.getY() - thisCoord.getY());
-        double allowedXDiff = (this.getBoundingWidth() + collideable.getBoundingWidth())/2 * allowedIntersection;
-        double allowedYDiff = (this.getBoundingHeight() + collideable.getBoundingHeight())/2 * allowedIntersection;
+        double allowedXDiff = (this.getBoundingWidth() + collideable.getBoundingWidth())/2 * ALLOWED_INTERSECTION;
+        double allowedYDiff = (this.getBoundingHeight() + collideable.getBoundingHeight())/2 * ALLOWED_INTERSECTION;
 
         if( xDiff < allowedXDiff && yDiff < allowedYDiff){
             return true;

@@ -30,14 +30,12 @@ public abstract class AbstractCharacter extends CollideableObject {
     public void deaccelerate() {
         double velocityLength = StandardMath.pyth(velocityX, velocityY);
 
-        if(velocityLength > 0.1){
-            if(velocityLength > this.velocityFloor){
-                this.velocityX *= this.spaceFriction;
-                this.velocityY *= this.spaceFriction;
-            } else {
-                this.velocityX = 0;
-                this.velocityY = 0;
-            }
+        if(velocityLength > this.velocityFloor){
+            this.velocityX *= this.spaceFriction;
+            this.velocityY *= this.spaceFriction;
+        } else {
+            this.velocityX = 0;
+            this.velocityY = 0;
         }
     }
 

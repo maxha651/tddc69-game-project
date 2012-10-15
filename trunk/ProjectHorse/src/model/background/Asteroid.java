@@ -21,7 +21,6 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
     boolean hasCollided = false;
     double tempVelocityX;
     double tempVelocityY;
-    int mass;
     int damageYield;
     public int deathParticleAmount;
     static public int redParticleAmount;
@@ -45,8 +44,8 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
 
     @Override
     public void update(World world) {
+        collidedCheck();
         super.update(world);
-
         collisionCheck(world);
     }
 
@@ -56,12 +55,6 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
             velocityY = tempVelocityY;
             hasCollided = false;
         }
-    }
-
-    @Override
-    public void updatePosition(double size){
-        collidedCheck();
-        super.updatePosition(size);
     }
 
     @Override
@@ -82,11 +75,10 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
             ((Damageable) c).doDamage(damageYield);
             
         }
-        
-        //double massRatio =(double) mass / (double) c.getMass() ; // divides by zero
+
         if(c.getClass() != Projectile.class){
-        	tempVelocityX = c.getVelocityX();// * massRatio * 0.7;
-        	tempVelocityY = c.getVelocityY();// * massRatio * 0.7;
+        	tempVelocityX = c.getVelocityX();
+        	tempVelocityY = c.getVelocityY();
         } else {
         	c.setState(WorldObjectState.DEAD);
         }
@@ -132,12 +124,6 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
         for(int i = 0; i < deathParticleAmount; i++){
             world.addWorldObject(new AsteroidParticle(this));
         }
-
-        /*
-        for(int i = 0; i < redParticleAmount; i++){
-            world.addWorldObject(new RedAsteroidParticle(this));
-        }
-        */
     }
     
     public void calculateDeathParticleAmount(){
