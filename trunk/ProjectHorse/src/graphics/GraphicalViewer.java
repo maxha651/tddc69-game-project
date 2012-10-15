@@ -38,6 +38,7 @@ public class GraphicalViewer extends Viewer {
     final static int PANEL_PADDING_HORI = 20; //pads the height of the graphical viewer
     final static int DEFAULT_FONT_SIZE = 14;
     final static int PLAYER_INFORMATION_FONT_PAD = 25;
+    final static int POINTER_DISTANCE_FROM_EDGE = 20;
     final static int POINTER_SIZE = 10;
     final static Color POINTER_COLOR = Color.RED;
     final static Color DEFAULT_PAINT_COLOR = Color.WHITE;
@@ -264,20 +265,23 @@ public class GraphicalViewer extends Viewer {
         cameraY = (positionY - height / 2);
     }
 
+    /**
+     * Draws a box in the direction of the other player if the other
+     * player is outside the camera
+     */
     public void drawPointerToOtherPlayer(Graphics2D g2d){
         Player otherPlayer = gameModel.getOtherPlayer(p);
         double zoneSize = gameModel.getZoneSize();
 
-        if(Math.abs(p.getXDifference(otherPlayer, zoneSize)) > width/2 ||
-                Math.abs(p.getYDifference(otherPlayer, zoneSize)) > height/2){
+        if(outOfCamera(otherPlayer)){
 
             double angle = p.getAngleTo(otherPlayer, zoneSize);
 
             int positionX = (int) (p.getZoneCoordinate().getX()*zoneSize + p.getCoordinate().getX());
             int positionY = (int) (p.getZoneCoordinate().getY()*zoneSize + p.getCoordinate().getY());
 
-            int paintX = (int) (-cameraX + positionX + Math.cos(angle)*(width/2 -PANEL_PADDING_VERT));
-            int paintY = (int) (-cameraY + positionY + Math.sin(angle)*(height/2 -PANEL_PADDING_HORI));
+            int paintX = (int) (-cameraX + positionX + Math.cos(angle)*(width/2 -POINTER_DISTANCE_FROM_EDGE));
+            int paintY = (int) (-cameraY + positionY + Math.sin(angle)*(height/2 -POINTER_DISTANCE_FROM_EDGE));
 
             g2d.setColor(POINTER_COLOR);
             g2d.fillRect(paintX, paintY, POINTER_SIZE, POINTER_SIZE);
