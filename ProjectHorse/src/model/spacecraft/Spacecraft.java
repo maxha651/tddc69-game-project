@@ -1,5 +1,6 @@
 package model.spacecraft;
 
+import model.character.Player;
 import model.properties.Boundable;
 import model.items.Item;
 import model.spacecraft.parts.*;
@@ -27,6 +28,11 @@ public class Spacecraft implements Boundable {
         this.engine = new Engine();
         this.weapon1 = new Weapon();
         this.shield = new ShieldGenerator();
+    }
+
+    public Spacecraft(Player p){
+        this();
+        this.weapon1 = new Weapon(p);
     }
 
     public Rectangle getBounds(){

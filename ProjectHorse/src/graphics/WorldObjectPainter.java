@@ -94,7 +94,8 @@ public class WorldObjectPainter {
         if(wo.getClass() == Asteroid.class){
             g2d.drawImage(imageLoader.getAsteroidImage(), paintX, paintY, bWidth, bHeight, gv);
         } else if(wo.getClass() == Player.class) {
-            g2d.drawImage(imageLoader.getPlayerImage((Player) wo), paintX, paintY, bWidth, bHeight, gv);
+            Player p = (Player) wo;
+            g2d.drawImage(imageLoader.getPlayerImage(p), paintX, paintY, bWidth, bHeight, gv);
         } else if(wo.getClass() == EngineParticle.class) {
             g2d.drawImage(imageLoader.getEngineParticleImage(), paintX, paintY, bWidth, bHeight, gv);
         } else if(wo.getClass() == Projectile.class) {

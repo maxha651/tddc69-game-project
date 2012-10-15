@@ -1,9 +1,13 @@
 package model.spacecraft.parts;
 
+import model.character.Player;
+import model.spacecraft.parts.types.projectile.ProjectileRed;
 import model.spacecraft.parts.types.weapon.DefaultWeapon;
 import model.spacecraft.parts.types.projectile.ProjectileBlue;
 import model.spacecraft.parts.types.projectile.ProjectileType;
 import model.spacecraft.parts.types.weapon.WeaponType;
+
+import java.awt.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,9 +22,21 @@ public class Weapon extends SpacecraftPart {
     int fireDelay = 0;
     int fireDelayTop = 10;
 
+    public Weapon(Player p){
+        this.wt = new DefaultWeapon();
+        if(p.getColor() == Color.blue){
+            this.pt = new ProjectileBlue();
+        } else {
+            this.pt = new ProjectileRed();
+        }
+
+    }
+
     public Weapon(){
         this.wt = new DefaultWeapon();
         this.pt = new ProjectileBlue();
+
+
     }
 
     public Weapon(WeaponType weaponType, ProjectileType projectileType) {

@@ -174,7 +174,7 @@ public class GraphicalViewer extends Viewer {
         g2d.setColor(p.getColor());
         g2d.drawString("score : " + p.getScore(), PLAYER_INFORMATION_FONT_PAD/2, PLAYER_INFORMATION_FONT_PAD *2);
         g2d.setColor(Color.white);
-        g2d.drawString("score : " + p.getScore(), (PLAYER_INFORMATION_FONT_PAD -2)/2, (PLAYER_INFORMATION_FONT_PAD - 2)*2);
+        g2d.drawString("score : " + p.getScore(), (PLAYER_INFORMATION_FONT_PAD)/2 - 2, (PLAYER_INFORMATION_FONT_PAD)*2 - 2);
     }
 
     /**
@@ -186,7 +186,7 @@ public class GraphicalViewer extends Viewer {
         g2d.setColor(p.getColor());
         g2d.drawString("health : " + p.getHealth(), PLAYER_INFORMATION_FONT_PAD/2 , PLAYER_INFORMATION_FONT_PAD );
         g2d.setColor(Color.white);
-        g2d.drawString("health : " + p.getHealth(), (PLAYER_INFORMATION_FONT_PAD  - 2)/2, PLAYER_INFORMATION_FONT_PAD  - 2);
+        g2d.drawString("health : " + p.getHealth(), (PLAYER_INFORMATION_FONT_PAD)/2 - 2, PLAYER_INFORMATION_FONT_PAD-2);
     }
 
     /**

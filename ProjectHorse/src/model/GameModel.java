@@ -39,8 +39,8 @@ public class GameModel extends Observable {
     public static final int COLLIDING_CHECK_DISTANCE = 50; // determines how faraway objects to check for collision
     public static final int ZONE_UPDATE_SPAN = 5;    //the spawn of how many zones are loaded away from player
     public static final int asteroidSpawnRate = 2; //how many asteroids to spawn per tick
-    public static final Coordinate startCoordinatePlayer1 = new Coordinate(0, 0);
-    public static final Coordinate startCoordinatePlayer2 = new Coordinate(0, 0);
+    public static final Coordinate startCoordinatePlayer1 = new Coordinate(ZONE_SIZE/2, ZONE_SIZE/2);
+    public static final Coordinate startCoordinatePlayer2 = new Coordinate(ZONE_SIZE/2, ZONE_SIZE/2);
     public static final ZoneCoordinate startZonePlayer1 = new ZoneCoordinate(0, 0);
     public static final ZoneCoordinate startZonePlayer2 = new ZoneCoordinate(1, 1);
     World world;
@@ -210,6 +210,14 @@ public class GameModel extends Observable {
 
     public void addWorldObject(WorldObject wo){
         this.world.addWorldObject(wo);
+    }
+
+    public void giveScoreToOtherPlayer(Player p){
+        if(p == player1){
+            player2.addScore(player1.scoreYield());
+        } else if (p == player2){
+            player1.addScore(player2.scoreYield());
+        }
     }
 
     public Player getPlayer(int i){
