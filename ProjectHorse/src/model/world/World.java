@@ -70,17 +70,13 @@ public class World {
      *
      */
     public void addWorldObject(WorldObject worldObject){
-        ZoneCoordinate zoneCoord = worldObject.getZoneCoordinate();
-        Zone zone = getZone(zoneCoord);
-
         // Checks which zone to put WorldObject in
-        if (!zone.isWithinBoundaries(worldObject)){
+        if (worldObject.isOutOfBounds(zoneSize)){
             worldObject.updateZone(zoneSize);
-            addWorldObject(worldObject);
         }
-        else{
-            zone.add(worldObject);
-        }
+
+        ZoneCoordinate zoneCoord = worldObject.getZoneCoordinate();
+        getZone(zoneCoord).add(worldObject);
     }
 
     public void removeWorldObject(WorldObject worldObject){
@@ -148,7 +144,6 @@ public class World {
      * @param stop The lower right corner of the search area
      * @return Returns all objects in the rectangular area from start to stop
      */
-
     public WorldObjectContainer getAllObjectsInArea(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
         WorldObjectContainer resObjects = new WorldObjectContainer();
         ZoneCoordinate tempZoneCoordinate = new ZoneCoordinate(zoneCoordinate);

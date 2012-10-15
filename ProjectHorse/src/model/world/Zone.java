@@ -3,22 +3,25 @@ package model.world;
 import model.utility.shape.Coordinate;
 
 /**
- * Fix (WorldObjectContainer = ZONE?)
+ * Contains all worldObject in a certain area
  */
-
 public class Zone {
     private final Coordinate origo;
     private final double zoneSize;
 
     private final WorldObjectContainer worldObjects;
 
+    /**
+     * Creates a Zone of size zoneSize
+     *
+     */
     public Zone(double zoneSize) {
         this.origo = new Coordinate(0.0, 0.0);
         this.zoneSize = zoneSize;
         worldObjects = new WorldObjectContainer();
     }
 
-    public void add(WorldObject object) throws IndexOutOfBoundsException {
+    public void add(WorldObject object){
         worldObjects.add(object);
     }
 
@@ -34,6 +37,14 @@ public class Zone {
         return worldObjects.size();
     }
 
+    /**
+     * Returns all objects in the zone within a rectangle with its upper left corner at start
+     * and its lower right corner at stop.
+     *
+     * @param start The upper left corner of the search area
+     * @param stop The lower right corner of the search area
+     * @return All objects in the zone and rectangular area from start to stop
+     */
     public WorldObjectContainer getAllObjectsInArea(Coordinate start, Coordinate stop){
         WorldObjectContainer resObjects = new WorldObjectContainer();
 
@@ -49,21 +60,7 @@ public class Zone {
         return resObjects;
     }
 
-    private boolean isWithinBoundaries(Coordinate position){
-        if (position.getX() < origo.getX() || position.getX() > origo.getX() + zoneSize){
-            return false;
-        }
-        if (position.getY() < origo.getY() || position.getY() > origo.getY() + zoneSize){
-            return false;
-        }
-        return true;
-    }
-
-    public boolean isWithinBoundaries(WorldObject object){
-        return isWithinBoundaries(object.getCoordinate());
-    }
-
-    protected WorldObjectContainer getWorldObjects() {
+    public WorldObjectContainer getWorldObjects() {
         return worldObjects;
     }
 }
