@@ -44,6 +44,8 @@ public class GraphicalViewer extends Viewer {
     final static Color DEFAULT_PAINT_COLOR = Color.WHITE;
     final static Color DEFAULT_BACKGROUND_COLOR = Color.BLACK;
     final static Color DEFAULT_FONT_COLOR = Color.WHITE;
+    final static Color DEFAULT_BOUNDS_COLOR = Color.GREEN;
+    final static Color DEFAULT_CROSS_COLOR = Color.blue;
     private final static int SCREEN_PADDING = 100; //how many pixels outside of screen width and height we should paint
 
     //colors used for painting
@@ -149,7 +151,7 @@ public class GraphicalViewer extends Viewer {
             g2d.setTransform(saved);
             if(paintWorldObjectBounds){
                 if(Collideable.class.isAssignableFrom(wo.getClass())){
-                    painter.paintWorldObjectBounds(wo, g2d, cameraX, cameraY, Color.RED);
+                    painter.paintWorldObjectBounds(wo, g2d, cameraX, cameraY, DEFAULT_BOUNDS_COLOR);
                 }
             }
         }
@@ -159,7 +161,7 @@ public class GraphicalViewer extends Viewer {
      * Draws a cross in middle of screen.
      */
     public void drawCross(Graphics2D g2d){
-        g2d.setColor(Color.GREEN);
+        g2d.setColor(DEFAULT_CROSS_COLOR);
         //draw vertical lines
         g2d.drawLine(width/2, 0, width/2, height);
         g2d.drawLine(0, height/2, width, height/2);
