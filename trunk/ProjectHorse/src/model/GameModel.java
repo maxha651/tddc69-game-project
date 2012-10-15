@@ -27,10 +27,6 @@ public class GameModel extends Observable {
     //player controllers
     Player player1;
     Player player2;
-    
-    // Projectile controllers
-    private int fireDelayDefault = 10;
-    private int fireDelay = 0;
 
     //object controllers
     public static final double DEFAULT_VELOCITY_FLOOR = 0.2;
@@ -38,11 +34,11 @@ public class GameModel extends Observable {
     public static final double ZONE_SIZE = 500;
     public static final int COLLIDING_CHECK_DISTANCE = 50; // determines how faraway objects to check for collision
     public static final int ZONE_UPDATE_SPAN = 5;    //the spawn of how many zones are loaded away from player
-    public static final int asteroidSpawnRate = 2; //how many asteroids to spawn per tick
-    public static final Coordinate startCoordinatePlayer1 = new Coordinate(ZONE_SIZE/2, ZONE_SIZE/2);
-    public static final Coordinate startCoordinatePlayer2 = new Coordinate(ZONE_SIZE/2, ZONE_SIZE/2);
-    public static final ZoneCoordinate startZonePlayer1 = new ZoneCoordinate(0, 0);
-    public static final ZoneCoordinate startZonePlayer2 = new ZoneCoordinate(1, 1);
+    public static final int ASTEROID_SPAWN_RATE = 2; //how many asteroids to spawn per tick
+    public static final Coordinate START_COORDINATE_PLAYER_1 = new Coordinate(ZONE_SIZE/2, ZONE_SIZE/2);
+    public static final Coordinate START_COORDINATE_PLAYER_2 = new Coordinate(ZONE_SIZE/2, ZONE_SIZE/2);
+    public static final ZoneCoordinate START_ZONE_PLAYER_1 = new ZoneCoordinate(0, 0);
+    public static final ZoneCoordinate START_ZONE_PLAYER_2 = new ZoneCoordinate(1, 1);
     World world;
 
     //graphics controllers
@@ -88,15 +84,15 @@ public class GameModel extends Observable {
     	world = new World(ZONE_SIZE);
 
     	if(player1 == null){
-            player1 = new Player(this, startCoordinatePlayer1, startZonePlayer1);
+            player1 = new Player(this, START_COORDINATE_PLAYER_1, START_ZONE_PLAYER_1);
     	} else {
-    		player1.reset(startCoordinatePlayer1, startZonePlayer1);
+    		player1.reset(START_COORDINATE_PLAYER_1, START_ZONE_PLAYER_1);
     	}
     	
     	if(player2 == null){
-            player2 = new Player(this, startCoordinatePlayer2, startZonePlayer2);
+            player2 = new Player(this, START_COORDINATE_PLAYER_2, START_ZONE_PLAYER_2);
     	} else {
-    		player2.reset(startCoordinatePlayer2, startZonePlayer2);
+    		player2.reset(START_COORDINATE_PLAYER_2, START_ZONE_PLAYER_2);
     	}
 
     	player1.setState(WorldObjectState.ALIVE);
@@ -112,8 +108,8 @@ public class GameModel extends Observable {
     public void initialize(){
     	world = new World(ZONE_SIZE);
 
-    	player1 = new Player(this, startCoordinatePlayer1, startZonePlayer1);
-    	player2 = new Player(this, startCoordinatePlayer2, startZonePlayer2);
+    	player1 = new Player(this, START_COORDINATE_PLAYER_1, START_ZONE_PLAYER_1);
+    	player2 = new Player(this, START_COORDINATE_PLAYER_2, START_ZONE_PLAYER_2);
 
         player2.setColor(Color.BLUE);
 
@@ -157,7 +153,8 @@ public class GameModel extends Observable {
         world.update(startZoneToUpdate, stopZoneToUpdate);
 
         if(!player1.isAlive() || !player2.isAlive()){
-            if (resetTick-- == 0){
+            resetTick--;
+            if (resetTick == 0){
                 reset();
             }
         }
@@ -166,7 +163,7 @@ public class GameModel extends Observable {
     }
 
     public void spawnAsteroids(){
-        for(int i = 0; i < asteroidSpawnRate; i++){
+        for(int i = 0; i < ASTEROID_SPAWN_RATE; i++){
             spawnAsteroid();
         }
     }

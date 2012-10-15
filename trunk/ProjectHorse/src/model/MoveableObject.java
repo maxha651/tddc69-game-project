@@ -29,7 +29,7 @@ public abstract class MoveableObject extends WorldObject{
 
     @Override
     public void update(World world) {
-        updatePosition(world.getZoneSize());
+        updatePosition();
 
         if(isOutOfBounds(world.getZoneSize())){
             world.removeWorldObject(this);
@@ -40,7 +40,7 @@ public abstract class MoveableObject extends WorldObject{
         super.update(world);
     }
 
-    public void updatePosition(double zoneSize){
+    public void updatePosition(){
         coordinate.setX(coordinate.getX() + velocityX);
         coordinate.setY(coordinate.getY() + velocityY);
         

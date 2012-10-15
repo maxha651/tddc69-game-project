@@ -8,5 +8,5 @@ package model.utility.enums;
  * To change this template use File | Settings | File Templates.
  */
 public enum ProjectileType {
-    LASER_RED, LASER_BLUE, MISSILE;
+    LASER_RED, LASER_BLUE, MISSILE
 }

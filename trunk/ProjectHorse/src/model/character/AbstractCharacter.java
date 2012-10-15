@@ -39,12 +39,6 @@ public abstract class AbstractCharacter extends CollideableObject {
         }
     }
 
-
-    public void updatePosition(boolean accelerate, double zoneSize) {
-        this.updateVelocity(accelerate);
-        //super.updatePosition(zoneSize);
-    }
-
     public void accelerate() {
         double acceleration = spacecraft.getEngine().getAcceleration();
         double maxVelocity = spacecraft.getEngine().getVelocityMax();

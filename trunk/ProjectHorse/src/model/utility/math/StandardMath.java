@@ -8,6 +8,9 @@ package model.utility.math;
  * To change this template use File | Settings | File Templates.
  */
 public class StandardMath {
+    private StandardMath() {
+    }
+
     public static double pyth(double a, double b){
         return Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2));
     }

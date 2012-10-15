@@ -196,8 +196,6 @@ public class GraphicalViewer extends Viewer {
      */
     public void paintExtraInformation(Graphics2D g2d){
 
-        Engine e = p.getSpacecraft().getEngine();
-
         //initialize font and information container
         setFontToMonospace(g2d, DEFAULT_FONT_SIZE);
         InformationContainer ic = new InformationContainer(20, 20);
@@ -255,8 +253,8 @@ public class GraphicalViewer extends Viewer {
         int positionX =(int) (positionInZone.getX() + zoneSize*zoneCoordinate.getX());
         int positionY =(int) (positionInZone.getY() + zoneSize*zoneCoordinate.getY());
 
-        cameraX = (int) (positionX - width / 2);
-        cameraY = (int) (positionY - height / 2);
+        cameraX = (positionX - width / 2);
+        cameraY = (positionY - height / 2);
     }
 
     /**
@@ -275,10 +273,8 @@ public class GraphicalViewer extends Viewer {
         double posX = p.getCoordinate().getX() + zc.getX()*zoneSize;
         double posY = p.getCoordinate().getY() + zc.getY()*zoneSize;
 
-        if(posX < cameraX + width && posX > cameraX && posY < cameraY + height && posY > cameraY){
-            return false;
-        }
-        return true;
+        return !(posX < cameraX + width && posX > cameraX &&
+                posY < cameraY + height && posY > cameraY);
     }
 
     /**

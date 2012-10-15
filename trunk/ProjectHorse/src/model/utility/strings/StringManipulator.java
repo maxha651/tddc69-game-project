@@ -9,6 +9,9 @@ package model.utility.strings;
  */
 public class StringManipulator {
 
+    private StringManipulator() {
+    }
+
     public static String toString(double d, int decimals){
         int power = (int) Math.pow(10, decimals);
         return Double.toString(((double)((int)(d*power)))/power);

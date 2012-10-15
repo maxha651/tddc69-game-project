@@ -8,5 +8,5 @@ package model.world;
  * To change this template use File | Settings | File Templates.
  */
 public enum WorldObjectState {
-    ALIVE, DEAD;
+    ALIVE, DEAD
 }

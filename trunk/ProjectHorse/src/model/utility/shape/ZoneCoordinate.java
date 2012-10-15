@@ -9,8 +9,8 @@ package model.utility.shape;
  */
 public class ZoneCoordinate implements Comparable{
 
-    int x;
-    int y;
+    private int x;
+    private int y;
 
     public ZoneCoordinate(int x, int y){
         this.x = x;
