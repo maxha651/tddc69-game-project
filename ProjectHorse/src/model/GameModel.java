@@ -162,13 +162,6 @@ public class GameModel extends Observable {
             }
         }
 
-        if(tick > 10000 && true){ //change true to false if you want to remove automatic quitting
-            //to make the game not fuck up the computer if memory leaks
-            System.out.println("Exited game to prevent fucked up memory leaks");
-            System.out.println("Check in Game Model in tick() to remove");
-            System.exit(0);
-        }
-
         updateTime = System.currentTimeMillis() - start;
     }
 

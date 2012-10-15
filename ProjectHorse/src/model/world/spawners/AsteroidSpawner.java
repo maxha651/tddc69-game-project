@@ -13,10 +13,13 @@ import model.world.World;
  * To change this template use File | Settings | File Templates.
  */
 public class AsteroidSpawner implements WorldObjectSpawner{
+
+    private static final double SPACING_BETWEEN_ASTEROIDS = 200;
+
     @Override
     public void spawnWorldObjects(World world, ZoneCoordinate zoneCoordinate) {
         double zoneSize = world.getZoneSize();
-        double space = 200;
+        double space = SPACING_BETWEEN_ASTEROIDS;
 
         for(int x=0; x < zoneSize; x+=space){
             for (int y=0; y < zoneSize; y+=space){
