@@ -38,7 +38,7 @@ public class GraphicalViewer extends Viewer {
     final static int PANEL_PADDING_HORI = 20; //pads the height of the graphical viewer
     final static int DEFAULT_FONT_SIZE = 14;
     final static int PLAYER_INFORMATION_FONT_PAD = 25;
-    final static int POINTER_DISTANCE_FROM_EDGE = 20;
+    final static int POINTER_DISTANCE_FROM_EDGE = 50;
     final static int POINTER_SIZE = 10;
     final static Color POINTER_COLOR = Color.RED;
     final static Color DEFAULT_PAINT_COLOR = Color.WHITE;
@@ -188,14 +188,21 @@ public class GraphicalViewer extends Viewer {
      * @param g2d
      */
     public void drawPlayerInformation(Graphics2D g2d){
-        
+
+        int health = p.getHealth();
+        String healthString;
     	setFontToMonospace(g2d, 16);
         int shadowPad = 2;
-        
+        if(health > 0){
+            healthString = Integer.toString(health);
+        } else {
+            healthString = "DEAD";
+        }
+
         g2d.setColor(p.getColor());
-        g2d.drawString("health : " + p.getHealth(), PLAYER_INFORMATION_FONT_PAD/2 , PLAYER_INFORMATION_FONT_PAD );
+        g2d.drawString("health : " + healthString, PLAYER_INFORMATION_FONT_PAD/2 , PLAYER_INFORMATION_FONT_PAD );
         g2d.setColor(Color.white);
-        g2d.drawString("health : " + p.getHealth(), (PLAYER_INFORMATION_FONT_PAD)/2 - shadowPad, PLAYER_INFORMATION_FONT_PAD - shadowPad);
+        g2d.drawString("health : " + healthString, (PLAYER_INFORMATION_FONT_PAD)/2 - shadowPad, PLAYER_INFORMATION_FONT_PAD - shadowPad);
     }
 
     /**
@@ -274,7 +281,6 @@ public class GraphicalViewer extends Viewer {
         double zoneSize = gameModel.getZoneSize();
 
         if(outOfCamera(otherPlayer)){
-
             double angle = p.getAngleTo(otherPlayer, zoneSize);
 
             int positionX = (int) (p.getZoneCoordinate().getX()*zoneSize + p.getCoordinate().getX());
@@ -284,7 +290,10 @@ public class GraphicalViewer extends Viewer {
             int paintY = (int) (-cameraY + positionY + Math.sin(angle)*(height/2 -POINTER_DISTANCE_FROM_EDGE));
 
             g2d.setColor(POINTER_COLOR);
-            g2d.fillRect(paintX, paintY, POINTER_SIZE, POINTER_SIZE);
+            g2d.fillOval(paintX, paintY, POINTER_SIZE, POINTER_SIZE);
+
+            g2d.setColor(Color.white);
+            g2d.drawString("ENEMY", paintX - POINTER_SIZE*5, paintY);
         }
     }
 
