@@ -6,12 +6,11 @@ import model.properties.Collideable;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 import model.world.WorldObject;
-import model.world.WorldObjectContainer;
 import resources.ImageLoader;
-
 import java.awt.geom.AffineTransform;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Collection;
 
 /**
  * The graphical viewer is a standard 2D game viewer that paints a GameModel object.
@@ -146,9 +145,9 @@ public class GraphicalViewer extends Viewer {
         Coordinate stop = new Coordinate(p.getCoordinate().getX() + width/2 + SCREEN_PADDING, p.getCoordinate().getY() + height/2 + SCREEN_PADDING);
 
         // get all world objects close to the start and stop positions.
-        WorldObjectContainer woc = gameModel.getAllObjectsInArea(zs, start, stop);
+        Collection<WorldObject> worldObjects = gameModel.getAllObjectsInArea(zs, start, stop);
 
-        for(WorldObject wo : woc){
+        for(WorldObject wo : worldObjects){
             painter.paintWorldObject(wo, g2d, cameraX, cameraY, this);
             g2d.setTransform(saved);
             if(paintWorldObjectBounds){
@@ -180,7 +179,7 @@ public class GraphicalViewer extends Viewer {
         g2d.setColor(p.getColor());
         g2d.drawString("score : " + p.getScore(), PLAYER_INFORMATION_FONT_PAD/2, PLAYER_INFORMATION_FONT_PAD *2);
         g2d.setColor(Color.white);
-        g2d.drawString("score : " + p.getScore(), (PLAYER_INFORMATION_FONT_PAD)/2 - shadowPad, (PLAYER_INFORMATION_FONT_PAD)*2 - shadowPad);
+        g2d.drawString("score : " + p.getScore(), (PLAYER_INFORMATION_FONT_PAD) / 2 - shadowPad, (PLAYER_INFORMATION_FONT_PAD) * 2 - shadowPad);
     }
 
     /**

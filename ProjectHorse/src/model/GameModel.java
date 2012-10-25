@@ -9,10 +9,10 @@ import model.utility.shape.ZoneCoordinate;
 import model.world.spawners.AsteroidSpawner;
 import model.world.World;
 import model.world.WorldObject;
-import model.world.WorldObjectContainer;
 import model.world.WorldObjectState;
 
 import java.awt.*;
+import java.util.Collection;
 import java.util.Observable;
 
 public class GameModel extends Observable {
@@ -184,7 +184,7 @@ public class GameModel extends Observable {
 
     }
 
-    public WorldObjectContainer getAllObjectsInArea(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
+    public Collection<WorldObject> getAllObjectsInArea(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
         return world.getAllObjectsInArea(zoneCoordinate, start, stop);
     }
 

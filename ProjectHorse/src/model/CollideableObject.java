@@ -4,7 +4,8 @@ import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
 import model.world.World;
 import model.world.WorldObject;
-import model.world.WorldObjectContainer;
+
+import java.util.Collection;
 
 /**
  * Any WorldObject which can collide with other objects
@@ -68,7 +69,7 @@ public abstract class CollideableObject extends MoveableObject {
      */
     protected void collisionCheck(World world){
 
-        WorldObjectContainer nearbyObjects;
+        Collection<WorldObject> nearbyObjects;
         int checkDistance = GameModel.COLLIDING_CHECK_DISTANCE;
 
         nearbyObjects = world.getAllObjectsInArea(zoneCoordinate,
