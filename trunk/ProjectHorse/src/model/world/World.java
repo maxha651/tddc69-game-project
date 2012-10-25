@@ -5,8 +5,8 @@ import model.utility.shape.ZoneCoordinate;
 import model.world.spawners.WorldObjectSpawner;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.concurrent.ConcurrentSkipListMap;
 
 /**
  * Uses Zones to store WorldObjects. Dynamically allocates new Zones when needed
@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentSkipListMap;
  */
 public class World {
     double zoneSize;
-    ConcurrentSkipListMap<ZoneCoordinate, Zone> zoneMap;
+    HashMap<ZoneCoordinate, Zone> zoneMap;
     Collection<WorldObjectSpawner> spawners;
 
     public int getNumberOfWorldObjects() {
@@ -30,7 +30,7 @@ public class World {
 
     public World(double zoneSize){
         this.zoneSize = zoneSize;
-        this.zoneMap = new ConcurrentSkipListMap<ZoneCoordinate, Zone>();
+        this.zoneMap = new HashMap<ZoneCoordinate, Zone>();
         this.spawners = new LinkedList<WorldObjectSpawner>();
     }
 
@@ -144,8 +144,8 @@ public class World {
      * @param stop The lower right corner of the search area
      * @return Returns all objects in the rectangular area from start to stop
      */
-    public WorldObjectContainer getAllObjectsInArea(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
-        WorldObjectContainer resObjects = new WorldObjectContainer();
+    public Collection<WorldObject> getAllObjectsInArea(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
+        LinkedList<WorldObject> resObjects = new LinkedList<WorldObject>();
         ZoneCoordinate tempZoneCoordinate = new ZoneCoordinate(zoneCoordinate);
         Coordinate tempStart = new Coordinate(start);
         Coordinate tempStop = new Coordinate(stop);
