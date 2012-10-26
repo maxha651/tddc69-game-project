@@ -64,16 +64,39 @@ Labbhandledaren och examinatorn kommer bland annat att använda den här dokumen
 Se även sidan om krav på programkod på webben.
 
 6.2. Användning av fritt material
-Skriv ner vilka klassbibliotek och vilket annat fritt material ni har använt utöver det som ingår i Java 7, eller ange uttryckligen att ni inte har använt något.
+Vi har inte använt något fritt material.
 
 6.3. Användning av designmönster
-Beskriv tydligt (i punktlista eller separata stycken) vilka designmönster som använts i implementationen, vad ni åstadkommer genom att använda just de designmönstren i just ert projekt (vad var bra med att använda det?), och hur designmönstret har realiserats i praktiken, t.ex. vilka klasser som är inblandade och vad de motsvarar i designmönstrets terminologi (”Klasserna X och Y är våra konkreta strategier för den här användningen av strategimönstret”).
+Model-View-Controller
+ Vi använde MVC då det är ett bra sätt att hålla isär de progrmmets olika delar. Detta gjorde det även väldigt lätt för oss att implementera tvåspelarläge.
+
+Abstract Factory
+ Vi har ett interface kallat WorldObjectSpawner som vi skickar till World. Varje gång en ny Zone i World skapas kommer alla WorldObjectSpawner som vi har lagt in i World att köras. WorldObjectSpawner spawnar då nya objekt.
+ Just nu har vi bara en WorldObjectSpawner som spawnar asteroider. WorldObjectSpawner spawnar WorldObjects.
+
+States/något annat?
 
 6.4. Användning av objektorientering
-För varje betygsnivå måste ni peka ut ett visst antal lösningar ni har gjort där ni använder objektorienterade "finesser" som t.ex. polymorfism, och diskutera kortfattat hur man kunde ha löst detta utan objektorientering.
+Vi har en abstrakt klass WorldObject som alla objekt som finns i World ärver av. Detta gör att vi kan försäkra att de funktioner som behövs för att hantera objekten i World finns i alla objekt och fungerar på samma sätt.
+Om vi vill att en funktion ska göra något annat än vad som specifieras i WorldObject så använder vi polymorfism för att åstadkomma detta. Update har till exempel en mycket enkel implementation i WorldObject, men t ex så lägger vi till en positionscheck i MoveableObject och en kollisionscheck i CollideableObject. Vi slipper implementera samma sak i flera klasser då MoveableObjects Update återanvänder Update i WorldObject och CollideableObject återanvänder Update i MoveableObject.
+
+Vi hade istället kunnat ha låtit World bara ta Object och sedan implementera skilda klasser som vi lägger in i World. Vi hade då tvingats ha samma kod i alla klasser och dessutom hade det varit svårare att garantera att World kan kommunicera med objekten.
+
+
 
 6.5. Motiverade designbeslut med alternativ
-Här anger ni motiverade designbeslut enligt betygskraven på webben.  Anledningen är både att ni ska visa oss hur ni har tänkt och att ni själva ska fundera över era val.
+World
+ Världen skapar vi som ett World-objekt. Detta består av flera zoner som är Zone-objekt. Istället för att ha en specifik funktion som skapar zonerna så görs detta dynamiskt i GetZone så fort vi försöker komma åt en zon. World tar även bort zoner när vi anser att de är tillräckligt långt bort.
+ På detta sätt kan vi lätt göra våran värld större och mindre så att den för spelaren upplevs som oändlig. Zonuppdelningen möjliggör även för oss att enklare plocka ut objekt från vissa delar av världen utan att behöva söka igenom alla objekt och jämföra deras positioner.
+
+ Först lät vi World uppdatera objekten, men för att hålla oss till det objektorienterade tankesättet så lät vi istället varje objekt uppdatera sig självt. Så allt World gör är att den anropar varje objekts update-funktion.
+ På detta sätt slapp vi en massa falluppdelning(är objektet Moveable, Collideabel..?) och det är enklare att ha denna kod i objektet självt. Vi slipper ändra i World när vi lägger in ett nytt objekt.
+
+ Vi mappar varje zon till dess koordinat i en HashMap. Denna datastruktur låter oss komma åt alla zoner väldigt snabbt.
+
+Zone
+ Denna klass lagrar egentligen bara WorldObjects, men varje zon innehåller endast objekt inom ett visst område. Vi har gjort denna klass trådsäker för att flera Viewers och Controllers ska kunna komma åt objekten samtidigt som de uppdateras.
+ Vi hade egentligen bara kunnat ha någonting som lagrade WorldObjekts trådsäkert (t ex ConcurrentLinkedQueue som är den underliggande strukturen), men har istället valt att göra en egen klass för tydlighetens skull och för att kunna he en del annan funktionalitet i klassen.
 
 7. Användarmanual
 Den här delen skriver ni inför slutinlämningen
