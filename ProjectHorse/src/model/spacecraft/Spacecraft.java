@@ -1,5 +1,6 @@
 package model.spacecraft;
 
+import model.LocalObject;
 import model.character.Player;
 import model.properties.Boundable;
 import model.items.Item;
@@ -10,7 +11,7 @@ import java.awt.*;
 /**
   * A spacecraft is the model of a spacecraft that can then be used in stores, by players or by NPCs
  */
-public class Spacecraft implements Boundable {
+public class Spacecraft extends LocalObject implements Boundable {
 
     private Engine engine = null;
     private ShieldGenerator shield = null;

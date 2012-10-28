@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>model.world.WorldObject</OriginalElement>
+  <nodes>
+    <node x="343.0" y="480.0">model.background.AsteroidParticle</node>
+    <node x="238.5" y="240.0">model.background.MoveableBackgroundObject</node>
+    <node x="472.75" y="400.0">model.character.Player</node>
+    <node x="296.5" y="400.0">model.background.Particle</node>
+    <node x="489.0" y="480.0">model.background.SpacecraftDeathParticle</node>
+    <node x="393.0" y="0.0">model.AbstractGameObject</node>
+    <node x="417.0" y="80.0">model.world.WorldObject</node>
+    <node x="394.75" y="400.0">model.character.NPC</node>
+    <node x="555.75" y="320.0">model.background.Asteroid</node>
+    <node x="302.0" y="320.0">model.background.Effect</node>
+    <node x="657.75" y="320.0">model.background.Projectile</node>
+    <node x="530.25" y="240.0">model.CollideableObject</node>
+    <node x="407.0" y="160.0">model.MoveableObject</node>
+    <node x="395.75" y="320.0">model.character.AbstractCharacter</node>
+    <node x="207.0" y="480.0">model.background.EngineParticle</node>
+    <node x="0.0" y="480.0">model.background.RedProjectileDeathParticle</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="model.character.NPC" target="model.character.AbstractCharacter">
+      <point x="0.0" y="-15.0" />
+      <point x="423.75" y="375.0" />
+      <point x="430.75" y="375.0" />
+      <point x="-35.0" y="15.0" />
+    </edge>
+    <edge source="model.background.AsteroidParticle" target="model.background.Particle">
+      <point x="0.0" y="-15.0" />
+      <point x="406.0" y="460.0" />
+      <point x="345.25" y="460.0" />
+      <point x="9.75" y="15.0" />
+    </edge>
+    <edge source="model.background.Projectile" target="model.CollideableObject">
+      <point x="0.0" y="-15.0" />
+      <point x="701.75" y="295.0" />
+      <point x="641.0833333333334" y="295.0" />
+      <point x="44.33333333333337" y="15.0" />
+    </edge>
+    <edge source="model.CollideableObject" target="model.MoveableObject">
+      <point x="0.0" y="-15.0" />
+      <point x="596.75" y="215.0" />
+      <point x="500.75" y="215.0" />
+      <point x="31.25" y="15.0" />
+    </edge>
+    <edge source="model.world.WorldObject" target="model.AbstractGameObject">
+      <point x="0.0" y="0.0" />
+      <point x="0.0" y="0.0" />
+    </edge>
+    <edge source="model.background.Asteroid" target="model.CollideableObject">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="model.character.AbstractCharacter" target="model.CollideableObject">
+      <point x="0.0" y="-15.0" />
+      <point x="465.75" y="295.0" />
+      <point x="552.4166666666666" y="295.0" />
+      <point x="-44.33333333333337" y="15.0" />
+    </edge>
+    <edge source="model.background.EngineParticle" target="model.background.Particle">
+      <point x="0.0" y="-15.0" />
+      <point x="265.0" y="460.0" />
+      <point x="325.75" y="460.0" />
+      <point x="-9.75" y="15.0" />
+    </edge>
+    <edge source="model.MoveableObject" target="model.world.WorldObject">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="model.background.Particle" target="model.background.Effect">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="model.background.MoveableBackgroundObject" target="model.MoveableObject">
+      <point x="0.0" y="-15.0" />
+      <point x="335.5" y="215.0" />
+      <point x="438.25" y="215.0" />
+      <point x="-31.25" y="15.0" />
+    </edge>
+    <edge source="model.background.SpacecraftDeathParticle" target="model.background.Particle">
+      <point x="0.0" y="-15.0" />
+      <point x="576.0" y="450.0" />
+      <point x="364.75" y="450.0" />
+      <point x="29.25" y="15.0" />
+    </edge>
+    <edge source="model.character.Player" target="model.character.AbstractCharacter">
+      <point x="0.0" y="-15.0" />
+      <point x="507.75" y="375.0" />
+      <point x="500.75" y="375.0" />
+      <point x="35.0" y="15.0" />
+    </edge>
+    <edge source="model.background.RedProjectileDeathParticle" target="model.background.Particle">
+      <point x="0.0" y="-15.0" />
+      <point x="93.5" y="450.0" />
+      <point x="306.25" y="450.0" />
+      <point x="-29.25" y="15.0" />
+    </edge>
+    <edge source="model.background.Effect" target="model.background.MoveableBackgroundObject">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="400.5" y="416.5" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+

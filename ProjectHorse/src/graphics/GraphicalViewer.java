@@ -225,7 +225,7 @@ public class GraphicalViewer extends Viewer {
         ic.add("Player angle     : " + toTruncatedStr(Math.toDegrees(p.getRotationAngle()), 1) + " (degrees), " + toTruncatedStr(p.getRotationAngle(), 1) + " (radians)");
         playerCoordinateString = (p.getZoneCoordinate().getX() + ", " + p.getZoneCoordinate().getY());
         ic.add("Player zone coord: " + playerCoordinateString);
-        ic.add("Angle between pl : " + gameModel.getPlayer(1).getAngleTo(gameModel.getPlayer(2), gameModel.getZoneSize()));
+        ic.add("Angle between pl : " + toTruncatedStr(gameModel.getPlayer(1).getAngleTo(gameModel.getPlayer(2), gameModel.getZoneSize()), 1));
         ic.add("World objects #  : " + gameModel.numberOfWorldObjects);
         ic.add("Zones #          : " + gameModel.numberOfZones());
         ic.add("Update Time (ms) : " + gameModel.updateTime);

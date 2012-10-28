@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>graphics.GraphicalViewer</OriginalElement>
+  <nodes>
+    <node x="-37.0" y="105.0">graphics.InformationContainer</node>
+    <node x="176.0" y="105.0">graphics.GraphicalViewer</node>
+    <node x="367.0" y="105.0">graphics.WorldObjectPainter</node>
+    <node x="347.0" y="-15.0">javax.swing.JComponent</node>
+    <node x="203.0" y="-15.0">graphics.Viewer</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="graphics.Viewer" target="javax.swing.JComponent">
+      <point x="37.0" y="0.0" />
+      <point x="-53.0" y="0.0" />
+    </edge>
+    <edge source="graphics.GraphicalViewer" target="graphics.WorldObjectPainter">
+      <point x="64.0" y="0.0" />
+      <point x="-73.0" y="0.0" />
+    </edge>
+    <edge source="graphics.GraphicalViewer" target="graphics.Viewer">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="graphics.GraphicalViewer" target="graphics.InformationContainer">
+      <point x="-64.0" y="0.0" />
+      <point x="77.0" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="238.0" y="92.5" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+
