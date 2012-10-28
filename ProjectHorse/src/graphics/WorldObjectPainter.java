@@ -21,10 +21,10 @@ import java.util.Observer;
 /**
  * Basically maps WorldObject objects to some paint method
  */
-public class WorldObjectPainter {
+public class WorldObjectPainter extends AbstractWorldObjectPainter {
 
-    private ImageLoader imageLoader;
-    private GameModel gm;
+    protected ImageLoader imageLoader;
+    protected GameModel gm;
 
     /**
      * Basic constructor. Uses ImageLoader interface for obvious reasons. gm is only used to get its zone size at the moment.

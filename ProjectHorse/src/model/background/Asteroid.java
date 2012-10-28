@@ -31,6 +31,7 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
     private final static int ROTATION_ANGLE_MAX_SPREAD = 10;    //max rotation angle when the asteroid is spawned
     private final static int DAMAGE_YIELD_MASS_DIVISIOR = 20;   //used to calculate the damage yield
     private final static int HEALTH_MASS_DIVISIOR = 60;
+    private final static int DEATH_PARTICLE_DIVISIOR = 130;     //used for calculating amount of death particles
     
     /**
      * Standard constructor that takes the zone and coordinate it should spawn at.
@@ -55,7 +56,7 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
     @Override
     public void update(World world) {
         collidedCheck();
-        super.update(world);
+        super.update(world);  
         collisionCheck(world);
     }
 
@@ -143,6 +144,6 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
      * Calculates how many asteroid particles should be spawned upon death.
      */
     protected void calculateDeathParticleAmount(){
-    	deathParticleAmount = (int) ((width*height/130));
+    	deathParticleAmount = (int) ((width*height/DEATH_PARTICLE_DIVISIOR));
     }
 }
