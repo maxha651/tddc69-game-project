@@ -17,11 +17,19 @@ public class InformationContainer {
     private int numberOfRows = 0;
     private LinkedBlockingQueue<String> queue = new LinkedBlockingQueue<String>();
 
+    /**
+     * Standard constructor for default padding
+     */
     public InformationContainer(){
     	stringPaddingX = DEFAULT_PADDING_X;
     	stringPaddingY = DEFAULT_PADDING_Y;
     }
     
+    /**
+     * Constructor for player padding
+     * @param padX
+     * @param padY
+     */
     public InformationContainer(int padX, int padY){
         stringPaddingX = padX;
         stringPaddingY = padY;

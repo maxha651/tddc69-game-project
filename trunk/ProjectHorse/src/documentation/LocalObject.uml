@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>model.AbstractGameObject</OriginalElement>
+  <nodes>
+    <node x="542.0" y="330.0">model.spacecraft.parts.Engine</node>
+    <node x="410.0" y="330.0">model.spacecraft.parts.PowerModule</node>
+    <node x="88.00000000000003" y="330.0">model.spacecraft.parts.ShieldGenerator</node>
+    <node x="335.0" y="330.0">model.spacecraft.parts.Hull</node>
+    <node x="368.0" y="160.0">model.spacecraft.Spacecraft</node>
+    <node x="234.00000000000003" y="330.0">model.spacecraft.parts.Weapon</node>
+    <node x="316.5" y="80.0">model.LocalObject</node>
+    <node x="291.0" y="0.0">model.AbstractGameObject</node>
+    <node x="289.0" y="160.0">model.items.Item</node>
+    <node x="258.0" y="240.0">model.spacecraft.parts.SpacecraftPart</node>
+    <node x="0.0" y="330.0">model.spacecraft.parts.Cargo</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="model.spacecraft.parts.PowerModule" target="model.spacecraft.parts.SpacecraftPart">
+      <point x="0.0" y="-15.0" />
+      <point x="466.0" y="300.0" />
+      <point x="348.75" y="300.0" />
+      <point x="30.25" y="15.0" />
+    </edge>
+    <edge source="model.spacecraft.parts.ShieldGenerator" target="model.spacecraft.parts.SpacecraftPart">
+      <point x="0.0" y="-15.0" />
+      <point x="151.00000000000003" y="300.0" />
+      <point x="288.25" y="300.0" />
+      <point x="-30.25" y="15.0" />
+    </edge>
+    <edge source="model.spacecraft.parts.Engine" target="model.spacecraft.parts.SpacecraftPart">
+      <point x="0.0" y="-15.0" />
+      <point x="578.0" y="290.0" />
+      <point x="368.91666666666674" y="290.0" />
+      <point x="50.416666666666686" y="15.0" />
+    </edge>
+    <edge source="model.spacecraft.parts.Weapon" target="model.spacecraft.parts.SpacecraftPart">
+      <point x="0.0" y="-15.0" />
+      <point x="274.5" y="310.0" />
+      <point x="308.41666666666674" y="310.0" />
+      <point x="-10.083333333333314" y="15.0" />
+    </edge>
+    <edge source="model.items.Item" target="model.LocalObject">
+      <point x="0.0" y="-15.0" />
+      <point x="318.5" y="135.0" />
+      <point x="342.0" y="135.0" />
+      <point x="-25.5" y="15.0" />
+    </edge>
+    <edge source="model.LocalObject" target="model.AbstractGameObject">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="model.spacecraft.parts.Hull" target="model.spacecraft.parts.SpacecraftPart">
+      <point x="0.0" y="-15.0" />
+      <point x="362.5" y="310.0" />
+      <point x="328.58333333333337" y="310.0" />
+      <point x="10.083333333333314" y="15.0" />
+    </edge>
+    <edge source="model.spacecraft.parts.Cargo" target="model.spacecraft.parts.SpacecraftPart">
+      <point x="0.0" y="-15.0" />
+      <point x="34.0" y="290.0" />
+      <point x="268.08333333333337" y="290.0" />
+      <point x="-50.416666666666686" y="15.0" />
+    </edge>
+    <edge source="model.spacecraft.parts.SpacecraftPart" target="model.items.Item">
+      <point x="0.0" y="-15.0" />
+      <point x="0.0" y="15.0" />
+    </edge>
+    <edge source="model.spacecraft.Spacecraft" target="model.LocalObject">
+      <point x="0.0" y="-15.0" />
+      <point x="416.5" y="135.0" />
+      <point x="393.0" y="135.0" />
+      <point x="25.5" y="15.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.0" x="307.0" y="328.5" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+
