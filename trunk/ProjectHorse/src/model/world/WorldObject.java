@@ -96,6 +96,13 @@ public abstract class WorldObject extends AbstractGameObject implements Boundabl
         return (int) (thatCoord.getY() - thisCoord.getY());
     }
 
+    public int getDistanceTo(WorldObject worldObject, double zoneSize){
+        int xDiff = getXDifference(worldObject, zoneSize);
+        int yDiff = getYDifference(worldObject, zoneSize);
+
+        return (int) Math.sqrt(Math.pow(xDiff, 2) + Math.pow(yDiff, 2));
+    }
+
     /**
      * Calculates the angle to another object
      *
@@ -109,6 +116,13 @@ public abstract class WorldObject extends AbstractGameObject implements Boundabl
         if(xDiff < 0){
             angle += Math.PI;
         }
+
+        if(angle < 0){
+            angle += 2*Math.PI;
+        } else if(angle > 2*Math.PI){
+            angle -= 2*Math.PI;
+        }
+
         return angle;
     }
 

@@ -85,25 +85,25 @@ public class GameFrame extends JFrame implements KeyListener, MouseListener{
         // Player p = gameModel.getPlayer();
         switch(keyCode){
             case PLAYER_1_THROTTLE:
-                gameModel.getPlayer(1).accelerationRequest = true;
+                gameModel.getPlayer(1).setAccelerationRequest(true);
                 break;
             case PLAYER_1_TURN_LEFT:
-                gameModel.getPlayer(1).turnLeftRequest = true;
+                gameModel.getPlayer(1).setTurnLeftRequest(true);
                 break;
             case PLAYER_1_TURN_RIGHT:
-                gameModel.getPlayer(1).turnRightRequest = true;
+                gameModel.getPlayer(1).setTurnRightRequest(true);
                 break;
             case PLAYER_1_FIRE:
-                gameModel.getPlayer(1).fireRequest = true;
+                gameModel.getPlayer(1).setFireRequest(true);
                 break;
             /*case PLAYER_2_THROTTLE:
                 gameModel.getPlayer(2).accelerationRequest = true;
                 break;*/
             case PLAYER_2_TURN_LEFT:
-                gameModel.getPlayer(2).turnLeftRequest = true;
+                gameModel.getPlayer(2).setTurnLeftRequest(true);
                 break;
             case PLAYER_2_TURN_RIGHT:
-                gameModel.getPlayer(2).turnRightRequest = true;
+                gameModel.getPlayer(2).setTurnRightRequest(true);
                 break;
             /*case PLAYER_2_FIRE:
                 gameModel.getPlayer(2).fireRequest = true;
@@ -144,25 +144,25 @@ public class GameFrame extends JFrame implements KeyListener, MouseListener{
         int keyCode = e.getKeyCode();
         switch(keyCode){
             case PLAYER_1_THROTTLE:
-                gameModel.getPlayer(1).accelerationRequest = false;
+                gameModel.getPlayer(1).setAccelerationRequest(false);
                 break;
             case PLAYER_1_TURN_LEFT:
-                gameModel.getPlayer(1).turnLeftRequest = false;
+                gameModel.getPlayer(1).setTurnLeftRequest(false);
                 break;
             case PLAYER_1_TURN_RIGHT:
-                gameModel.getPlayer(1).turnRightRequest = false;
+                gameModel.getPlayer(1).setTurnRightRequest(false);
                 break;
             case PLAYER_1_FIRE:
-                gameModel.getPlayer(1).fireRequest = false;
+                gameModel.getPlayer(1).setFireRequest(false);
                 break;
             /*case PLAYER_2_THROTTLE:
                 gameModel.getPlayer(2).accelerationRequest = false;
                 break;*/
             case PLAYER_2_TURN_LEFT:
-                gameModel.getPlayer(2).turnLeftRequest = false;
+                gameModel.getPlayer(2).setTurnLeftRequest(false);
                 break;
             case PLAYER_2_TURN_RIGHT:
-                gameModel.getPlayer(2).turnRightRequest = false;
+                gameModel.getPlayer(2).setTurnRightRequest(false);
                 break;
             /*case PLAYER_2_FIRE:
                 gameModel.getPlayer(2).fireRequest = false;
@@ -178,10 +178,10 @@ public class GameFrame extends JFrame implements KeyListener, MouseListener{
 		int mouseCode = arg0.getButton();
 		switch(mouseCode){
 		case PLAYER_2_FIRE_MOUSE:
-			gameModel.getPlayer(2).fireRequest = true;
+			gameModel.getPlayer(2).setFireRequest(true);
 			break;
 		case PLAYER_2_THROTTLE_MOUSE:
-			gameModel.getPlayer(2).accelerationRequest = true;
+			gameModel.getPlayer(2).setAccelerationRequest(true);
 			break;
 		}
 	}
@@ -195,10 +195,10 @@ public class GameFrame extends JFrame implements KeyListener, MouseListener{
 		int mouseCode = arg0.getButton();
 		switch(mouseCode){
 		case PLAYER_2_FIRE_MOUSE:
-			gameModel.getPlayer(2).fireRequest = false;
+			gameModel.getPlayer(2).setFireRequest(false);
 			break;
 		case PLAYER_2_THROTTLE_MOUSE:
-			gameModel.getPlayer(2).accelerationRequest = false;
+			gameModel.getPlayer(2).setAccelerationRequest(false);
 			break;		
 		}
 	}

@@ -7,6 +7,7 @@ import model.background.EngineParticle;
 import model.background.Projectile;
 import model.background.RedProjectileDeathParticle;
 import model.background.SpacecraftDeathParticle;
+import model.character.NPC;
 import model.character.Player;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
@@ -108,7 +109,7 @@ public class WorldObjectPainter extends AbstractWorldObjectPainter {
          */
         if(wo.getClass() == Asteroid.class){
             g2d.drawImage(imageLoader.getAsteroidImage(), paintX, paintY, bWidth, bHeight, gv);
-        } else if(wo.getClass() == Player.class) {
+        } else if(wo.getClass() == Player.class || wo.getClass() == NPC.class) {
             Player p = (Player) wo;
             g2d.drawImage(imageLoader.getPlayerImage(p), paintX, paintY, bWidth, bHeight, gv);
         } else if(wo.getClass() == EngineParticle.class) {

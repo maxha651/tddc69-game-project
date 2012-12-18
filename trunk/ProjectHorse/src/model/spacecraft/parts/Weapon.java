@@ -15,16 +15,18 @@ import java.awt.*;
 public class Weapon extends SpacecraftPart {
     ProjectileType pt;
     WeaponType wt;
-    int fireDelay = 0;
+    int fireDelay = 10;
     int fireDelayTop = 10;
 
     public Weapon(Player p){
         this.wt = new DefaultWeapon();
-        if(p.getColor().equals(Color.blue)){
+        this.pt = new ProjectileRed();
+
+        /*if(p.getColor().equals(Color.blue)){
             this.pt = new ProjectileBlue();
         } else {
             this.pt = new ProjectileRed();
-        }
+        }*/
 
     }
 
@@ -54,6 +56,10 @@ public class Weapon extends SpacecraftPart {
 
     public void setProjectileType(ProjectileType pt) {
         this.pt = pt;
+    }
+
+    public int getFireDelay(){
+        return fireDelay;
     }
 
 }

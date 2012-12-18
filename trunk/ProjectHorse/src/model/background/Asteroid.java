@@ -11,7 +11,7 @@ import model.world.*;
 /**
  * Model for an asteroid with velocity, damage yield, health, mass and collision
  */
-public class Asteroid extends CollideableObject implements Collideable, Damageable{
+public class Asteroid extends CollideableObject implements Damageable{
 
 	//declarations
     private short health;
@@ -100,11 +100,6 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
     }
 
     @Override
-    public boolean hasCollided() {
-        return hasCollided;
-    }
-
-    @Override
     public int getMass() {
         return mass;
     }
@@ -124,7 +119,7 @@ public class Asteroid extends CollideableObject implements Collideable, Damageab
      * Returns the score this object yields when killed.
      */
     @Override
-    public int scoreYield() {
+    public int getScoreYield() {
         return 10;
     }
 

@@ -1,47 +1,28 @@
 package model.character;
 
 
-import model.CollideableObject;
-import model.background.Projectile;
-import model.properties.Boundable;
-import model.properties.Collideable;
-import model.spacecraft.Spacecraft;
+import model.GameModel;
 import model.utility.shape.Coordinate;
 import model.utility.shape.ZoneCoordinate;
+import model.world.World;
 
 /**
  * This class is not being used. NPC is NOT finished.
  */
-public class NPC extends AbstractCharacter implements Collideable, Boundable {
+public class NPC extends Player {
 
-	/**
-	 * Do not use.
-	 */
-    public NPC(){
-        System.err.println("The NPC is not allowed for used. It is not finished yet.");
-        System.exit(0);
-        this.setSpacecraft(new Spacecraft());
-        this.coordinate = new Coordinate(0,0);
-        this.zoneCoordinate = new ZoneCoordinate(0,0);
+    Behaviour behaviour = new StationaryAggressive();
 
-        mass = (int) (spacecraft.getHull().getHeight() * spacecraft.getHull().getWidth());
-    }
-
-    public Projectile fire(){
-        return new Projectile(spacecraft.getWeapon1(), new Coordinate(this.getCoordinate()), this.rotationAngle, new ZoneCoordinate(this.zoneCoordinate), this);
+    /**
+     * Standard constructor that initializes 1 NPC.
+     */
+    public NPC(GameModel gameModel, Coordinate c, ZoneCoordinate zc) {
+        super(gameModel, c, zc);
     }
 
     @Override
-    public boolean hasCollided() {
-        return false;
-    }
-
-    @Override
-    public int getMass() {
-        return mass;
-    }
-
-    public void updateAI(){
-
+    public void update(World world) {
+        behaviour.update(world, this);
+        super.update(world);
     }
 }
