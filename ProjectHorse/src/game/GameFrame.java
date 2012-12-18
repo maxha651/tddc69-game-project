@@ -1,5 +1,9 @@
 package game;
 
+import controller.AbstractController;
+import controller.DefaultKeyBindings;
+import controller.Player1;
+import controller.Player2;
 import graphics.GraphicalViewer;
 import model.GameModel;
 import resources.BasicImageLoader;
@@ -11,13 +15,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
 
 /**
  * Main frame controlling a GameModel and a GraphicalViewer with KeyListeners and MouseListeners
  */
-public class GameFrame extends JFrame implements KeyListener, MouseListener{
+public class GameFrame extends JFrame{
 
 	//declarations and default initializations
     private static final String FRAME_TITLE = "Space Explorer";
@@ -25,30 +31,7 @@ public class GameFrame extends JFrame implements KeyListener, MouseListener{
     private Game game; //used for pausing/unpausing/destroying game
     private GraphicalViewer viewer1;
     private GraphicalViewer viewer2;
-
-    //player 1 key coding
-    private final static int PLAYER_1_FIRE = KeyEvent.VK_SPACE;
-    private final static int PLAYER_1_TURN_LEFT = KeyEvent.VK_A;
-    private final static int PLAYER_1_TURN_RIGHT = KeyEvent.VK_D;
-    private final static int PLAYER_1_THROTTLE = KeyEvent.VK_W;
-    private final static int PLAYER_1_FOCUS_CAMERA = KeyEvent.VK_F;
-
-    //player 2 key coding
-    private final static int PLAYER_2_TURN_LEFT = KeyEvent.VK_LEFT;
-    private final static int PLAYER_2_FIRE = KeyEvent.VK_ENTER;
-    private final static int PLAYER_2_TURN_RIGHT = KeyEvent.VK_RIGHT;
-    private final static int PLAYER_2_THROTTLE = KeyEvent.VK_UP;
-    private final static int PLAYER_2_THROTTLE_MOUSE = MouseEvent.BUTTON3;
-    private final static int PLAYER_2_FIRE_MOUSE = MouseEvent.BUTTON1;
-
-    //other key coding
-    private final static int SHOW_INFORMATION = KeyEvent.VK_I;
-    private final static int DRAW_BOUNDS = KeyEvent.VK_B;
-    private final static int SHOW_KEY_CODING = KeyEvent.VK_K;
-    private final static int DRAW_CROSS = KeyEvent.VK_C;
-    private final static int PAUSE = KeyEvent.VK_P;
-    private final static int QUIT = KeyEvent.VK_Q;
-    private final static int RESTART = KeyEvent.VK_R;
+    private Collection<AbstractController> abstractControllers;
     
     /**
      * The default constructor that creates 2 graphical viewers (one for each player).
@@ -57,10 +40,17 @@ public class GameFrame extends JFrame implements KeyListener, MouseListener{
         super(FRAME_TITLE);
         this.gameModel = gameModel;
         this.game = game;
-        
+
         //key and mouse listeners
-        this.addKeyListener(this);
-        this.addMouseListener(this);
+        abstractControllers = new LinkedList<AbstractController>();
+        abstractControllers.add(new Player1(gameModel.getPlayer(1)));
+        abstractControllers.add(new Player2(gameModel.getPlayer(2)));
+        abstractControllers.add(new DefaultKeyBindings(viewer1, game, this));
+
+        for(AbstractController controller : abstractControllers){
+            this.addKeyListener(controller);
+            this.addMouseListener(controller);
+        }
 
         //graphical initialization
         addAllComponents();
@@ -70,138 +60,6 @@ public class GameFrame extends JFrame implements KeyListener, MouseListener{
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
     }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-        //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    /**
-     * Decides what key is pressed and acts accordingly
-     */
-    @Override
-    public void keyPressed(KeyEvent e) {
-        int keyCode = e.getKeyCode();
-        // Player p = gameModel.getPlayer();
-        switch(keyCode){
-            case PLAYER_1_THROTTLE:
-                gameModel.getPlayer(1).setAccelerationRequest(true);
-                break;
-            case PLAYER_1_TURN_LEFT:
-                gameModel.getPlayer(1).setTurnLeftRequest(true);
-                break;
-            case PLAYER_1_TURN_RIGHT:
-                gameModel.getPlayer(1).setTurnRightRequest(true);
-                break;
-            case PLAYER_1_FIRE:
-                gameModel.getPlayer(1).setFireRequest(true);
-                break;
-            /*case PLAYER_2_THROTTLE:
-                gameModel.getPlayer(2).accelerationRequest = true;
-                break;*/
-            case PLAYER_2_TURN_LEFT:
-                gameModel.getPlayer(2).setTurnLeftRequest(true);
-                break;
-            case PLAYER_2_TURN_RIGHT:
-                gameModel.getPlayer(2).setTurnRightRequest(true);
-                break;
-            /*case PLAYER_2_FIRE:
-                gameModel.getPlayer(2).fireRequest = true;
-                break;*/
-            case PLAYER_1_FOCUS_CAMERA:
-                viewer1.setLockOnPlayer(!viewer1.isLockOnPlayer());
-                break;
-            case SHOW_INFORMATION:
-                viewer1.setPaintExtraInformation(!viewer1.isPaintExtraInformation());
-                break;
-            case DRAW_CROSS:
-                viewer1.setDrawCross(!viewer1.isDrawCross());
-                break;
-            case SHOW_KEY_CODING:
-                viewer1.setPaintKeyBindings(!viewer1.isPaintKeyBindings());
-                break;
-            case DRAW_BOUNDS :
-                viewer1.setPaintWorldObjectBounds(!viewer1.isPaintWorldObjectBounds());
-                break;
-            case PAUSE :
-            	game.setPause(!game.isPause());
-                break;
-            case RESTART :
-            	reset();
-                break;
-            case QUIT :
-            	System.exit(0);
-                break;
-        }
-    }
-
-    
-    /**
-     * Decides what key is released and acts accordingly.
-     */
-    @Override
-    public void keyReleased(KeyEvent e) {
-        int keyCode = e.getKeyCode();
-        switch(keyCode){
-            case PLAYER_1_THROTTLE:
-                gameModel.getPlayer(1).setAccelerationRequest(false);
-                break;
-            case PLAYER_1_TURN_LEFT:
-                gameModel.getPlayer(1).setTurnLeftRequest(false);
-                break;
-            case PLAYER_1_TURN_RIGHT:
-                gameModel.getPlayer(1).setTurnRightRequest(false);
-                break;
-            case PLAYER_1_FIRE:
-                gameModel.getPlayer(1).setFireRequest(false);
-                break;
-            /*case PLAYER_2_THROTTLE:
-                gameModel.getPlayer(2).accelerationRequest = false;
-                break;*/
-            case PLAYER_2_TURN_LEFT:
-                gameModel.getPlayer(2).setTurnLeftRequest(false);
-                break;
-            case PLAYER_2_TURN_RIGHT:
-                gameModel.getPlayer(2).setTurnRightRequest(false);
-                break;
-            /*case PLAYER_2_FIRE:
-                gameModel.getPlayer(2).fireRequest = false;
-                break;*/
-        }
-    }
-
-    /**
-     * Decides what mouse button is pressed and acts accordingly.
-     */
-	@Override
-	public void mousePressed(MouseEvent arg0) {
-		int mouseCode = arg0.getButton();
-		switch(mouseCode){
-		case PLAYER_2_FIRE_MOUSE:
-			gameModel.getPlayer(2).setFireRequest(true);
-			break;
-		case PLAYER_2_THROTTLE_MOUSE:
-			gameModel.getPlayer(2).setAccelerationRequest(true);
-			break;
-		}
-	}
-
-	/**
-     * Decides what mouse button is released and acts accordingly.
-     */
-	@Override
-	public void mouseReleased(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		int mouseCode = arg0.getButton();
-		switch(mouseCode){
-		case PLAYER_2_FIRE_MOUSE:
-			gameModel.getPlayer(2).setFireRequest(false);
-			break;
-		case PLAYER_2_THROTTLE_MOUSE:
-			gameModel.getPlayer(2).setAccelerationRequest(false);
-			break;		
-		}
-	}
 
     /**
      * Resets the game model and the locks the camera on the player.
@@ -229,24 +87,4 @@ public class GameFrame extends JFrame implements KeyListener, MouseListener{
 
         this.pack();
     }
-	
-	@Override
-	public void mouseClicked(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseEntered(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-
 }
