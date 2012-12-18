@@ -7,6 +7,9 @@ import model.world.spawners.WorldObjectSpawner;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Uses Zones to store WorldObjects. Dynamically allocates new Zones when needed
@@ -16,7 +19,7 @@ import java.util.LinkedList;
  */
 public class World {
     double zoneSize;
-    HashMap<ZoneCoordinate, Zone> zoneMap;
+    Map<ZoneCoordinate, Zone> zoneMap;
     Collection<WorldObjectSpawner> spawners;
 
     public int getNumberOfWorldObjects() {
@@ -145,7 +148,7 @@ public class World {
      * @return Returns all objects in the rectangular area from start to stop
      */
     public Collection<WorldObject> getAllObjectsInArea(ZoneCoordinate zoneCoordinate, Coordinate start, Coordinate stop){
-        LinkedList<WorldObject> resObjects = new LinkedList<WorldObject>();
+        ConcurrentLinkedQueue<WorldObject> resObjects = new ConcurrentLinkedQueue<WorldObject>();
         ZoneCoordinate tempZoneCoordinate = new ZoneCoordinate(zoneCoordinate);
         Coordinate tempStart = new Coordinate(start);
         Coordinate tempStop = new Coordinate(stop);

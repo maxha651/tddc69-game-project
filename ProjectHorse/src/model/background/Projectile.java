@@ -18,9 +18,11 @@ import model.world.WorldObjectState;
  * The projectile class is used for all projectiles in the world, such as laser beams,
  * missiles, gun shots etc. 
  * 
- * Is removed on collision <=> "health = 0"
+ * Is removed on collision <=> "health = 0" or if LifeSpan ticks have occurred
  */
 public class Projectile extends CollideableObject implements Collideable{
+
+    final static int LIFESPAN = 500;
 
 	//default declarations
     private ProjectileType pt;
@@ -70,7 +72,7 @@ public class Projectile extends CollideableObject implements Collideable{
             ((Damageable) object).doDamage(pt.getDamage());
             if(object.getClass() != Player.class){
             	if(owner.getClass() == Player.class){
-            		((Player) owner).addScore(((Damageable) object).scoreYield());
+            		((Player) owner).addScore(((Damageable) object));
             	}
             }
         }
@@ -85,7 +87,7 @@ public class Projectile extends CollideableObject implements Collideable{
 
         collisionCheck(world);
         
-        if(tick < 125){
+        if(tick < LIFESPAN){
             this.tick++;
         } else {
             this.setState(WorldObjectState.DEAD);

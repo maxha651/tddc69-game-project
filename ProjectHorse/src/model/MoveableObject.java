@@ -50,6 +50,11 @@ public abstract class MoveableObject extends WorldObject{
      */
     public void updateRotation(){
         this.rotationAngle = this.rotationAngle + this.rotationSpeed;
+        if(rotationAngle < 0){
+            rotationAngle += 2*Math.PI;
+        } else if(rotationAngle > 2*Math.PI){
+            rotationAngle -= 2*Math.PI;
+        }
     }
 
     public double getVelocityX() {

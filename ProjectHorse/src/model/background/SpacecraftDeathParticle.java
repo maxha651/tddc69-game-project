@@ -19,7 +19,7 @@ public class SpacecraftDeathParticle extends Particle {
 	private static final int MIN_LIFE_SPAN = 25;
 	private static final int LIFE_SPAN_SPREAD = 20;
 	
-	public SpacecraftDeathParticle(Player p){
+	public SpacecraftDeathParticle(AbstractCharacter p){
 		super(new Coordinate(p.getCoordinate()), 
 			new ZoneCoordinate(p.getZoneCoordinate()), 
 			getParticleVelocityX(),

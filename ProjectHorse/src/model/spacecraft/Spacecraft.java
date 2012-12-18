@@ -3,7 +3,6 @@ package model.spacecraft;
 import model.LocalObject;
 import model.character.Player;
 import model.properties.Boundable;
-import model.items.Item;
 import model.spacecraft.parts.*;
 
 import java.awt.*;
@@ -16,8 +15,7 @@ public class Spacecraft extends LocalObject implements Boundable {
     private Engine engine = null;
     private ShieldGenerator shield = null;
     private Cargo cargo = null;
-    private Weapon weapon1 = null; // weaponLeft?
-    private Weapon weapon2 = null; // weaponRight?
+    private Weapon weapon = null; // weaponLeft?
     private Hull hull = null;
 
     private String name = "Default Spacecraft";
@@ -27,19 +25,23 @@ public class Spacecraft extends LocalObject implements Boundable {
         //add parts to the spacecraft
         this.hull = new Hull();
         this.engine = new Engine();
-        this.weapon1 = new Weapon();
+        this.weapon = new Weapon();
         this.shield = new ShieldGenerator();
     }
 
     public Spacecraft(Player p){
         this();
-        this.weapon1 = new Weapon(p);
+        this.weapon = new Weapon(p);
     }
 
     public Rectangle getBounds(){
         //the bounding rectangle of the spacecraft only checks the hull size
         return new Rectangle((int)this.hull.getWidth(), (int)this.hull.getHeight());
 
+    }
+
+    public int getFireDelay(){
+        return weapon.getFireDelay();
     }
 
     @Override
@@ -72,12 +74,8 @@ public class Spacecraft extends LocalObject implements Boundable {
         this.cargo = cargo;
     }
 
-    public void setWeapon1(Weapon weapon1) {
-        this.weapon1 = weapon1;
-    }
-
-    public void setWeapon2(Weapon weapon2) {
-        this.weapon2 = weapon2;
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
     }
 
     public void setName(String name) {
@@ -100,12 +98,8 @@ public class Spacecraft extends LocalObject implements Boundable {
         return cargo;
     }
 
-    public Weapon getWeapon1() {
-        return weapon1;
-    }
-
-    public Weapon getWeapon2() {
-        return weapon2;
+    public Weapon getWeapon() {
+        return weapon;
     }
 
     public Hull getHull() {

@@ -2,6 +2,7 @@ package model;
 
 
 import model.background.Asteroid;
+import model.character.NPC;
 import model.character.Player;
 import model.utility.math.Randomizer;
 import model.utility.shape.Coordinate;
@@ -105,7 +106,7 @@ public class GameModel extends Observable {
     	player1 = new Player(this, START_COORDINATE_PLAYER_1, START_ZONE_PLAYER_1);
     	player2 = new Player(this, START_COORDINATE_PLAYER_2, START_ZONE_PLAYER_2);
 
-        player2.setColor(Color.BLUE);
+        //player2.setColor(Color.BLUE);
 
         world.addWorldObject(player1);
     	world.addWorldObject(player2);
@@ -198,9 +199,9 @@ public class GameModel extends Observable {
 
     public void giveScoreToOtherPlayer(Player p){
         if(p == player1){
-            player2.addScore(player1.scoreYield());
+            player2.addScore(player1);
         } else if (p == player2){
-            player1.addScore(player2.scoreYield());
+            player1.addScore(player2);
         }
     }
 
